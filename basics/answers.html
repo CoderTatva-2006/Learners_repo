@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title>Answers</title>
+    <link rel="stylesheet" type="text/css" href="../style.css">
+  </head>
+  <body>
+    <a name="answers" href="#answers"><h1>Answers</h1>
+</a><p>These are my answers for exercises in the chapters. If your solution
+isn't exactly like mine but it works just fine it's ok, and you can
+<a href="../contact-me.html">ask me</a> why I didn't do it like you did it.</p>
+<a name="thinkpython-the-way-of-the-program" href="#thinkpython-the-way-of-the-program"><h2>ThinkPython: The way of the program</h2>
+</a><ol>
+<li>With +, the strings get added together, and with * we get an error.</li>
+<li>With + we get an error, and with * the string is repeated multiple times.</li>
+<li>Python calculates the result and echoes it.</li>
+</ol>
+<a name="if-else-and-elif" href="#if-else-and-elif"><h2>If, else and elif</h2>
+</a><ol>
+<li><p>Problems and solutions:</p>
+<ul>
+<li>The first line should be <code>print("Hello!")</code> or <code>print('Hello!')</code>,
+  not <code>print(Hello!)</code>. <code>Hello!</code> is a piece of text, so we need to
+  tell Python that it's a string by putting quotes around it.</li>
+<li>The second line will create an error message that says that
+  there's no variable called <code>something</code>. But we are trying to
+  create it here, so we need <code>=</code> instead of <code>==</code>. <code>=</code> is
+  assigning, <code>==</code> is comparing.</li>
+<li>The last line should have a comma between the arguments, like
+  <code>print('You entered:', something)</code>.</li>
+</ul>
+</li>
+<li><p>The broken code has mostly the same issues as exercise 1. Here are
+ the problems that excercise 1 doesn't have:</p>
+<ul>
+<li>The if-elif-else has a blank line at a confusing place. Delete it.</li>
+<li>After deleting the code, it looks quite dense. Add a new blank
+line before the <code>if</code>.</li>
+<li>The elif line is missing a <code>:</code> at the end.</li>
+<li>On the last line the comma is on the wrong side. <code>"bla bla,"</code> is
+a string that <strong>contains</strong> a comma, but <code>"bla bla",</code> is a
+string and a <strong>separate</strong> comma. In this exercise, the last
+line should be <code>print("I don't know what", something, "means.")</code></li>
+</ul>
+</li>
+<li><p>We can simply ask the word with input and print <code>word * 1000</code>.</p>
+<div class="highlight" style="background: #111111"><pre style="line-height: 125%; margin: 0;"><span></span> word = <span style="color: #9966ff">input</span>(<span style="color: #ffff33">&quot;Enter a word: &quot;</span>)
+ <span style="color: #9966ff">print</span>(word * 1000)
+</pre></div>
+</li>
+<li><p>We can add a space to the word before we print it.</p>
+<div class="highlight" style="background: #111111"><pre style="line-height: 125%; margin: 0;"><span></span> word = <span style="color: #9966ff">input</span>(<span style="color: #ffff33">&quot;Enter a word: &quot;</span>)
+ word += <span style="color: #ffff33">&quot; &quot;</span>
+ <span style="color: #9966ff">print</span>(word * 1000)
+</pre></div>
+<p>We can also add the space right away on the first line:</p>
+<div class="highlight" style="background: #111111"><pre style="line-height: 125%; margin: 0;"><span></span> word = <span style="color: #9966ff">input</span>(<span style="color: #ffff33">&quot;Enter a word: &quot;</span>) + <span style="color: #ffff33">&quot; &quot;</span>
+ <span style="color: #9966ff">print</span>(word * 1000)
+</pre></div>
+<p>Of course, there are 999 spaces between 1000 words and this will
+ print 1000 spaces instead, so there will be a useless space at the
+ end, but it doesn't matter. If we really want to get rid of the
+ space, we can do something like this instead:</p>
+<div class="highlight" style="background: #111111"><pre style="line-height: 125%; margin: 0;"><span></span> no_space = <span style="color: #9966ff">input</span>(<span style="color: #ffff33">&quot;Enter a word: &quot;</span>)
+ yes_space = no_space + <span style="color: #ffff33">&quot; &quot;</span>
+ <span style="color: #9966ff">print</span>(yes_space*999 + no_space)
+</pre></div>
+</li>
+<li><p>Like this:</p>
+<div class="highlight" style="background: #111111"><pre style="line-height: 125%; margin: 0;"><span></span> first = <span style="color: #9966ff">input</span>(<span style="color: #ffff33">&quot;Enter a word: &quot;</span>)
+ second = <span style="color: #9966ff">input</span>(<span style="color: #ffff33">&quot;Enter another word: &quot;</span>)
+ words = first + <span style="color: #ffff33">&quot; &quot;</span> + second + <span style="color: #ffff33">&quot; &quot;</span>
+ <span style="color: #9966ff">print</span>(words * 1000)
+</pre></div>
+</li>
+<li><p>We can compare the word against an empty string (<code>""</code> or <code>''</code>) to
+ check if it's empty. In this example, the password is "seKr3t".</p>
+<div class="highlight" style="background: #111111"><pre style="line-height: 125%; margin: 0;"><span></span> word = <span style="color: #9966ff">input</span>(<span style="color: #ffff33">&quot;Enter your password: &quot;</span>)
+
+ <span style="color: #6699cc; font-weight: bold">if</span> word == <span style="color: #ffff33">&quot;seKr3t&quot;</span>:
+     <span style="color: #9966ff">print</span>(<span style="color: #ffff33">&quot;Welcome!&quot;</span>)
+ <span style="color: #6699cc; font-weight: bold">elif</span> word == <span style="color: #ffff33">&quot;&quot;</span>:
+     <span style="color: #9966ff">print</span>(<span style="color: #ffff33">&quot;You didn&#39;t enter anything.&quot;</span>)
+ <span style="color: #6699cc; font-weight: bold">else</span>:
+     <span style="color: #9966ff">print</span>(<span style="color: #ffff33">&quot;Access denied.&quot;</span>)
+</pre></div>
+<p>Again, this is not a good way to ask a real password from the user.</p>
+</li>
+</ol>
+<a name="handy-stuff-strings" href="#handy-stuff-strings"><h2>Handy stuff: Strings</h2>
+</a><ol>
+<li><p>The program is not like you might expect it to be. It actually works
+ just fine if we run it, but there's a problem. The last line is
+ really long and it's hard to see what it does.</p>
+<p>The solution is string formatting. At the time of writing this, I
+ recommend replacing the last line with one of these:</p>
+<div class="highlight" style="background: #111111"><pre style="line-height: 125%; margin: 0;"><span></span> <span style="color: #9966ff">print</span>(<span style="color: #ffff33">&quot;You entered %s, %s, %s and %s.&quot;</span> % (word1, word2, word3, word4))
+ <span style="color: #9966ff">print</span>(<span style="color: #ffff33">&quot;You entered {}, {}, {} and {}.&quot;</span>.format(word1, word2, word3, word4))
+</pre></div>
+<p>In the future when most people will have Python 3.6 or newer, you
+ can also use this:</p>
+<div class="highlight" style="background: #111111"><pre style="line-height: 125%; margin: 0;"><span></span> <span style="color: #9966ff">print</span>(<span style="color: #ffff33">f&quot;You entered {</span>word1<span style="color: #ffff33">}, {</span>word2<span style="color: #ffff33">}, {</span>word3<span style="color: #ffff33">} and {</span>word4<span style="color: #ffff33">}.&quot;</span>)
+</pre></div>
+</li>
+<li><p>If we have a look at <code>help(str.upper)</code> it looks like this:</p>
+<pre><code> S.upper() -&gt; str
+
+ Return a copy of S converted to uppercase.
+</code></pre>
+<p>We have two problems. First of all, the broken code uses
+ <code>message.upper</code> instead of <code>message.upper()</code>. It also expects the
+ message to magically make itself uppercased, but strings can't be
+ changed in-place so it doesn't work.</p>
+<p>The solution is to do <code>message.upper()</code> and save the value we got
+ from that to a variable:</p>
+<div class="highlight" style="background: #111111"><pre style="line-height: 125%; margin: 0;"><span></span> message = <span style="color: #9966ff">input</span>(<span style="color: #ffff33">&quot;What do you want me to say? &quot;</span>)
+ uppermessage = message.upper()
+ <span style="color: #9966ff">print</span>(uppermessage, <span style="color: #ffff33">&quot;!!!&quot;</span>)
+ <span style="color: #9966ff">print</span>(uppermessage, <span style="color: #ffff33">&quot;!!!&quot;</span>)
+ <span style="color: #9966ff">print</span>(uppermessage, <span style="color: #ffff33">&quot;!!!&quot;</span>)
+</pre></div>
+<p>Or we can reuse the same variable name:</p>
+<div class="highlight" style="background: #111111"><pre style="line-height: 125%; margin: 0;"><span></span> message = <span style="color: #9966ff">input</span>(<span style="color: #ffff33">&quot;What do you want me to say? &quot;</span>)
+ message = message.upper()
+ <span style="color: #9966ff">print</span>(message, <span style="color: #ffff33">&quot;!!!&quot;</span>)
+ <span style="color: #9966ff">print</span>(message, <span style="color: #ffff33">&quot;!!!&quot;</span>)
+ <span style="color: #9966ff">print</span>(message, <span style="color: #ffff33">&quot;!!!&quot;</span>)
+</pre></div>
+<p>Or we can convert the message to uppercase right away on the first
+ line:</p>
+<div class="highlight" style="background: #111111"><pre style="line-height: 125%; margin: 0;"><span></span> message = <span style="color: #9966ff">input</span>(<span style="color: #ffff33">&quot;What do you want me to say? &quot;</span>).upper()
+ <span style="color: #9966ff">print</span>(message, <span style="color: #ffff33">&quot;!!!&quot;</span>)
+ <span style="color: #9966ff">print</span>(message, <span style="color: #ffff33">&quot;!!!&quot;</span>)
+ <span style="color: #9966ff">print</span>(message, <span style="color: #ffff33">&quot;!!!&quot;</span>)
+</pre></div>
+</li>
+</ol>
+<a name="lists-and-tuples" href="#lists-and-tuples"><h2>Lists and tuples</h2>
+</a><ol>
+<li><p>Look carefully. The <code>namelist</code> is written in <code>()</code> instead of <code>[]</code>,
+so it's actually a tuple, not a list. Using confusing variable names
+is of course a bad idea, but you shouldn't be surprised if someone
+is doing that. Replace the <code>()</code> with <code>[]</code> and the code will work.</p>
+</li>
+<li><p>When we run the program we get a weird error:</p>
+<pre><code> Hello!
+ Enter your name: my name
+ Traceback (most recent call last):
+   File "program.py", line 3, in &lt;module&gt;
+     print("Your name is " + name + ".")
+ TypeError: Can't convert 'tuple' object to str implicitly
+</code></pre>
+<p>So Python is trying to convert a tuple to a string. But
+ <code>"Your name is "</code> and <code>"."</code> are strings, so maybe <code>name</code> is a
+ tuple? Let's change the last line to just <code>print(name)</code> so our
+ program looks like this:</p>
+<div class="highlight" style="background: #111111"><pre style="line-height: 125%; margin: 0;"><span></span> <span style="color: #9966ff">print</span>(<span style="color: #ffff33">&quot;Hello!&quot;</span>)
+ name = <span style="color: #9966ff">input</span>(<span style="color: #ffff33">&quot;Enter your name: &quot;</span>),
+ <span style="color: #9966ff">print</span>(name)
+</pre></div>
+<p>Let's run it.</p>
+<pre><code> Hello!
+ Enter your name: my name
+ ('my name',)
+</code></pre>
+<p><code>name</code> is indeed a tuple! The problem is the second line. Look
+ carefully, there's a comma after <code>input("Enter your name: ")</code>.
+ Python created a tuple automatically, but that's not what we
+ wanted. If we remove the comma, everything works just fine.</p>
+</li>
+<li><p>Again, the code gives us a weird error message.</p>
+<pre><code> Enter your name: my name
+ Traceback (most recent call last):
+   File "program.py", line 3, in &lt;module&gt;
+     if input("Enter your name: ") in namelist:
+ TypeError: argument of type 'NoneType' is not iterable
+</code></pre>
+<p>Now we need to remember that when the error messages talk about
+ <code>NoneType</code> <a href="variables.html#none">they always mean None</a>. So
+ <code>namelist</code> seems to be None. Let's make the program a bit simpler
+ for working on the namelist:</p>
+<div class="highlight" style="background: #111111"><pre style="line-height: 125%; margin: 0;"><span></span> namelist = [<span style="color: #ffff33">&#39;wub_wub&#39;</span>, <span style="color: #ffff33">&#39;RubyPinch&#39;</span>, <span style="color: #ffff33">&#39;go|dfish&#39;</span>, <span style="color: #ffff33">&#39;Nitori&#39;</span>]
+ namelist = namelist.extend(<span style="color: #ffff33">&#39;theelous3&#39;</span>)
+ <span style="color: #9966ff">print</span>(namelist)
+</pre></div>
+<p>Now fixing the namelist is easier, so I'll just go through the
+ problems and solutions:</p>
+<ul>
+<li><code>namelist</code> is None. It should be <code>namelist.extend('theelous3')</code>,
+  not <code>namelist = namelist.extend('theelous3')</code>. See <a href="using-functions.html#return-values">this
+  thing</a>.</li>
+<li>Now the namelist is like <code>['wub_wub', ..., 't', 'h', 'e', 'e', ...]</code>.
+  Python treated <code>'theelous3'</code> like a list so it added each of its
+  characters to <code>namelist</code>. We can use <code>namelist.append('theelous3')</code>
+  or <code>namelist.extend(['theelous3'])</code> instead to solve this problem.</li>
+</ul>
+</li>
+</ol>
+<a name="loops" href="#loops"><h2>Loops</h2>
+</a><ol>
+<li><p>The problem is that <code>things</code> is a string because we converted it to a
+ string with <code>str</code>, so the for loop loops over the characters <code>[</code>,
+ <code>1</code>, <code>,</code> and so on. Replace <code>str([1, 2, 3, 4, 5])</code> with
+ <code>[1, 2, 3, 4, 5]</code>.</p>
+</li>
+<li><p>The code appends each list in <code>before</code> to <code>after</code>, so the <code>number</code>
+ variable actually pointed to a list like <code>[1, 2]</code>. An easy solution
+ is to just write two for loops inside each other:</p>
+<div class="highlight" style="background: #111111"><pre style="line-height: 125%; margin: 0;"><span></span> before = [[1, 2], [3, 4], [5, 6]]
+ after = []
+ <span style="color: #6699cc; font-weight: bold">for</span> sublist in before:
+     <span style="color: #6699cc; font-weight: bold">for</span> number in sublist:
+         after.append(number)
+ <span style="color: #9966ff">print</span>(after)
+</pre></div>
+<p>Lists also have an extend method that appends each item from another
+ list, so we can also use that:</p>
+<div class="highlight" style="background: #111111"><pre style="line-height: 125%; margin: 0;"><span></span> before = [[1, 2], [3, 4], [5, 6]]
+ after = []
+ <span style="color: #6699cc; font-weight: bold">for</span> sublist in before:
+     after.extend(sublist)
+ <span style="color: #9966ff">print</span>(after)
+</pre></div>
+</li>
+<li><p>The code has some empty lines in it, and they divide it nicely into
+ three parts. All of these parts have some problems, so I'll go
+ through them one by one.</p>
+<p>The first part makes a variable called <code>input</code>. The problem is that
+ now the rest of the program <a href="using-functions.html#variables-names-and-builtin-things">can't use the input
+ function</a>. It
+ doesn't really matter here because the rest of the program doesn't
+ use it anyway, but I still recommend using some other variable name,
+ like <code>inputlist</code>.</p>
+<p>The second part runs <code>numbers = []</code> three times. It was probably
+ meant to be ran once before the loop started, like this:</p>
+<div class="highlight" style="background: #111111"><pre style="line-height: 125%; margin: 0;"><span></span> numbers = []
+ <span style="color: #6699cc; font-weight: bold">for</span> string in inputlist:
+     numbers.append(<span style="color: #9966ff">int</span>(string))
+</pre></div>
+<p>The third part calculates <code>result + n</code> but throws away the value.
+ It was probably supposed to do <code>result += n</code> instead.</p>
+</li>
+<li><p>If you run this program you'll notice that nothing happened to the
+ numbers list. The reason is that the <code>number</code> variable only works
+ one way. It gets its values from the <code>numbers</code> list, but changing it
+ doesn't change the <code>numbers</code> list. In general, <code>thing = stuff</code>
+ changes the <code>thing</code> variable, and that's it. It doesn't change
+ anything else.</p>
+<p>An easy solution is to just create a new list:</p>
+<div class="highlight" style="background: #111111"><pre style="line-height: 125%; margin: 0;"><span></span> numbers = [<span style="color: #ffff33">&#39;1&#39;</span>, <span style="color: #ffff33">&#39;2&#39;</span>, <span style="color: #ffff33">&#39;3&#39;</span>]
+ converted_numbers = []
+ <span style="color: #6699cc; font-weight: bold">for</span> number in numbers:
+     converted_numbers.append(<span style="color: #9966ff">int</span>(number))
+ <span style="color: #9966ff">print</span>(converted_numbers)
+</pre></div>
+</li>
+</ol>
+<a name="trey-hunner-zip-and-enumerate" href="#trey-hunner-zip-and-enumerate"><h2>Trey Hunner: zip and enumerate</h2>
+</a><ol>
+<li><p>Read some lines with <code>input</code> into a list and then enumerate it.</p>
+<div class="highlight" style="background: #111111"><pre style="line-height: 125%; margin: 0;"><span></span> <span style="color: #9966ff">print</span>(<span style="color: #ffff33">&quot;Enter something, and press Enter without typing anything&quot;</span>,
+       <span style="color: #ffff33">&quot;when you&#39;re done.&quot;</span>)
+
+ lines = []
+ <span style="color: #6699cc; font-weight: bold">while</span> <span style="color: #6699cc; font-weight: bold">True</span>:
+     line = <span style="color: #9966ff">input</span>(<span style="color: #ffff33">&#39;&gt;&#39;</span>)
+     <span style="color: #6699cc; font-weight: bold">if</span> line == <span style="color: #ffff33">&#39;&#39;</span>:
+         <span style="color: #6699cc; font-weight: bold">break</span>
+     lines.append(line)
+
+ <span style="color: #6699cc; font-weight: bold">for</span> index, line in <span style="color: #9966ff">enumerate</span>(lines, start=1):
+     <span style="color: #9966ff">print</span>(<span style="color: #ffff33">&quot;Line&quot;</span>, index, <span style="color: #ffff33">&quot;is:&quot;</span>, line)
+</pre></div>
+</li>
+<li><p>Let's start by trying out <code>zip</code> with strings:</p>
+<div class="highlight" style="background: #111111"><pre style="line-height: 125%; margin: 0;"><span></span> &gt;&gt;&gt; <span style="color: #6699cc; font-weight: bold">for</span> pair in <span style="color: #9966ff">zip</span>(<span style="color: #ffff33">&#39;ABC&#39;</span>, <span style="color: #ffff33">&#39;abc&#39;</span>):
+ ...     <span style="color: #9966ff">print</span>(pair)
+ ...
+ (<span style="color: #ffff33">&#39;A&#39;</span>, <span style="color: #ffff33">&#39;a&#39;</span>)
+ (<span style="color: #ffff33">&#39;B&#39;</span>, <span style="color: #ffff33">&#39;b&#39;</span>)
+ (<span style="color: #ffff33">&#39;C&#39;</span>, <span style="color: #ffff33">&#39;c&#39;</span>)
+ &gt;&gt;&gt;
+</pre></div>
+<p>Great, it works just like it works with lists. Now let's create
+ the letter printing program:</p>
+<div class="highlight" style="background: #111111"><pre style="line-height: 125%; margin: 0;"><span></span> uppercase = <span style="color: #ffff33">&#39;ABCDEFGHIJKLMNOPQRSTUVWXYZ&#39;</span>
+ lowercase = <span style="color: #ffff33">&#39;abcdefghijklmnopqrstuvwxyz&#39;</span>
+
+ <span style="color: #6699cc; font-weight: bold">for</span> upper, lower in <span style="color: #9966ff">zip</span>(uppercase, lowercase):
+     <span style="color: #9966ff">print</span>(upper, lower)
+</pre></div>
+</li>
+<li><p>This one is a bit more difficult than the other two because we
+ need to combine <code>zip</code> and <code>enumerate</code>. One way to do this is
+ to pass a <code>zip</code> result to <code>enumerate</code>, like this:</p>
+<div class="highlight" style="background: #111111"><pre style="line-height: 125%; margin: 0;"><span></span> uppercase = <span style="color: #ffff33">&#39;ABCDEFGHIJKLMNOPQRSTUVWXYZ&#39;</span>
+ lowercase = <span style="color: #ffff33">&#39;abcdefghijklmnopqrstuvwxyz&#39;</span>
+
+ <span style="color: #6699cc; font-weight: bold">for</span> index, letterpair in <span style="color: #9966ff">enumerate</span>(<span style="color: #9966ff">zip</span>(uppercase, lowercase), start=1):
+     upper, lower = letterpair
+     <span style="color: #9966ff">print</span>(index, upper, lower)
+</pre></div>
+<p>We can also save the zip result to a variable. I would
+ probably do this.</p>
+<div class="highlight" style="background: #111111"><pre style="line-height: 125%; margin: 0;"><span></span> uppercase = <span style="color: #ffff33">&#39;ABCDEFGHIJKLMNOPQRSTUVWXYZ&#39;</span>
+ lowercase = <span style="color: #ffff33">&#39;abcdefghijklmnopqrstuvwxyz&#39;</span>
+
+ letterzip = <span style="color: #9966ff">zip</span>(uppercase, lowercase)
+ <span style="color: #6699cc; font-weight: bold">for</span> index, letterpair in <span style="color: #9966ff">enumerate</span>(letterzip, start=1):
+     upper, lower = letterpair
+     <span style="color: #9966ff">print</span>(index, upper, lower)
+</pre></div>
+<p>Another alternative is to pass an <code>enumerate</code> result to <code>zip</code>. This is
+ a bit more complicated, so I wouldn't do it this way.</p>
+<div class="highlight" style="background: #111111"><pre style="line-height: 125%; margin: 0;"><span></span> uppercase = <span style="color: #ffff33">&#39;ABCDEFGHIJKLMNOPQRSTUVWXYZ&#39;</span>
+ lowercase = <span style="color: #ffff33">&#39;abcdefghijklmnopqrstuvwxyz&#39;</span>
+
+ <span style="color: #6699cc; font-weight: bold">for</span> upper, indexlowerpair in <span style="color: #9966ff">zip</span>(uppercase, <span style="color: #9966ff">enumerate</span>(lowercase, start=1)):
+     index, lower = indexlowerpair
+     <span style="color: #9966ff">print</span>(index, upper, lower)
+</pre></div>
+</li>
+</ol>
+<a name="defining-functions" href="#defining-functions"><h2>Defining functions</h2>
+</a><ol>
+<li><p>The problem with the first example is that name is a local variable.
+ I explained how to fix this in <a href="defining-functions.html#output">the output section</a>:</p>
+<div class="highlight" style="background: #111111"><pre style="line-height: 125%; margin: 0;"><span></span> <span style="color: #6699cc; font-weight: bold">def</span> ask_name():
+     name = <span style="color: #9966ff">input</span>(<span style="color: #ffff33">&quot;Enter your name: &quot;</span>)
+     <span style="color: #6699cc; font-weight: bold">return</span> name
+
+ <span style="color: #9966ff">print</span>(<span style="color: #ffff33">&quot;Your name is&quot;</span>, ask_name())
+</pre></div>
+</li>
+<li><p>If you run the next example, you get something like this:</p>
+<pre><code> &lt;function get_greeting at 0xb73a0a04&gt;
+</code></pre>
+<p>The problem is that we print the actual <code>get_greeting</code> function,
+ but we need to <strong>call</strong> it like <code>get_greeting()</code>:</p>
+<div class="highlight" style="background: #111111"><pre style="line-height: 125%; margin: 0;"><span></span> <span style="color: #6699cc; font-weight: bold">def</span> get_greeting():
+     <span style="color: #6699cc; font-weight: bold">return</span> <span style="color: #ffff33">&quot;Hello World!&quot;</span>
+
+ <span style="color: #9966ff">print</span>(get_greeting())
+</pre></div>
+</li>
+<li><p>See <a href="defining-functions.html#return-or-print">the return or print section</a>.</p>
+<p>The greet function prints a greeting.</p>
+<div class="highlight" style="background: #111111"><pre style="line-height: 125%; margin: 0;"><span></span> &gt;&gt;&gt; greet(<span style="color: #ffff33">&quot;World&quot;</span>)
+ Hello World
+ &gt;&gt;&gt;
+</pre></div>
+<p>But it also returns None because we don't tell it to return anything else.</p>
+<div class="highlight" style="background: #111111"><pre style="line-height: 125%; margin: 0;"><span></span> &gt;&gt;&gt; return_value = greet(<span style="color: #ffff33">&quot;World&quot;</span>)
+ Hello World
+ &gt;&gt;&gt; <span style="color: #9966ff">print</span>(return_value)
+ <span style="color: #6699cc; font-weight: bold">None</span>
+ &gt;&gt;&gt;
+</pre></div>
+<p>This code from the exercise does the same thing as the code above
+ does, but without a temporary <code>return_value</code> variable:</p>
+<div class="highlight" style="background: #111111"><pre style="line-height: 125%; margin: 0;"><span></span> &gt;&gt;&gt; <span style="color: #9966ff">print</span>(greet(<span style="color: #ffff33">&quot;World&quot;</span>))
+ Hello World
+ <span style="color: #6699cc; font-weight: bold">None</span>
+ &gt;&gt;&gt;
+</pre></div>
+</li>
+</ol>
+<hr>
+<p>If you have trouble with this tutorial please <a href="../contact-me.html">tell me about
+it</a> and I'll make this tutorial better. If you
+like this tutorial, please <a href="../index.html#how-can-i-thank-you-for-writing-and-sharing-this-tutorial">give it a
+star</a>.</p>
+<p>You may use this tutorial freely at your own risk. See
+<a href="../LICENSE.txt">LICENSE</a>.</p>
+<p><a href="../index.html#list-of-contents">List of contents</a></p>
+
+  </body>
+</html>
+

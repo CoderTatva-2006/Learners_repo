@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title>Using functions</title>
+    <link rel="stylesheet" type="text/css" href="../style.css">
+  </head>
+  <body>
+    <a name="using-functions" href="#using-functions"><h1>Using functions</h1>
+</a><p>Now we know how to make Python show text.</p>
+<div class="highlight" style="background: #111111"><pre style="line-height: 125%; margin: 0;"><span></span>&gt;&gt;&gt; <span style="color: #ffff33">&#39;Hello!&#39;</span>
+&#39;Hello!&#39;
+&gt;&gt;&gt;
+</pre></div>
+<p>But that includes <code>''</code>. One way to show text to the user without <code>''</code>
+is with the print function. In Python, printing doesn't have anything
+to do with physical printers, it just means showing text on the screen.</p>
+<div class="highlight" style="background: #111111"><pre style="line-height: 125%; margin: 0;"><span></span>&gt;&gt;&gt; <span style="color: #9966ff">print</span>(<span style="color: #ffff33">&#39;Hello!&#39;</span>)
+Hello!
+&gt;&gt;&gt;
+</pre></div>
+<p>Now we are ready for a classic example, which is also the first program
+in many tutorials :)</p>
+<div class="highlight" style="background: #111111"><pre style="line-height: 125%; margin: 0;"><span></span>&gt;&gt;&gt; <span style="color: #9966ff">print</span>(<span style="color: #ffff33">&quot;Hello World!&quot;</span>)
+Hello World!
+&gt;&gt;&gt;
+</pre></div>
+<p>But what exactly is print?</p>
+<a name="what-are-functions" href="#what-are-functions"><h2>What are functions?</h2>
+</a><p>Let's see what happens if we type <code>print</code> without the <code>('Hello')</code> part.</p>
+<div class="highlight" style="background: #111111"><pre style="line-height: 125%; margin: 0;"><span></span>&gt;&gt;&gt; <span style="color: #9966ff">print</span>
+&lt;built-in function print&gt;
+&gt;&gt;&gt;
+</pre></div>
+<p>We could also type <code>print(print)</code>, it would do the same thing. Python
+replied to us with some information about print wrapped in <code>&lt;&gt;</code>.</p>
+<p>As we can see, print is a function. Functions do something when they are
+<strong>called</strong> by typing their name and parentheses. Inside the
+parentheses, we can pass some arguments too. In <code>print("hello")</code> the
+function is <code>print</code> and we give it one argument, which is <code>"hello"</code>.</p>
+<p>Functions are easy to understand, They simply <strong>do something when they
+are called</strong>. Functions run immediately when we call them, so the
+text appears on the screen right away when we run <code>print(something)</code>.</p>
+<p>Sometimes people think that doing <code>thingy = print('hello')</code> means that
+Python is going to print hello every time we type <code>thingy</code>. But <strong>this
+is not correct</strong>! <code>print('hello')</code> runs print right away, and if we
+type <code>thingy</code> later it's not going to run <code>print('hello')</code> again.</p>
+<a name="return-values" href="#return-values"><h2>Return values</h2>
+</a><p>Now we know that <code>thingy = print('hello')</code> doesn't store the
+<code>print('hello')</code> call in a variable. But what does it do then?</p>
+<div class="highlight" style="background: #111111"><pre style="line-height: 125%; margin: 0;"><span></span>&gt;&gt;&gt; thingy = <span style="color: #9966ff">print</span>(<span style="color: #ffff33">&#39;hello&#39;</span>)
+hello
+&gt;&gt;&gt; <span style="color: #9966ff">print</span>(thingy)       <span style="color: #336666; font-style: italic"># thingy is now None</span>
+None
+&gt;&gt;&gt;
+</pre></div>
+<p>So doing <code>thingy = print('hello')</code> set <code>thingy</code> to None.</p>
+<p>Here's what happened, explained in more detail:</p>
+<ul>
+<li>When we do <code>thingy = print('hello')</code>, the right side is processed
+  first.</li>
+<li><code>print('hello')</code> calls the print function with the argument
+  <code>'hello'</code>.</li>
+<li>The function runs. It shows the word hello.</li>
+<li>The print function <strong>returns</strong> None. All functions need to return
+  something, and print returns None because there's no need to return
+  anything else.</li>
+<li>Now the right side has been processed. <code>print('hello')</code> returned
+  None, so we can imagine we have None instead of <code>print('hello')</code>
+  there, and the assignment now looks like <code>thingy = None</code>.</li>
+<li><code>thingy</code> is now None.</li>
+</ul>
+<p>Now we understand what <strong>a return value</strong> is. When we call the
+function, Python "replaces" <code>function(arguments)</code> with whatever the
+function returns.</p>
+<p>Calling a function without assigning the return value to anything (e.g.
+<code>print('hello')</code> instead of <code>thingy = print('hello')</code>) simply throws away
+the return value. The interactive <code>&gt;&gt;&gt;</code> prompt doesn't echo the return
+value back because it's None.</p>
+<p>Of course, <code>thingy = print('hello')</code> is useless compared to <code>print('hello')</code>
+because the print function always returns None and we can do <code>thingy = None</code>
+without any printing.</p>
+<p>Not all functions return None. The input function can be used for
+getting a string from the user.</p>
+<div class="highlight" style="background: #111111"><pre style="line-height: 125%; margin: 0;"><span></span>&gt;&gt;&gt; stuff = <span style="color: #9966ff">input</span>(<span style="color: #ffff33">&quot;Enter something:&quot;</span>)
+Enter something:hello
+&gt;&gt;&gt; stuff
+&#39;hello&#39;
+&gt;&gt;&gt;
+</pre></div>
+<p><code>input("Enter something:")</code> showed the text <code>Enter something:</code> on the
+screen and waited for me to type something. I typed hello and pressed
+Enter. Then input returned the hello I typed as a string and it was
+assigned to <code>stuff</code>.</p>
+<p>Usually we want to add a space after the <code>:</code>, like this:</p>
+<div class="highlight" style="background: #111111"><pre style="line-height: 125%; margin: 0;"><span></span>&gt;&gt;&gt; stuff = <span style="color: #9966ff">input</span>(<span style="color: #ffff33">&quot;Enter something: &quot;</span>)  <span style="color: #336666; font-style: italic"># now there&#39;s space between : and where i type</span>
+Enter something: hello
+&gt;&gt;&gt;
+</pre></div>
+<a name="handy-things-about-print" href="#handy-things-about-print"><h2>Handy things about print</h2>
+</a><p>We can also print an empty line by calling print without any
+arguments.</p>
+<div class="highlight" style="background: #111111"><pre style="line-height: 125%; margin: 0;"><span></span>&gt;&gt;&gt; <span style="color: #9966ff">print</span>()
+
+&gt;&gt;&gt;
+</pre></div>
+<p>In Python, <code>\n</code> is a newline character. Printing a string that contains
+a newline character also prints a newline:</p>
+<div class="highlight" style="background: #111111"><pre style="line-height: 125%; margin: 0;"><span></span>&gt;&gt;&gt; <span style="color: #9966ff">print</span>(<span style="color: #ffff33">&#39;hello\nworld&#39;</span>)
+hello
+world
+&gt;&gt;&gt;
+</pre></div>
+<p>If we want to print a real backslash, we need to <strong>escape</strong> it by typing
+two backslashes.</p>
+<pre><code>&gt;&gt;&gt; print('hello\\nworld')
+hello\nworld
+&gt;&gt;&gt;
+</code></pre>
+<p>We can also pass multiple arguments to the print function. We need to
+separate them with commas and print will add spaces between them.</p>
+<div class="highlight" style="background: #111111"><pre style="line-height: 125%; margin: 0;"><span></span>&gt;&gt;&gt; <span style="color: #9966ff">print</span>(<span style="color: #ffff33">&quot;Hello&quot;</span>, <span style="color: #ffff33">&quot;World!&quot;</span>)
+Hello World!
+&gt;&gt;&gt;
+</pre></div>
+<p>Unlike with <code>+</code>, the arguments don't need to be strings.</p>
+<div class="highlight" style="background: #111111"><pre style="line-height: 125%; margin: 0;"><span></span>&gt;&gt;&gt; <span style="color: #9966ff">print</span>(42, <span style="color: #ffff33">&quot;is an integer, and the value of pi is&quot;</span>, 3.14)
+42 is an integer, and the value of pi is 3.14
+&gt;&gt;&gt;
+</pre></div>
+<a name="variables-names-and-builtin-things" href="#variables-names-and-builtin-things"><h2>Variables names and built-in things</h2>
+</a><p>In <a href="variables.html">the previous chapter</a> we learned that <code>if</code> is not a
+valid variable name because it's a keyword.</p>
+<div class="highlight" style="background: #111111"><pre style="line-height: 125%; margin: 0;"><span></span>&gt;&gt;&gt; <span style="color: #6699cc; font-weight: bold">if</span> = 123
+  File <span style="color: #9966ff">&quot;&lt;stdin&gt;&quot;</span>, line 1
+    <span style="color: #6699cc; font-weight: bold">if</span> = 123
+       ^
+SyntaxError: invalid syntax
+&gt;&gt;&gt;
+</pre></div>
+<p>But <code>print</code> and <code>input</code> are not keywords, so can we use them as
+variable names?</p>
+<div class="highlight" style="background: #111111"><pre style="line-height: 125%; margin: 0;"><span></span>&gt;&gt;&gt; <span style="color: #9966ff">print</span> = <span style="color: #ffff33">&quot;hello&quot;</span>
+&gt;&gt;&gt; <span style="color: #9966ff">print</span>
+&#39;hello&#39;
+&gt;&gt;&gt;
+</pre></div>
+<p>We can, but there's a problem. Now we can't even do our hello world!</p>
+<div class="highlight" style="background: #111111"><pre style="line-height: 125%; margin: 0;"><span></span>&gt;&gt;&gt; <span style="color: #9966ff">print</span>(<span style="color: #ffff33">&quot;Hello World!&quot;</span>)
+Traceback (most recent call last):
+  File <span style="color: #9966ff">&quot;&lt;stdin&gt;&quot;</span>, line 1, in &lt;module&gt;
+TypeError: &#39;str&#39; object is not callable
+&gt;&gt;&gt;
+</pre></div>
+<p>The error message complains that strings aren't callable because we just
+set <code>print</code> to the string <code>'hello'</code> and now we're trying to call it like
+a function. As you can see, <strong>this is not a good idea</strong> at all. Most
+<a href="editor-setup.html">editors</a> display built-in functions with a special
+color, so you don't need to worry about doing this accidentally.</p>
+<p>Exit out of Python and start it again, and <code>print("Hello World!")</code>
+should work normally.</p>
+<a name="summary" href="#summary"><h2>Summary</h2>
+</a><ul>
+<li><code>function()</code> calls a function without any arguments, and
+  <code>function(1, 2, 3)</code> calls a function with 1, 2 and 3 as arguments.</li>
+<li>When a function is called, it does something and returns something.</li>
+<li><code>function(arguments)</code> is "replaced" with the return value in the code
+  that called it. For example, <code>stuff = function()</code> calls a function,
+  and then does <code>stuff = the_return_value</code> and the return value ends
+  up in stuff.</li>
+<li>Python comes with <code>print</code> and <code>input</code>. They are built-in functions.</li>
+<li>Avoid variable names that conflict with built-in functions.</li>
+</ul>
+<hr>
+<p>If you have trouble with this tutorial please <a href="../contact-me.html">tell me about
+it</a> and I'll make this tutorial better. If you
+like this tutorial, please <a href="../index.html#how-can-i-thank-you-for-writing-and-sharing-this-tutorial">give it a
+star</a>.</p>
+<p>You may use this tutorial freely at your own risk. See
+<a href="../LICENSE.txt">LICENSE</a>.</p>
+<p><a href="variables.html">Previous</a> | <a href="editor-setup.html">Next</a> |
+<a href="../index.html#basics">List of contents</a></p>
+
+  </body>
+</html>
+

@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title>Managing files in Python</title>
+    <link rel="stylesheet" type="text/css" href="../style.css">
+  </head>
+  <body>
+    <a name="managing-files-in-python" href="#managing-files-in-python"><h1>Managing files in Python</h1>
+</a><a name="what-are-files-directories-and-paths" href="#what-are-files-directories-and-paths"><h2>What are files, directories and paths?</h2>
+</a><p>These are simple thing that many computer users already know, but I'll go
+through them just to make sure you know them also.</p>
+<a name="files" href="#files"><h3>Files</h3>
+</a><ul>
+<li>Each file has a <strong>name</strong>, like <code>hello.py</code>, <code>mytext.txt</code> or
+  <code>coolimage.png</code>. Usually the name ends with an <strong>extension</strong> that
+  describes the content, like <code>py</code> for Python, <code>txt</code> for text or <code>png</code>
+  for "portable network graphic".</li>
+<li>With just names identifying the files, it wouldn't be possible to have
+  two files with the same name. That's why files also have a
+  <strong>location</strong>. We'll talk more about this in a moment.</li>
+<li>Files have <strong>content</strong> that consists of
+  <a href="https://www.youtube.com/watch?v=Dnd28lQHquU">8-bit bytes</a>.</li>
+</ul>
+<a name="directoriesfolders" href="#directoriesfolders"><h3>Directories/folders</h3>
+</a><p>Directories are a way to group files. They also have a name and a location
+like files, but instead of containing data directly like files do they
+contain other files and directories.</p>
+<a name="paths" href="#paths"><h3>Paths</h3>
+</a><p>Directories and files have a path, like <code>C:\Users\me\hello.py</code>. That just
+means that there's a folder called <code>C:</code>, and inside it there's a folder
+called <code>Users</code>, and inside it there's a folder called <code>me</code> and inside it
+there's a <code>hello.py</code>. Like this:</p>
+<pre><code>C:
+└── Users
+    └── me
+        └── hello.py
+</code></pre>
+<p><code>C:\Users\me\hello.py</code> is an <strong>absolute path</strong>. But there are also
+<strong>relative paths</strong>. For example, if we are in <code>C:\Users</code>, <code>me\hello.py</code>
+is same as <code>C:\Users\me\hello.py</code>. The place we are in is sometimes
+called <strong>current directory</strong>, <strong>working directory</strong> or
+<strong>current working directory</strong>.</p>
+<p>So far we've talked about Windows paths, but not all computers run
+Windows. For example, an equivalent to <code>C:\Users\me\hello.py</code> is
+<code>/home/me/hello.py</code> on my Ubuntu, and if I'm in <code>/home</code>, <code>me/hello.py</code>
+is same as <code>/home/me/hello.py</code>.</p>
+<pre><code>/
+└── home
+    └── me
+        └── hello.py
+</code></pre>
+<a name="writing-to-a-file" href="#writing-to-a-file"><h2>Writing to a file</h2>
+</a><p>Let's create a file and write a hello world to it.</p>
+<div class="highlight" style="background: #111111"><pre style="line-height: 125%; margin: 0;"><span></span>&gt;&gt;&gt; <span style="color: #6699cc; font-weight: bold">with</span> <span style="color: #9966ff">open</span>(<span style="color: #ffff33">&#39;hello.txt&#39;</span>, <span style="color: #ffff33">&#39;w&#39;</span>) <span style="color: #6699cc; font-weight: bold">as</span> f:
+...     <span style="color: #9966ff">print</span>(<span style="color: #ffff33">&quot;Hello World!&quot;</span>, file=f)
+...
+&gt;&gt;&gt;
+</pre></div>
+<p>Doesn't seem like it did anything. But actually it created a <code>hello.txt</code>
+somewhere on our system. On Windows it's probably in <code>C:\Users\YourName</code>,
+and on most other systems it should be in <code>/home/yourname</code>. You can open
+it with notepad or any other plain text editor your system comes with by
+opening the folder that contains the file and then double-clicking the
+file.</p>
+<p>So how does that code work?</p>
+<p>First of all, we open a path with <code>open</code>, and it gives us a Python file
+object that is assigned to the variable <code>f</code>.</p>
+<div class="highlight" style="background: #111111"><pre style="line-height: 125%; margin: 0;"><span></span>&gt;&gt;&gt; f
+&lt;_io.TextIOWrapper name=&#39;hello.txt&#39; mode=&#39;w&#39; encoding=&#39;UTF-8&#39;&gt;
+&gt;&gt;&gt;
+</pre></div>
+<p>File objects are not the same thing as paths and filenames, so if we try
+to use <code>'hello.txt'</code> like we used <code>f</code> it doesn't work.</p>
+<p>The first argument we passed to <code>open</code> was the path we wanted to write.
+Our path was more like a filename than a path, so the file ended up in
+the current working directory.</p>
+<p>The second argument was <code>w</code>. It's short for write, and that just means
+that we'll create a new file. There's some other modes we can use also:</p>
+<table border="1">
+<thead><tr>
+<th>Mode</th>
+<th>Short for</th>
+<th>Meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>r</code></td>
+<td>read</td>
+<td>Read from an existing file.</td>
+</tr>
+<tr>
+<td><code>w</code></td>
+<td>write</td>
+<td>Write to a file. <strong>If the file exists, its old content is removed.</strong></td>
+</tr>
+<tr>
+<td><code>a</code></td>
+<td>append</td>
+<td>Write to the end of a file, and keep the old content.</td>
+</tr>
+</tbody>
+</table>
+<p>But what is that <code>with ourfile as f</code> crap? That's just a fancy way to make
+sure that the file gets closed, no matter what happens. As we can see,
+the file was indeed closed.</p>
+<div class="highlight" style="background: #111111"><pre style="line-height: 125%; margin: 0;"><span></span>&gt;&gt;&gt; f.closed
+True
+&gt;&gt;&gt;
+</pre></div>
+<p>When we had opened the file we could just print to it. The print is just
+like any other print, but we also need to specify that we want to print
+to the file we opened using <code>file=f</code>.</p>
+<a name="reading-from-files" href="#reading-from-files"><h2>Reading from files</h2>
+</a><p>After opening a file with the <code>r</code> mode we can for loop over it, just
+like it was a list. So let's go ahead and read everything in the file
+we created to a list of lines.</p>
+<div class="highlight" style="background: #111111"><pre style="line-height: 125%; margin: 0;"><span></span>&gt;&gt;&gt; lines = []
+&gt;&gt;&gt; <span style="color: #6699cc; font-weight: bold">with</span> <span style="color: #9966ff">open</span>(<span style="color: #ffff33">&#39;hello.txt&#39;</span>, <span style="color: #ffff33">&#39;r&#39;</span>) <span style="color: #6699cc; font-weight: bold">as</span> f:
+...     <span style="color: #6699cc; font-weight: bold">for</span> line in f:
+...         lines.append(line)
+...
+&gt;&gt;&gt; lines
+[&#39;Hello World!\n&#39;]
+&gt;&gt;&gt;
+</pre></div>
+<p>Trying to open a non-existent file with <code>w</code> or <code>a</code> creates the file for
+us, but doing that with <code>r</code> gives us an error instead. We'll learn more
+about errors <a href="exceptions.html">later</a>.</p>
+<div class="highlight" style="background: #111111"><pre style="line-height: 125%; margin: 0;"><span></span>&gt;&gt;&gt; <span style="color: #6699cc; font-weight: bold">with</span> <span style="color: #9966ff">open</span>(<span style="color: #ffff33">&#39;this-doesnt-exist.txt&#39;</span>, <span style="color: #ffff33">&#39;r&#39;</span>) <span style="color: #6699cc; font-weight: bold">as</span> f:
+...     <span style="color: #9966ff">print</span>(<span style="color: #ffff33">&quot;It&#39;s working!&quot;</span>)
+...
+Traceback (most recent call last):
+  File <span style="color: #9966ff">&quot;&lt;stdin&gt;&quot;</span>, line 1, in &lt;module&gt;
+FileNotFoundError: [Errno 2] No such file or directory: &#39;this-doesnt-exist.txt&#39;
+&gt;&gt;&gt;
+</pre></div>
+<p>So now we have the hello world in the <code>lines</code> variable, but it's
+<code>['Hello World!\n']</code> instead of <code>['Hello World!']</code>. So what the heck is
+that <code>\n</code> doing there?</p>
+<p><code>\n</code> means newline. Note that it needs to be a backslash, so <code>/n</code>
+doesn't have any special meaning like <code>\n</code> has. When we wrote the file
+with print it actually added a <code>\n</code> to the end of it. It's recommended
+to end the content of files with a newline character, but it's not
+necessary.</p>
+<p>Let's see how that works if we have more than one line in the file.</p>
+<div class="highlight" style="background: #111111"><pre style="line-height: 125%; margin: 0;"><span></span>&gt;&gt;&gt; <span style="color: #6699cc; font-weight: bold">with</span> <span style="color: #9966ff">open</span>(<span style="color: #ffff33">&#39;hello.txt&#39;</span>, <span style="color: #ffff33">&#39;w&#39;</span>) <span style="color: #6699cc; font-weight: bold">as</span> f:
+...     <span style="color: #9966ff">print</span>(<span style="color: #ffff33">&quot;Hello one!&quot;</span>, file=f)
+...     <span style="color: #9966ff">print</span>(<span style="color: #ffff33">&quot;Hello two!&quot;</span>, file=f)
+...     <span style="color: #9966ff">print</span>(<span style="color: #ffff33">&quot;Hello three!&quot;</span>, file=f)
+...
+&gt;&gt;&gt; lines = []
+&gt;&gt;&gt; <span style="color: #6699cc; font-weight: bold">with</span> <span style="color: #9966ff">open</span>(<span style="color: #ffff33">&#39;hello.txt&#39;</span>, <span style="color: #ffff33">&#39;r&#39;</span>) <span style="color: #6699cc; font-weight: bold">as</span> f:
+...     <span style="color: #6699cc; font-weight: bold">for</span> line in f:
+...         lines.append(line)
+...
+&gt;&gt;&gt; lines
+[&#39;Hello one!\n&#39;, &#39;Hello two!\n&#39;, &#39;Hello three!\n&#39;]
+&gt;&gt;&gt;
+</pre></div>
+<p>There we go, each of our lines now ends with a <code>\n</code>. When we for
+loop over the file it's divided into lines based on where the <code>\n</code>
+characters are, not based on how we printed to it.</p>
+<p>But how to get rid of that <code>\n</code>? <a href="https://docs.python.org/3/library/stdtypes.html#str.rstrip">The rstrip string
+method</a> is
+great for this:</p>
+<div class="highlight" style="background: #111111"><pre style="line-height: 125%; margin: 0;"><span></span>&gt;&gt;&gt; stripped = []
+&gt;&gt;&gt; <span style="color: #6699cc; font-weight: bold">for</span> line in lines:
+...     stripped.append(line.rstrip(<span style="color: #ffff33">&#39;\n&#39;</span>))
+...
+&gt;&gt;&gt; stripped
+[&#39;Hello one!&#39;, &#39;Hello two!&#39;, &#39;Hello three!&#39;]
+&gt;&gt;&gt;
+</pre></div>
+<p>It's also possible to read lines one by one. Files have <a href="https://docs.python.org/3/library/io.html#io.TextIOBase.readline">a readline
+method</a>
+that reads the next line, and returns <code>''</code> if we're at the end of the file.</p>
+<div class="highlight" style="background: #111111"><pre style="line-height: 125%; margin: 0;"><span></span>&gt;&gt;&gt; <span style="color: #6699cc; font-weight: bold">with</span> <span style="color: #9966ff">open</span>(<span style="color: #ffff33">&#39;hello.txt&#39;</span>, <span style="color: #ffff33">&#39;r&#39;</span>) <span style="color: #6699cc; font-weight: bold">as</span> f:
+...     first_line = f.readline()
+...     second_line = f.readline()
+...
+&gt;&gt;&gt; first_line
+&#39;Hello one!\n&#39;
+&gt;&gt;&gt; second_line
+&#39;Hello two!\n&#39;
+</pre></div>
+<p>There's only one confusing thing about reading files. If we try
+to read the same file object twice we'll find out that it only gets read
+once:</p>
+<div class="highlight" style="background: #111111"><pre style="line-height: 125%; margin: 0;"><span></span>&gt;&gt;&gt; first = []
+&gt;&gt;&gt; second = []
+&gt;&gt;&gt; <span style="color: #6699cc; font-weight: bold">with</span> <span style="color: #9966ff">open</span>(<span style="color: #ffff33">&#39;hello.txt&#39;</span>, <span style="color: #ffff33">&#39;r&#39;</span>) <span style="color: #6699cc; font-weight: bold">as</span> f:
+...     <span style="color: #6699cc; font-weight: bold">for</span> line in f:
+...         first.append(line)
+...     <span style="color: #6699cc; font-weight: bold">for</span> line in f:
+...         second.append(line)
+...
+&gt;&gt;&gt; first
+[&#39;Hello one!\n&#39;, &#39;Hello two!\n&#39;, &#39;Hello three!\n&#39;]
+&gt;&gt;&gt; second
+[]
+&gt;&gt;&gt;
+</pre></div>
+<p>File objects remember their position. When we tried to read the
+file again it was already at the end, and there was nothing left
+to read. But if we open the file again, we get a new file object that
+is in the beginning and everything works.</p>
+<div class="highlight" style="background: #111111"><pre style="line-height: 125%; margin: 0;"><span></span>&gt;&gt;&gt; first = []
+&gt;&gt;&gt; second = []
+&gt;&gt;&gt; <span style="color: #6699cc; font-weight: bold">with</span> <span style="color: #9966ff">open</span>(<span style="color: #ffff33">&#39;hello.txt&#39;</span>, <span style="color: #ffff33">&#39;r&#39;</span>) <span style="color: #6699cc; font-weight: bold">as</span> f:
+...     <span style="color: #6699cc; font-weight: bold">for</span> line in f:
+...         first.append(line)
+...
+&gt;&gt;&gt; <span style="color: #6699cc; font-weight: bold">with</span> <span style="color: #9966ff">open</span>(<span style="color: #ffff33">&#39;hello.txt&#39;</span>, <span style="color: #ffff33">&#39;r&#39;</span>) <span style="color: #6699cc; font-weight: bold">as</span> f:
+...     <span style="color: #6699cc; font-weight: bold">for</span> line in f:
+...         second.append(line)
+...
+&gt;&gt;&gt; first
+[&#39;Hello one!\n&#39;, &#39;Hello two!\n&#39;, &#39;Hello three!\n&#39;]
+&gt;&gt;&gt; second
+[&#39;Hello one!\n&#39;, &#39;Hello two!\n&#39;, &#39;Hello three!\n&#39;]
+&gt;&gt;&gt;
+</pre></div>
+<p>Usually it's best to just read the file once, and use the
+content we have read from it multiple times.</p>
+<p>If we need all of the content as a string, we can use <a href="https://docs.python.org/3/library/io.html#io.TextIOBase.read">the read
+method</a>.</p>
+<div class="highlight" style="background: #111111"><pre style="line-height: 125%; margin: 0;"><span></span>&gt;&gt;&gt; <span style="color: #6699cc; font-weight: bold">with</span> <span style="color: #9966ff">open</span>(<span style="color: #ffff33">&#39;hello.txt&#39;</span>, <span style="color: #ffff33">&#39;r&#39;</span>) <span style="color: #6699cc; font-weight: bold">as</span> f:
+...     full_content = f.read()
+...
+&gt;&gt;&gt; full_content
+&#39;Hello one!\nHello two!\nHello three!\n&#39;
+&gt;&gt;&gt;
+</pre></div>
+<p>We can also open full paths, like <code>open('C:\\Users\\me\\myfile.txt', 'r')</code>.
+The reason why we need to use <code>\\</code> when we really mean <code>\</code> is that
+backslash has a special meaning. There are special characters like
+<code>\n</code>, and <code>\\</code> means an actual backslash.</p>
+<pre><code>&gt;&gt;&gt; print('C:\some\name')
+C:\some
+ame
+&gt;&gt;&gt; print('C:\\some\\name')
+C:\some\name
+&gt;&gt;&gt;
+</code></pre>
+<p>Another way to create paths is to tell Python to escape them by
+adding an <code>r</code> to the beginning of the string. In this case the <code>r</code>
+is short for "raw", not "read".</p>
+<div class="highlight" style="background: #111111"><pre style="line-height: 125%; margin: 0;"><span></span>&gt;&gt;&gt; <span style="color: #ffff33">r&#39;C:\some\name&#39;</span>
+&#39;C:\\some\\name&#39;
+&gt;&gt;&gt;
+</pre></div>
+<p>If our program is not meant to be ran on Windows and the paths
+don't contain backslashes we don't need to double anything or use
+<code>r</code> in front of paths.</p>
+<div class="highlight" style="background: #111111"><pre style="line-height: 125%; margin: 0;"><span></span>&gt;&gt;&gt; <span style="color: #9966ff">print</span>(<span style="color: #ffff33">&#39;/some/name&#39;</span>)
+/some/name
+&gt;&gt;&gt;
+</pre></div>
+<p>Doing things like <code>open('C:\\Users\\me\\myfile.txt', 'r')</code> is not
+recommended because the code needs to be modified if someone wants to
+run the program on a different computer that doesn't have a
+<code>C:\Users\me</code> folder. Just use <code>open('myfile.txt', 'r')</code>.</p>
+<a name="examples" href="#examples"><h2>Examples</h2>
+</a><p>This program prints the contents of files:</p>
+<div class="highlight" style="background: #111111"><pre style="line-height: 125%; margin: 0;"><span></span><span style="color: #6699cc; font-weight: bold">while</span> <span style="color: #6699cc; font-weight: bold">True</span>:
+    filename = <span style="color: #9966ff">input</span>(<span style="color: #ffff33">&quot;Filename or path, or nothing at all to exit: &quot;</span>)
+    <span style="color: #6699cc; font-weight: bold">if</span> filename == <span style="color: #ffff33">&#39;&#39;</span>:
+        <span style="color: #6699cc; font-weight: bold">break</span>
+
+    <span style="color: #6699cc; font-weight: bold">with</span> <span style="color: #9966ff">open</span>(filename, <span style="color: #ffff33">&#39;r&#39;</span>) <span style="color: #6699cc; font-weight: bold">as</span> f:
+        <span style="color: #336666; font-style: italic"># We could read the whole file at once, but this is</span>
+        <span style="color: #336666; font-style: italic"># faster if the file is very large.</span>
+        <span style="color: #6699cc; font-weight: bold">for</span> line in f:
+            <span style="color: #9966ff">print</span>(line.rstrip(<span style="color: #ffff33">&#39;\n&#39;</span>))
+</pre></div>
+<p>This program stores the user's username and password in a file.
+Plain text files are definitely not a good way to store usernames
+and passwords, but this is just an example.</p>
+<div class="highlight" style="background: #111111"><pre style="line-height: 125%; margin: 0;"><span></span><span style="color: #336666; font-style: italic"># Ask repeatedly until the user answers &#39;y&#39; or &#39;n&#39;.</span>
+<span style="color: #6699cc; font-weight: bold">while</span> <span style="color: #6699cc; font-weight: bold">True</span>:
+    answer = <span style="color: #9966ff">input</span>(<span style="color: #ffff33">&quot;Have you been here before? (y/n) &quot;</span>)
+    <span style="color: #6699cc; font-weight: bold">if</span> answer == <span style="color: #ffff33">&#39;Y&#39;</span> or answer == <span style="color: #ffff33">&#39;y&#39;</span>:
+        been_here_before = <span style="color: #6699cc; font-weight: bold">True</span>
+        <span style="color: #6699cc; font-weight: bold">break</span>
+    <span style="color: #6699cc; font-weight: bold">elif</span> answer == <span style="color: #ffff33">&#39;N&#39;</span> or answer == <span style="color: #ffff33">&#39;n&#39;</span>:
+        been_here_before = <span style="color: #6699cc; font-weight: bold">False</span>
+        <span style="color: #6699cc; font-weight: bold">break</span>
+    <span style="color: #6699cc; font-weight: bold">else</span>:
+        <span style="color: #9966ff">print</span>(<span style="color: #ffff33">&quot;Enter &#39;y&#39; or &#39;n&#39;.&quot;</span>)
+
+<span style="color: #6699cc; font-weight: bold">if</span> been_here_before:
+    <span style="color: #336666; font-style: italic"># Read username and password from a file.</span>
+    <span style="color: #6699cc; font-weight: bold">with</span> <span style="color: #9966ff">open</span>(<span style="color: #ffff33">&#39;userinfo.txt&#39;</span>, <span style="color: #ffff33">&#39;r&#39;</span>) <span style="color: #6699cc; font-weight: bold">as</span> f:
+        username = f.readline().rstrip(<span style="color: #ffff33">&#39;\n&#39;</span>)
+        password = f.readline().rstrip(<span style="color: #ffff33">&#39;\n&#39;</span>)
+
+    <span style="color: #6699cc; font-weight: bold">if</span> <span style="color: #9966ff">input</span>(<span style="color: #ffff33">&quot;Username: &quot;</span>) != username:
+        <span style="color: #9966ff">print</span>(<span style="color: #ffff33">&quot;Wrong username!&quot;</span>)
+    <span style="color: #6699cc; font-weight: bold">elif</span> <span style="color: #9966ff">input</span>(<span style="color: #ffff33">&quot;Password: &quot;</span>) != password:
+        <span style="color: #9966ff">print</span>(<span style="color: #ffff33">&quot;Wrong password!&quot;</span>)
+    <span style="color: #6699cc; font-weight: bold">else</span>:
+        <span style="color: #9966ff">print</span>(<span style="color: #ffff33">&quot;Correct username and password, welcome!&quot;</span>)
+
+<span style="color: #6699cc; font-weight: bold">else</span>:
+    <span style="color: #336666; font-style: italic"># Write username and password to a file.</span>
+    username = <span style="color: #9966ff">input</span>(<span style="color: #ffff33">&quot;Username: &quot;</span>)
+    password = <span style="color: #9966ff">input</span>(<span style="color: #ffff33">&quot;Password: &quot;</span>)
+    <span style="color: #6699cc; font-weight: bold">with</span> <span style="color: #9966ff">open</span>(<span style="color: #ffff33">&#39;userinfo.txt&#39;</span>, <span style="color: #ffff33">&#39;w&#39;</span>) <span style="color: #6699cc; font-weight: bold">as</span> f:
+        <span style="color: #9966ff">print</span>(username, file=f)
+        <span style="color: #9966ff">print</span>(password, file=f)
+
+    <span style="color: #9966ff">print</span>(<span style="color: #ffff33">&quot;Done! Now run this program again and select &#39;y&#39;.&quot;</span>)
+</pre></div>
+<hr>
+<p>If you have trouble with this tutorial please <a href="../contact-me.html">tell me about
+it</a> and I'll make this tutorial better. If you
+like this tutorial, please <a href="../index.html#how-can-i-thank-you-for-writing-and-sharing-this-tutorial">give it a
+star</a>.</p>
+<p>You may use this tutorial freely at your own risk. See
+<a href="../LICENSE.txt">LICENSE</a>.</p>
+<p><a href="what-is-true.html">Previous</a> | <a href="modules.html">Next</a> |
+<a href="../index.html#basics">List of contents</a></p>
+
+  </body>
+</html>
+

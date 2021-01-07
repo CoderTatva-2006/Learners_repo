@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title>Lists and tuples</title>
+    <link rel="stylesheet" type="text/css" href="../style.css">
+  </head>
+  <body>
+    <a name="lists-and-tuples" href="#lists-and-tuples"><h1>Lists and tuples</h1>
+</a><a name="why-should-we-use-lists" href="#why-should-we-use-lists"><h2>Why should we use lists?</h2>
+</a><p>Sometimes we may end up doing something like this.</p>
+<div class="highlight" style="background: #111111"><pre style="line-height: 125%; margin: 0;"><span></span>name1 = <span style="color: #ffff33">&#39;wub_wub&#39;</span>
+name2 = <span style="color: #ffff33">&#39;theelous3&#39;</span>
+name3 = <span style="color: #ffff33">&#39;RubyPinch&#39;</span>
+name4 = <span style="color: #ffff33">&#39;go|dfish&#39;</span>
+name5 = <span style="color: #ffff33">&#39;Nitori&#39;</span>
+
+name = <span style="color: #9966ff">input</span>(<span style="color: #ffff33">&quot;Enter your name: &quot;</span>)
+<span style="color: #6699cc; font-weight: bold">if</span> name == name1 or name == name2 or name == name3 or name == name4 or name == name5:
+    <span style="color: #9966ff">print</span>(<span style="color: #ffff33">&quot;I know you!&quot;</span>)
+<span style="color: #6699cc; font-weight: bold">else</span>:
+    <span style="color: #9966ff">print</span>(<span style="color: #ffff33">&quot;Sorry, I don&#39;t know who you are :(&quot;</span>)
+</pre></div>
+<p>This code works just fine, but there's a problem. The name check
+is repetitive, and adding a new name requires adding even more
+repetitive, boring checks.</p>
+<a name="our-first-list" href="#our-first-list"><h2>Our first list</h2>
+</a><p>Instead of adding a new variable for each name it might be
+better to store all names in one variable. This means that our
+one variable needs to point to multiple values. An easy way to
+do this is using a list:</p>
+<div class="highlight" style="background: #111111"><pre style="line-height: 125%; margin: 0;"><span></span>names = [<span style="color: #ffff33">&#39;wub_wub&#39;</span>, <span style="color: #ffff33">&#39;theelous3&#39;</span>, <span style="color: #ffff33">&#39;Nitori&#39;</span>, <span style="color: #ffff33">&#39;RubyPinch&#39;</span>, <span style="color: #ffff33">&#39;go|dfish&#39;</span>]
+</pre></div>
+<p>Here the <code>names</code> variable points to a list, which then points to
+strings, like this:</p>
+<p><a href="../images/people.png"><img src="../images/people.png" alt="List of names."></a></p>
+<a name="what-can-we-do-with-lists" href="#what-can-we-do-with-lists"><h2>What can we do with lists?</h2>
+</a><p>Let's open the <code>&gt;&gt;&gt;</code> prompt and create a name list.</p>
+<div class="highlight" style="background: #111111"><pre style="line-height: 125%; margin: 0;"><span></span>&gt;&gt;&gt; names = [<span style="color: #ffff33">&#39;wub_wub&#39;</span>, <span style="color: #ffff33">&#39;theelous3&#39;</span>, <span style="color: #ffff33">&#39;RubyPinch&#39;</span>, <span style="color: #ffff33">&#39;go|dfish&#39;</span>, <span style="color: #ffff33">&#39;Nitori&#39;</span>]
+&gt;&gt;&gt; names
+[&#39;wub_wub&#39;, &#39;theelous3&#39;, &#39;RubyPinch&#39;, &#39;go|dfish&#39;, &#39;Nitori&#39;]
+&gt;&gt;&gt;
+</pre></div>
+<p>There's many things <a href="handy-stuff-strings.html">we can do with strings</a>,
+and some of these things also work with lists.</p>
+<div class="highlight" style="background: #111111"><pre style="line-height: 125%; margin: 0;"><span></span>&gt;&gt;&gt; <span style="color: #9966ff">len</span>(names)   <span style="color: #336666; font-style: italic"># len is short for length, we have 5 names</span>
+5
+&gt;&gt;&gt; names + [<span style="color: #ffff33">&#39;Akuli&#39;</span>]   <span style="color: #336666; font-style: italic"># create a new list with me in it</span>
+[&#39;wub_wub&#39;, &#39;theelous3&#39;, &#39;RubyPinch&#39;, &#39;go|dfish&#39;, &#39;Nitori&#39;, &#39;Akuli&#39;]
+&gt;&gt;&gt; [<span style="color: #ffff33">&#39;theelous3&#39;</span>, <span style="color: #ffff33">&#39;RubyPinch&#39;</span>] * 2    <span style="color: #336666; font-style: italic"># repeating</span>
+[&#39;theelous3&#39;, &#39;RubyPinch&#39;, &#39;theelous3&#39;, &#39;RubyPinch&#39;]
+&gt;&gt;&gt;
+</pre></div>
+<p>With strings indexing and slicing both returned a string, but
+with lists we get a new list when we're slicing and an element
+from the list if we're indexing.</p>
+<div class="highlight" style="background: #111111"><pre style="line-height: 125%; margin: 0;"><span></span>&gt;&gt;&gt; names[:2]    <span style="color: #336666; font-style: italic"># first two names</span>
+[&#39;wub_wub&#39;, &#39;theelous3&#39;]
+&gt;&gt;&gt; names[0]     <span style="color: #336666; font-style: italic"># the first name</span>
+&#39;wub_wub&#39;
+&gt;&gt;&gt;
+</pre></div>
+<p>If we want to check if the program knows a name all we need to
+do is to use the <code>in</code> keyword.</p>
+<div class="highlight" style="background: #111111"><pre style="line-height: 125%; margin: 0;"><span></span>&gt;&gt;&gt; <span style="color: #ffff33">&#39;lol&#39;</span> in names
+False
+&gt;&gt;&gt; <span style="color: #ffff33">&#39;RubyPinch&#39;</span> in names
+True
+&gt;&gt;&gt;
+</pre></div>
+<p>We can't use this for checking if a list of names is a part of
+our name list.</p>
+<div class="highlight" style="background: #111111"><pre style="line-height: 125%; margin: 0;"><span></span>&gt;&gt;&gt; [<span style="color: #ffff33">&#39;RubyPinch&#39;</span>, <span style="color: #ffff33">&#39;go|dfish&#39;</span>] in names
+False
+&gt;&gt;&gt; [<span style="color: #ffff33">&#39;RubyPinch&#39;</span>] in names
+False
+&gt;&gt;&gt;
+</pre></div>
+<p>Lists have a few <a href="https://docs.python.org/3/tutorial/datastructures.html#more-on-lists">useful
+methods</a>.
+Some of the most commonly used ones are append, extend and remove.
+<code>append</code> adds an item to the end of a list, <code>extend</code> adds
+multiple items from another list and <code>remove</code> removes an item.</p>
+<div class="highlight" style="background: #111111"><pre style="line-height: 125%; margin: 0;"><span></span>&gt;&gt;&gt; names
+[&#39;wub_wub&#39;, &#39;theelous3&#39;, &#39;RubyPinch&#39;, &#39;go|dfish&#39;, &#39;Nitori&#39;]
+&gt;&gt;&gt; names.remove(<span style="color: #ffff33">&#39;theelous3&#39;</span>)  <span style="color: #336666; font-style: italic"># sorry theelous3</span>
+&gt;&gt;&gt; names.remove(<span style="color: #ffff33">&#39;go|dfish&#39;</span>)   <span style="color: #336666; font-style: italic"># and sorry go|dfish</span>
+&gt;&gt;&gt; names
+[&#39;wub_wub&#39;, &#39;RubyPinch&#39;, &#39;Nitori&#39;]
+&gt;&gt;&gt; names.append(<span style="color: #ffff33">&#39;Akuli&#39;</span>)    <span style="color: #336666; font-style: italic"># let&#39;s add me here</span>
+&gt;&gt;&gt; names
+[&#39;wub_wub&#39;, &#39;RubyPinch&#39;, &#39;Nitori&#39;, &#39;Akuli&#39;]
+&gt;&gt;&gt; names.extend([<span style="color: #ffff33">&#39;go|dfish&#39;</span>, <span style="color: #ffff33">&#39;theelous3&#39;</span>])  <span style="color: #336666; font-style: italic"># wb guys</span>
+&gt;&gt;&gt; names
+[&#39;wub_wub&#39;, &#39;RubyPinch&#39;, &#39;Nitori&#39;, &#39;Akuli&#39;, &#39;go|dfish&#39;, &#39;theelous3&#39;]
+&gt;&gt;&gt;
+</pre></div>
+<p>Note that <code>remove</code> removes only the first match it finds.</p>
+<div class="highlight" style="background: #111111"><pre style="line-height: 125%; margin: 0;"><span></span>&gt;&gt;&gt; names = [<span style="color: #ffff33">&#39;theelous3&#39;</span>, <span style="color: #ffff33">&#39;go|dfish&#39;</span>, <span style="color: #ffff33">&#39;theelous3&#39;</span>]
+&gt;&gt;&gt; names.remove(<span style="color: #ffff33">&#39;theelous3&#39;</span>)
+&gt;&gt;&gt; names    <span style="color: #336666; font-style: italic"># the second theelous3 is still there!</span>
+[&#39;go|dfish&#39;, &#39;theelous3&#39;]
+&gt;&gt;&gt;
+</pre></div>
+<p>If we need to remove all matching items we can use a simple while loop.
+We'll talk more about loops <a href="loops.html">in the next chapter</a>.</p>
+<div class="highlight" style="background: #111111"><pre style="line-height: 125%; margin: 0;"><span></span>&gt;&gt;&gt; names = [<span style="color: #ffff33">&#39;theelous3&#39;</span>, <span style="color: #ffff33">&#39;go|dfish&#39;</span>, <span style="color: #ffff33">&#39;theelous3&#39;</span>]
+&gt;&gt;&gt; <span style="color: #6699cc; font-weight: bold">while</span> <span style="color: #ffff33">&#39;theelous3&#39;</span> in names:
+...     names.remove(<span style="color: #ffff33">&#39;theelous3&#39;</span>)
+...
+&gt;&gt;&gt; names
+[&#39;go|dfish&#39;]
+&gt;&gt;&gt;
+</pre></div>
+<p>Another useful thing about lists is <strong>list comprehension</strong>.
+It's a handy way to construct a list in single line. It often makes code cleaner, shorter and easier to read.</p>
+<div class="highlight" style="background: #111111"><pre style="line-height: 125%; margin: 0;"><span></span>&gt;&gt;&gt; numbers = [1,2,3,4,5]
+&gt;&gt;&gt; numbers_squared = [number ** 2 <span style="color: #6699cc; font-weight: bold">for</span> number in numbers]
+&gt;&gt;&gt; numbers_squared
+[1, 4, 9, 16, 25]
+&gt;&gt;&gt;
+</pre></div>
+<p>Without a list comprehension, doing the same thing looks like this:</p>
+<div class="highlight" style="background: #111111"><pre style="line-height: 125%; margin: 0;"><span></span>&gt;&gt;&gt; numbers = [1,2,3,4,5]
+&gt;&gt;&gt; numbers_squared = []
+&gt;&gt;&gt; <span style="color: #6699cc; font-weight: bold">for</span> number in numbers:
+...     numbers_squared.append(number**2)
+&gt;&gt;&gt; numbers_squared
+[1, 4, 9, 16, 25]
+&gt;&gt;&gt;
+</pre></div>
+<p>We can also use slicing and indexing to change the content:</p>
+<div class="highlight" style="background: #111111"><pre style="line-height: 125%; margin: 0;"><span></span>&gt;&gt;&gt; names = [<span style="color: #ffff33">&#39;theelous3&#39;</span>, <span style="color: #ffff33">&#39;LOL&#39;</span>, <span style="color: #ffff33">&#39;RubyPinch&#39;</span>, <span style="color: #ffff33">&#39;go|dfish&#39;</span>, <span style="color: #ffff33">&#39;Nitori&#39;</span>]
+&gt;&gt;&gt; names[1] = <span style="color: #ffff33">&#39;wub_wub&#39;</span>   <span style="color: #336666; font-style: italic"># replace LOL with wub_wub</span>
+&gt;&gt;&gt; names
+[&#39;theelous3&#39;, &#39;wub_wub&#39;, &#39;RubyPinch&#39;, &#39;go|dfish&#39;, &#39;Nitori&#39;]
+&gt;&gt;&gt;
+</pre></div>
+<p>As you can see, <strong>list can be changed in-place</strong>. In other
+words, they are <strong>mutable</strong>. Integers, floats, strings and many
+other built-in types can't, so they are <strong>immutable</strong>.</p>
+<p>With <a href="handy-stuff-strings.html">strings</a> we did something to them
+and then set the result back to the same variable, like
+<code>message = message.strip()</code>. This just doesn't work right with
+most mutable things because they're designed to be changed in-place.</p>
+<div class="highlight" style="background: #111111"><pre style="line-height: 125%; margin: 0;"><span></span>&gt;&gt;&gt; names = names.remove(<span style="color: #ffff33">&#39;Akuli&#39;</span>)
+&gt;&gt;&gt; <span style="color: #9966ff">print</span>(names)     <span style="color: #336666; font-style: italic"># now it&#39;s None!</span>
+None
+&gt;&gt;&gt;
+</pre></div>
+<p>This is the same thing that happened way back when <a href="using-functions.html#return-values">we assigned
+print's return value to a variable</a>.</p>
+<a name="what-is-what" href="#what-is-what"><h2>What is what?</h2>
+</a><p>After working with lists a while you'll find out that they
+behave like this:</p>
+<div class="highlight" style="background: #111111"><pre style="line-height: 125%; margin: 0;"><span></span>&gt;&gt;&gt; a = [1, 2, 3]
+&gt;&gt;&gt; b = a
+&gt;&gt;&gt; b.append(4)
+&gt;&gt;&gt; a    <span style="color: #336666; font-style: italic"># this changed also!</span>
+[1, 2, 3, 4]
+&gt;&gt;&gt;
+</pre></div>
+<p>This can be confusing at first, but it's actually easy to
+explain. The problem with this code example is the <code>b = a</code>
+line. If we draw a picture of the variables it looks like this:</p>
+<p><a href="../images/samelist.png"><img src="../images/samelist.png" alt="Same list."></a></p>
+<p>This is when the <code>is</code> keyword comes in. It can be used to
+check if two variables point to the <strong>same</strong> thing.</p>
+<div class="highlight" style="background: #111111"><pre style="line-height: 125%; margin: 0;"><span></span>&gt;&gt;&gt; a is b
+True
+&gt;&gt;&gt;
+</pre></div>
+<p>Typing <code>[]</code> creates a <strong>new</strong> list every time.</p>
+<div class="highlight" style="background: #111111"><pre style="line-height: 125%; margin: 0;"><span></span>&gt;&gt;&gt; [] is []
+False
+&gt;&gt;&gt; [1, 2, 3] is [1, 2, 3]
+False
+&gt;&gt;&gt;
+</pre></div>
+<p>If we need <strong>a new list with similar content</strong> we can use the
+<code>copy</code> method.</p>
+<div class="highlight" style="background: #111111"><pre style="line-height: 125%; margin: 0;"><span></span>&gt;&gt;&gt; a = [1, 2, 3]
+&gt;&gt;&gt; b = a.copy()
+&gt;&gt;&gt; b is a
+False
+&gt;&gt;&gt; b.append(4)
+&gt;&gt;&gt; b
+[1, 2, 3, 4]
+&gt;&gt;&gt; a
+[1, 2, 3]
+&gt;&gt;&gt;
+</pre></div>
+<p>If we draw a picture of our variables in this example it looks
+like this:</p>
+<p><a href="../images/differentlist.png"><img src="../images/differentlist.png" alt="Different lists."></a></p>
+<a name="tuples" href="#tuples"><h2>Tuples</h2>
+</a><p>Tuples are a lot like lists, but they're immutable so they
+can't be changed in-place. We create them like lists, but
+with <code>()</code> instead of <code>[]</code>.</p>
+<div class="highlight" style="background: #111111"><pre style="line-height: 125%; margin: 0;"><span></span>&gt;&gt;&gt; thing = (1, 2, 3)
+&gt;&gt;&gt; thing
+(1, 2, 3)
+&gt;&gt;&gt; thing = ()
+&gt;&gt;&gt; thing
+()
+&gt;&gt;&gt;
+</pre></div>
+<p>If we need to create a tuple that contains only one item we
+need to use <code>(item,)</code> instead of <code>(item)</code> because <code>(item)</code> is
+used in places like <code>(1 + 2) * 3</code>.</p>
+<div class="highlight" style="background: #111111"><pre style="line-height: 125%; margin: 0;"><span></span>&gt;&gt;&gt; (3)
+3
+&gt;&gt;&gt; (3,)
+(3,)
+&gt;&gt;&gt; (1 + 2) * 3
+9
+&gt;&gt;&gt; (1 + 2,) * 3
+(3, 3, 3)
+&gt;&gt;&gt;
+</pre></div>
+<p>It's also possible to create tuples by just separating things with
+commas and adding no parentheses. Personally I don't like this feature,
+but some people like to do it this way.</p>
+<div class="highlight" style="background: #111111"><pre style="line-height: 125%; margin: 0;"><span></span>&gt;&gt;&gt; 1, 2, 3
+(1, 2, 3)
+&gt;&gt;&gt; <span style="color: #ffff33">&#39;hello&#39;</span>,
+(&#39;hello&#39;,)
+&gt;&gt;&gt;
+</pre></div>
+<p>Tuples don't have methods like append, extend and remove
+because they can't change themselves in-place.</p>
+<div class="highlight" style="background: #111111"><pre style="line-height: 125%; margin: 0;"><span></span>&gt;&gt;&gt; stuff = (1, 2, 3)
+&gt;&gt;&gt; stuff.append(4)
+Traceback (most recent call last):
+  File <span style="color: #9966ff">&quot;&lt;stdin&gt;&quot;</span>, line 1, in &lt;module&gt;
+AttributeError: &#39;tuple&#39; object has no attribute &#39;append&#39;
+&gt;&gt;&gt;
+</pre></div>
+<p>So, why the heck would we use tuples instead of lists? There are
+some cases when we don't want mutability, but there are also
+cases when Python programmers just like to use tuples. If you
+want to know more about this you can read <a href="http://nedbatchelder.com/blog/201608/lists_vs_tuples.html">Ned Batchelder's blog
+post about this</a>.</p>
+<a name="summary" href="#summary"><h2>Summary</h2>
+</a><ul>
+<li>Lists are a way to store multiple values in one variable.</li>
+<li>Lists can be changed in-place and they have methods that change them
+  in-place, like append, extend and remove.</li>
+<li>Slicing lists returns a <strong>new</strong> list, and indexing them returns an
+  item from them.</li>
+<li><code>thing = another_thing</code> does not create a copy of <code>another_thing</code>.</li>
+<li>Tuples are like lists, but they can't be changed in-place. They're
+  also used in different places.</li>
+</ul>
+<a name="examples" href="#examples"><h2>Examples</h2>
+</a><p>Here's the same program we had in the beginning of this tutorial, but
+using a list:</p>
+<div class="highlight" style="background: #111111"><pre style="line-height: 125%; margin: 0;"><span></span>namelist = [<span style="color: #ffff33">&#39;wub_wub&#39;</span>, <span style="color: #ffff33">&#39;theelous3&#39;</span>, <span style="color: #ffff33">&#39;RubyPinch&#39;</span>, <span style="color: #ffff33">&#39;go|dfish&#39;</span>, <span style="color: #ffff33">&#39;Nitori&#39;</span>]
+
+name = <span style="color: #9966ff">input</span>(<span style="color: #ffff33">&quot;Enter your name: &quot;</span>)
+<span style="color: #6699cc; font-weight: bold">if</span> name in namelist:
+    <span style="color: #9966ff">print</span>(<span style="color: #ffff33">&quot;I know you!&quot;</span>)
+<span style="color: #6699cc; font-weight: bold">else</span>:
+    <span style="color: #9966ff">print</span>(<span style="color: #ffff33">&quot;Sorry, I don&#39;t know who you are :(&quot;</span>)
+</pre></div>
+<a name="exercises" href="#exercises"><h2>Exercises</h2>
+</a><ol>
+<li><p>Fix this program:</p>
+<div class="highlight" style="background: #111111"><pre style="line-height: 125%; margin: 0;"><span></span> namelist = (<span style="color: #ffff33">&#39;wub_wub&#39;</span>, <span style="color: #ffff33">&#39;RubyPinch&#39;</span>, <span style="color: #ffff33">&#39;go|dfish&#39;</span>, <span style="color: #ffff33">&#39;Nitori&#39;</span>)
+ namelist.append(<span style="color: #ffff33">&#39;pb122&#39;</span>)
+ <span style="color: #6699cc; font-weight: bold">if</span> <span style="color: #ffff33">&#39;pb122&#39;</span> in namelist:
+     <span style="color: #9966ff">print</span>(<span style="color: #ffff33">&quot;Now I know pb122!&quot;</span>)
+</pre></div>
+</li>
+<li><p>Fix this program.</p>
+<div class="highlight" style="background: #111111"><pre style="line-height: 125%; margin: 0;"><span></span> <span style="color: #9966ff">print</span>(<span style="color: #ffff33">&quot;Hello!&quot;</span>)
+ name = <span style="color: #9966ff">input</span>(<span style="color: #ffff33">&quot;Enter your name: &quot;</span>),
+ <span style="color: #9966ff">print</span>(<span style="color: #ffff33">&quot;Your name is &quot;</span> + name + <span style="color: #ffff33">&quot;.&quot;</span>)
+</pre></div>
+</li>
+<li><p>Fix this program.</p>
+<div class="highlight" style="background: #111111"><pre style="line-height: 125%; margin: 0;"><span></span> namelist = [<span style="color: #ffff33">&#39;wub_wub&#39;</span>, <span style="color: #ffff33">&#39;RubyPinch&#39;</span>, <span style="color: #ffff33">&#39;go|dfish&#39;</span>, <span style="color: #ffff33">&#39;Nitori&#39;</span>]
+ namelist = namelist.extend(<span style="color: #ffff33">&#39;theelous3&#39;</span>)
+ <span style="color: #6699cc; font-weight: bold">if</span> <span style="color: #9966ff">input</span>(<span style="color: #ffff33">&quot;Enter your name: &quot;</span>) in namelist:
+     <span style="color: #9966ff">print</span>(<span style="color: #ffff33">&quot;I know you!&quot;</span>)
+ <span style="color: #6699cc; font-weight: bold">else</span>:
+     <span style="color: #9966ff">print</span>(<span style="color: #ffff33">&quot;I don&#39;t know you.&quot;</span>)
+</pre></div>
+</li>
+</ol>
+<p>The answers are <a href="answers.html#lists-and-tuples">here</a>.</p>
+<hr>
+<p>If you have trouble with this tutorial please <a href="../contact-me.html">tell me about
+it</a> and I'll make this tutorial better. If you
+like this tutorial, please <a href="../index.html#how-can-i-thank-you-for-writing-and-sharing-this-tutorial">give it a
+star</a>.</p>
+<p>You may use this tutorial freely at your own risk. See
+<a href="../LICENSE.txt">LICENSE</a>.</p>
+<p><a href="handy-stuff-strings.html">Previous</a> | <a href="loops.html">Next</a> |
+<a href="../index.html#basics">List of contents</a></p>
+
+  </body>
+</html>
+

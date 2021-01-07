@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title>Variables, Booleans and None</title>
+    <link rel="stylesheet" type="text/css" href="../style.css">
+  </head>
+  <body>
+    <a name="variables-booleans-and-none" href="#variables-booleans-and-none"><h1>Variables, Booleans and None</h1>
+</a><a name="variables" href="#variables"><h2>Variables</h2>
+</a><p>Variables are easy to understand. They simply <strong>point to values</strong>.</p>
+<div class="highlight" style="background: #111111"><pre style="line-height: 125%; margin: 0;"><span></span>&gt;&gt;&gt; a = 1   <span style="color: #336666; font-style: italic"># create a variable called a that points to 1</span>
+&gt;&gt;&gt; b = 2   <span style="color: #336666; font-style: italic"># create another variable</span>
+&gt;&gt;&gt; a       <span style="color: #336666; font-style: italic"># get the value that the variable points to</span>
+1
+&gt;&gt;&gt; b
+2
+&gt;&gt;&gt;
+</pre></div>
+<p>Let's draw a diagram of these variables.</p>
+<p><a href="../images/variables1.png"><img src="../images/variables1.png" alt="Variable diagram"></a></p>
+<p>We can also change the value of a variable after setting it.</p>
+<div class="highlight" style="background: #111111"><pre style="line-height: 125%; margin: 0;"><span></span>&gt;&gt;&gt; a = 2    <span style="color: #336666; font-style: italic"># make a point to 2 instead of 1</span>
+&gt;&gt;&gt; a
+2
+&gt;&gt;&gt;
+</pre></div>
+<p>So now our diagram looks like this:</p>
+<p><a href="../images/variables2.png"><img src="../images/variables2.png" alt="Variable diagram"></a></p>
+<p>Setting a variable to another variable gets the value of the other
+variable and sets the first variable to point to that value.</p>
+<div class="highlight" style="background: #111111"><pre style="line-height: 125%; margin: 0;"><span></span>&gt;&gt;&gt; a = 1
+&gt;&gt;&gt; b = a  <span style="color: #336666; font-style: italic"># this makes b point to 1, not a</span>
+&gt;&gt;&gt; a = 5
+&gt;&gt;&gt; b      <span style="color: #336666; font-style: italic"># b didn&#39;t change when a changed</span>
+1
+&gt;&gt;&gt;
+</pre></div>
+<p>Trying to access a variable that is not defined creates an error
+message.</p>
+<div class="highlight" style="background: #111111"><pre style="line-height: 125%; margin: 0;"><span></span>&gt;&gt;&gt; thingy
+Traceback (most recent call last):
+  File <span style="color: #9966ff">&quot;&lt;stdin&gt;&quot;</span>, line 1, in &lt;module&gt;
+NameError: name &#39;thingy&#39; is not defined
+&gt;&gt;&gt;
+</pre></div>
+<p>Variables are simple to understand, but there are a few details that we
+need to keep in mind:</p>
+<ul>
+<li>Variables always point to a value, <strong>they never point to other
+variables</strong>. That's why the arrows in our diagrams always go left
+to right.</li>
+<li>Multiple variables can point to the same value, but one variable
+cannot point to multiple values.</li>
+<li>The values that variables point to can point to other values also.
+We'll learn more about that when we'll talk about
+<a href="lists-and-tuples.html">lists</a>.</li>
+</ul>
+<p>Variables are an important part of most programming languages, and they
+allow programmers to write much larger programs than they could write
+without variables.</p>
+<p>Variable names are case-sensitive, like many other things in Python.</p>
+<div class="highlight" style="background: #111111"><pre style="line-height: 125%; margin: 0;"><span></span>&gt;&gt;&gt; thing = 1
+&gt;&gt;&gt; THING = 2
+&gt;&gt;&gt; thIng = 3
+&gt;&gt;&gt; thing
+1
+&gt;&gt;&gt; THING
+2
+&gt;&gt;&gt; thIng
+3
+&gt;&gt;&gt;
+</pre></div>
+<p>There are also words that cannot be used as variable names
+because they are reserved by Python itself and have a special meaning. 
+They are called <strong>keywords</strong>, and we can run <code>help('keywords')</code> 
+to see the full list if we want to.
+We'll learn to use most of them later in this tutorial. Trying to use a
+keyword as a variable name causes a syntax error.</p>
+<div class="highlight" style="background: #111111"><pre style="line-height: 125%; margin: 0;"><span></span>&gt;&gt;&gt; <span style="color: #6699cc; font-weight: bold">if</span> = 123
+  File <span style="color: #9966ff">&quot;&lt;stdin&gt;&quot;</span>, line 1
+    <span style="color: #6699cc; font-weight: bold">if</span> = 123
+       ^
+SyntaxError: invalid syntax
+&gt;&gt;&gt;
+</pre></div>
+<p>When assigning something to a variable using a <code>=</code>, the right side of
+the <code>=</code> is always executed before the left side. This means that we can
+do something with a variable on the right side, then assign the result
+back to the same variable on the left side.</p>
+<div class="highlight" style="background: #111111"><pre style="line-height: 125%; margin: 0;"><span></span>&gt;&gt;&gt; a = 1
+&gt;&gt;&gt; a = a + 1
+&gt;&gt;&gt; a
+2
+&gt;&gt;&gt;
+</pre></div>
+<p>To do something to a variable (for example, to add something to it) we
+can also use <code>+=</code>, <code>-=</code>, <code>*=</code> and <code>/=</code> instead of <code>+</code>, <code>-</code>, <code>*</code> and
+<code>/</code>. The "advanced" <code>%=</code>, <code>//=</code> and <code>**=</code> also work.</p>
+<div class="highlight" style="background: #111111"><pre style="line-height: 125%; margin: 0;"><span></span>&gt;&gt;&gt; a += 2          <span style="color: #336666; font-style: italic"># a = a + 2</span>
+&gt;&gt;&gt; a -= 2          <span style="color: #336666; font-style: italic"># a = a - 2</span>
+&gt;&gt;&gt; a *= 2          <span style="color: #336666; font-style: italic"># a = a * 2</span>
+&gt;&gt;&gt; a /= 2          <span style="color: #336666; font-style: italic"># a = a / 2</span>
+&gt;&gt;&gt;
+</pre></div>
+<p>This is not limited to integers.</p>
+<div class="highlight" style="background: #111111"><pre style="line-height: 125%; margin: 0;"><span></span>&gt;&gt;&gt; a = <span style="color: #ffff33">&#39;hello&#39;</span>
+&gt;&gt;&gt; a *= 3
+&gt;&gt;&gt; a += <span style="color: #ffff33">&#39;world&#39;</span>
+&gt;&gt;&gt; a
+&#39;hellohellohelloworld&#39;
+&gt;&gt;&gt;
+</pre></div>
+<p>Now we also understand why typing hello to the prompt didn't work in
+the beginning of this tutorial. But we can assign something to a
+variable called hello and then type hello:</p>
+<div class="highlight" style="background: #111111"><pre style="line-height: 125%; margin: 0;"><span></span>&gt;&gt;&gt; hello = <span style="color: #ffff33">&#39;hello there&#39;</span>
+&gt;&gt;&gt; hello
+&#39;hello there&#39;
+&gt;&gt;&gt;
+</pre></div>
+<a name="good-and-bad-variable-names" href="#good-and-bad-variable-names"><h2>Good and bad variable names</h2>
+</a><p>Variable names can be multiple characters long. They can contain
+uppercase characters, numbers and some other characters, but most of the
+time we should use simple, lowercase variable names. We can also use
+underscores. For example, these variable names are good:</p>
+<div class="highlight" style="background: #111111"><pre style="line-height: 125%; margin: 0;"><span></span>&gt;&gt;&gt; magic_number = 123
+&gt;&gt;&gt; greeting = <span style="color: #ffff33">&quot;Hello World!&quot;</span>
+&gt;&gt;&gt;
+</pre></div>
+<p>Don't use variable names like this, <strong>these variables are <em>bad</em></strong>:</p>
+<div class="highlight" style="background: #111111"><pre style="line-height: 125%; margin: 0;"><span></span>&gt;&gt;&gt; magicNumber = 3.14          <span style="color: #336666; font-style: italic"># looks weird</span>
+&gt;&gt;&gt; Greeting = <span style="color: #ffff33">&quot;Hello there!&quot;</span>   <span style="color: #336666; font-style: italic"># also looks weird</span>
+&gt;&gt;&gt; x = <span style="color: #ffff33">&quot;Hello again!&quot;</span>          <span style="color: #336666; font-style: italic"># what the heck is x?</span>
+&gt;&gt;&gt;
+</pre></div>
+<p>All of these variables work just fine, but other Python programmers
+don't want you to use them. Most Python code doesn't use variable names
+that contain UpperCase letters like <code>magicNumber</code> and <code>Greeting</code>, so
+other people reading your code will think it looks weird if you use
+them. The problem with <code>x</code> is that it's too short, and people have no
+idea what it is. Remember that mathematicians like figuring out what x
+is, but programmers hate that.</p>
+<a name="booleans" href="#booleans"><h2>Booleans</h2>
+</a><p>There are two Boolean values, True and False. In Python, and in many
+other programming languages, <code>=</code> is assigning and <code>==</code> is comparing.
+<code>a = 1</code> sets a to 1, and <code>a == 1</code> checks if a equals 1.</p>
+<div class="highlight" style="background: #111111"><pre style="line-height: 125%; margin: 0;"><span></span>&gt;&gt;&gt; a = 1
+&gt;&gt;&gt; a == 1
+True
+&gt;&gt;&gt; a = 2
+&gt;&gt;&gt; a == 1
+False
+&gt;&gt;&gt;
+</pre></div>
+<p><code>a == 1</code> is the same as <code>(a == 1) == True</code>, but <code>a == 1</code> is more
+readable, so most of the time we shouldn't write <code>== True</code> anywhere.</p>
+<div class="highlight" style="background: #111111"><pre style="line-height: 125%; margin: 0;"><span></span>&gt;&gt;&gt; a = 1
+&gt;&gt;&gt; a == 1
+True
+&gt;&gt;&gt; (a == 1) == <span style="color: #6699cc; font-weight: bold">True</span>
+True
+&gt;&gt;&gt; a = 2
+&gt;&gt;&gt; a == 1
+False
+&gt;&gt;&gt; (a == 1) == <span style="color: #6699cc; font-weight: bold">True</span>
+False
+&gt;&gt;&gt;
+</pre></div>
+<a name="none" href="#none"><h2>None</h2>
+</a><p>None is Python's "nothing" value. It behaves just like any other value,
+and it's often used as a default value for different kinds of things.
+Right now it might seem useless but we'll find a bunch of ways to use
+None later.</p>
+<p>None's behavior on the interactive prompt might be a bit confusing at
+first:</p>
+<div class="highlight" style="background: #111111"><pre style="line-height: 125%; margin: 0;"><span></span>&gt;&gt;&gt; thingy = <span style="color: #6699cc; font-weight: bold">None</span>
+&gt;&gt;&gt; thingy
+&gt;&gt;&gt;
+</pre></div>
+<p>That was weird! We set thingy to None, but typing <code>thingy</code> didn't echo
+back None.</p>
+<p>This is because the prompt never echoes back None. That is handy,
+because many things result in None, and it would be annoying to see
+None coming up all the time.</p>
+<p>If we want to see a None on the interactive prompt, we can use print.</p>
+<div class="highlight" style="background: #111111"><pre style="line-height: 125%; margin: 0;"><span></span>&gt;&gt;&gt; <span style="color: #9966ff">print</span>(thingy)
+None
+&gt;&gt;&gt;
+</pre></div>
+<p>Another confusing thing is that if we do something weird to None we get
+error messages that talk about NoneType object. The NoneType object they
+are talking about is always None. We'll learn more about what attributes
+and calling are later.</p>
+<div class="highlight" style="background: #111111"><pre style="line-height: 125%; margin: 0;"><span></span>&gt;&gt;&gt; <span style="color: #6699cc; font-weight: bold">None</span>.hello    <span style="color: #336666; font-style: italic"># None has no attribute &#39;hello&#39;</span>
+Traceback (most recent call last):
+  File <span style="color: #9966ff">&quot;&lt;stdin&gt;&quot;</span>, line 1, in &lt;module&gt;
+AttributeError: &#39;NoneType&#39; object has no attribute &#39;hello&#39;
+&gt;&gt;&gt; <span style="color: #6699cc; font-weight: bold">None</span>()        <span style="color: #336666; font-style: italic"># None is not callable</span>
+Traceback (most recent call last):
+  File <span style="color: #9966ff">&quot;&lt;stdin&gt;&quot;</span>, line 1, in &lt;module&gt;
+TypeError: &#39;NoneType&#39; object is not callable
+&gt;&gt;&gt;
+</pre></div>
+<a name="other-comparing-operators" href="#other-comparing-operators"><h2>Other comparing operators</h2>
+</a><p>So far we've used <code>==</code>, but there are other operators also. This list
+probably looks awfully long, but it's actually quite easy to learn.</p>
+<table border="1">
+<thead><tr>
+<th>Usage</th>
+<th>Description</th>
+<th>True examples</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>a == b</code></td>
+<td>a is equal to b</td>
+<td><code>1 == 1</code></td>
+</tr>
+<tr>
+<td><code>a != b</code></td>
+<td>a is not equal to b</td>
+<td><code>1 != 2</code></td>
+</tr>
+<tr>
+<td><code>a &gt; b</code></td>
+<td>a is greater than b</td>
+<td><code>2 &gt; 1</code></td>
+</tr>
+<tr>
+<td><code>a &gt;= b</code></td>
+<td>a is greater than or equal to b</td>
+<td><code>2 &gt;= 1</code>, <code>1 &gt;= 1</code></td>
+</tr>
+<tr>
+<td><code>a &lt; b</code></td>
+<td>a is less than b</td>
+<td><code>1 &lt; 2</code></td>
+</tr>
+<tr>
+<td><code>a &lt;= b</code></td>
+<td>a is less than or equal to b</td>
+<td><code>1 &lt;= 2</code>, <code>1 &lt;= 1</code></td>
+</tr>
+</tbody>
+</table>
+<p>We can also combine multiple comparisons. This table assumes that a and
+b are Booleans.</p>
+<table border="1">
+<thead><tr>
+<th>Usage</th>
+<th>Description</th>
+<th>True example</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>a and b</code></td>
+<td>a is True and b is True</td>
+<td><code>1 == 1 and 2 == 2</code></td>
+</tr>
+<tr>
+<td><code>a or b</code></td>
+<td>a is True, b is True or they're both True</td>
+<td><code>False or 1 == 1</code>, <code>True or True</code></td>
+</tr>
+</tbody>
+</table>
+<p><code>not</code> can be used for negations. If <code>value</code> is True, <code>not value</code> is
+False, and if <code>value</code> is False, <code>not value</code> is True.</p>
+<p>There's also <code>is</code>, but don't use it instead of <code>==</code> unless you know
+what you are doing. We'll learn more about it later.</p>
+<a name="summary" href="#summary"><h2>Summary</h2>
+</a><ul>
+<li>Variables have a name and a value. We can create or change variables
+with <code>name = value</code>.</li>
+<li><code>thing += stuff</code> does the same thing as <code>thing = thing + stuff</code>.</li>
+<li>Use lowercase variable names and remember that programmers hate
+figuring out what x is.</li>
+<li><code>=</code> means assigning and <code>==</code> means comparing.</li>
+<li>True and False are Booleans. Comparing values results in a Boolean.</li>
+<li>None is a value that we'll find useful later. When error messages say
+<code>NoneType object</code> they mean None.</li>
+</ul>
+<hr>
+<p>If you have trouble with this tutorial please <a href="../contact-me.html">tell me about
+it</a> and I'll make this tutorial better. If you
+like this tutorial, please <a href="../index.html#how-can-i-thank-you-for-writing-and-sharing-this-tutorial">give it a
+star</a>.</p>
+<p>You may use this tutorial freely at your own risk. See
+<a href="../LICENSE.txt">LICENSE</a>.</p>
+<p><a href="the-way-of-the-program.html">Previous</a> | <a href="using-functions.html">Next</a> |
+<a href="../index.html#basics">List of contents</a></p>
+
+  </body>
+</html>
+

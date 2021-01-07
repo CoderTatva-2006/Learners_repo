@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title>Iterables, iterators and generators</title>
+    <link rel="stylesheet" type="text/css" href="../style.css">
+  </head>
+  <body>
+    <a name="iterables-iterators-and-generators" href="#iterables-iterators-and-generators"><h1>Iterables, iterators and generators</h1>
+</a><p>So far we have used for loops with many different kinds of things.</p>
+<div class="highlight" style="background: #111111"><pre style="line-height: 125%; margin: 0;"><span></span>&gt;&gt;&gt; <span style="color: #6699cc; font-weight: bold">for</span> name in [<span style="color: #ffff33">&#39;theelous3&#39;</span>, <span style="color: #ffff33">&#39;RubyPinch&#39;</span>, <span style="color: #ffff33">&#39;go|dfish&#39;</span>]:
+...     <span style="color: #9966ff">print</span>(name)
+...
+theelous3
+RubyPinch
+go|dfish
+&gt;&gt;&gt; <span style="color: #6699cc; font-weight: bold">for</span> letter in <span style="color: #ffff33">&#39;abc&#39;</span>:
+...     <span style="color: #9966ff">print</span>(letter)
+...
+a
+b
+c
+&gt;&gt;&gt;
+</pre></div>
+<p>For looping over something is one way to <strong>iterate</strong> over it. Some other
+things also iterate, for example, <code>' '.join(['a', 'b', 'c'])</code> iterates
+over the list <code>['a', 'b', 'c']</code>. If we can iterate over something, then
+that something is <strong>iterable</strong>. For example, strings and lists are
+iterable, but integers and floats are not.</p>
+<div class="highlight" style="background: #111111"><pre style="line-height: 125%; margin: 0;"><span></span>&gt;&gt;&gt; <span style="color: #6699cc; font-weight: bold">for</span> thing in 123:
+...     <span style="color: #9966ff">print</span>(thing)
+...
+Traceback (most recent call last):
+  File <span style="color: #9966ff">&quot;&lt;stdin&gt;&quot;</span>, line 1, in &lt;module&gt;
+TypeError: &#39;int&#39; object is not iterable
+&gt;&gt;&gt;
+</pre></div>
+<a name="iterators" href="#iterators"><h2>Iterators</h2>
+</a><p>Lists and strings don't change when we iterate over them.</p>
+<div class="highlight" style="background: #111111"><pre style="line-height: 125%; margin: 0;"><span></span>&gt;&gt;&gt; word = <span style="color: #ffff33">&#39;hi&#39;</span>
+&gt;&gt;&gt; <span style="color: #6699cc; font-weight: bold">for</span> character in word:
+...     <span style="color: #9966ff">print</span>(character)
+...
+h
+i
+&gt;&gt;&gt; word
+&#39;hi&#39;
+&gt;&gt;&gt;
+</pre></div>
+<p>We can also iterate over <a href="../basics/files.html">files</a>, but they remember
+their position and we get the content once only if we iterate over them
+twice.</p>
+<div class="highlight" style="background: #111111"><pre style="line-height: 125%; margin: 0;"><span></span>&gt;&gt;&gt; <span style="color: #6699cc; font-weight: bold">with</span> <span style="color: #9966ff">open</span>(<span style="color: #ffff33">&#39;test.txt&#39;</span>, <span style="color: #ffff33">&#39;w&#39;</span>) <span style="color: #6699cc; font-weight: bold">as</span> f:
+...     <span style="color: #9966ff">print</span>(<span style="color: #ffff33">&quot;one&quot;</span>, file=f)
+...     <span style="color: #9966ff">print</span>(<span style="color: #ffff33">&quot;two&quot;</span>, file=f)
+...
+&gt;&gt;&gt; a = []
+&gt;&gt;&gt; b = []
+&gt;&gt;&gt; <span style="color: #6699cc; font-weight: bold">with</span> <span style="color: #9966ff">open</span>(<span style="color: #ffff33">&#39;test.txt&#39;</span>, <span style="color: #ffff33">&#39;r&#39;</span>) <span style="color: #6699cc; font-weight: bold">as</span> f:
+...     <span style="color: #6699cc; font-weight: bold">for</span> line in f:
+...         a.append(line)
+...     <span style="color: #6699cc; font-weight: bold">for</span> line in f:
+...         b.append(line)
+...
+&gt;&gt;&gt; a
+[&#39;one\n&#39;, &#39;two\n&#39;]
+&gt;&gt;&gt; b
+[]
+&gt;&gt;&gt;
+</pre></div>
+<p>We have also used <a href="../basics/trey-hunner-zip-and-enumerate.html">enumerate</a>
+before, and it actually remembers its position also:</p>
+<div class="highlight" style="background: #111111"><pre style="line-height: 125%; margin: 0;"><span></span>&gt;&gt;&gt; e = <span style="color: #9966ff">enumerate</span>(<span style="color: #ffff33">&#39;hello&#39;</span>)
+&gt;&gt;&gt; <span style="color: #6699cc; font-weight: bold">for</span> pair in e:
+...     <span style="color: #9966ff">print</span>(pair)
+...
+(0, &#39;h&#39;)
+(1, &#39;e&#39;)
+(2, &#39;l&#39;)
+(3, &#39;l&#39;)
+(4, &#39;o&#39;)
+&gt;&gt;&gt; <span style="color: #6699cc; font-weight: bold">for</span> pair in e:
+...     <span style="color: #9966ff">print</span>(pair)
+...
+&gt;&gt;&gt;
+</pre></div>
+<p><strong>Iterators are iterables that remember their position.</strong> For example,
+<code>open('test.txt', 'r')</code> and <code>enumerate('hello')</code> return iterators.
+Iterators can only be used once, so we need to create a new iterator if
+we want to do another for loop.</p>
+<p>All iterators are iterables, but not all iterables are iterators. Like
+this:</p>
+<p><a href="../images/iters.png"><img src="../images/iters.png" alt="Iterables and iterators."></a></p>
+<a name="iterating-manually" href="#iterating-manually"><h2>Iterating manually</h2>
+</a><p>Iterators have a magic method called <code>__next__</code> that gets next value and
+moves the iterator forward.</p>
+<div class="highlight" style="background: #111111"><pre style="line-height: 125%; margin: 0;"><span></span>&gt;&gt;&gt; e = <span style="color: #9966ff">enumerate</span>(<span style="color: #ffff33">&#39;abc&#39;</span>)
+&gt;&gt;&gt; e.__next__()
+(0, &#39;a&#39;)
+&gt;&gt;&gt; e.__next__()
+(1, &#39;b&#39;)
+&gt;&gt;&gt; e.__next__()
+(2, &#39;c&#39;)
+&gt;&gt;&gt;
+</pre></div>
+<p>There's also a built-in <code>next()</code> function that does the same thing:</p>
+<div class="highlight" style="background: #111111"><pre style="line-height: 125%; margin: 0;"><span></span>&gt;&gt;&gt; e = <span style="color: #9966ff">enumerate</span>(<span style="color: #ffff33">&#39;abc&#39;</span>)
+&gt;&gt;&gt; <span style="color: #9966ff">next</span>(e)
+(0, &#39;a&#39;)
+&gt;&gt;&gt; <span style="color: #9966ff">next</span>(e)
+(1, &#39;b&#39;)
+&gt;&gt;&gt; <span style="color: #9966ff">next</span>(e)
+(2, &#39;c&#39;)
+&gt;&gt;&gt;
+</pre></div>
+<p>Here <code>e</code> remembers its position, and every time we call <code>next(e)</code> it
+gives us the next element and moves forward. When it has no more values
+to give us, calling <code>next(e)</code> raises a StopIteration:</p>
+<div class="highlight" style="background: #111111"><pre style="line-height: 125%; margin: 0;"><span></span>&gt;&gt;&gt; <span style="color: #9966ff">next</span>(e)
+Traceback (most recent call last):
+  File <span style="color: #9966ff">&quot;&lt;stdin&gt;&quot;</span>, line 1, in &lt;module&gt;
+StopIteration
+&gt;&gt;&gt;
+</pre></div>
+<p>There is usually not a good way to check if the iterator is at the end,
+and it's best to just try to get a value from it and
+<a href="../basics/exceptions.html#catching-exceptions">catch</a> StopIteration.</p>
+<p>That's actually what for loops do. For example,
+this code...</p>
+<div class="highlight" style="background: #111111"><pre style="line-height: 125%; margin: 0;"><span></span><span style="color: #6699cc; font-weight: bold">for</span> pair in <span style="color: #9966ff">enumerate</span>(<span style="color: #ffff33">&#39;hello&#39;</span>):
+    <span style="color: #9966ff">print</span>(pair)
+</pre></div>
+<p>...does roughly the same thing as this code:</p>
+<div class="highlight" style="background: #111111"><pre style="line-height: 125%; margin: 0;"><span></span>e = <span style="color: #9966ff">enumerate</span>(<span style="color: #ffff33">&#39;hello&#39;</span>)
+<span style="color: #6699cc; font-weight: bold">while</span> <span style="color: #6699cc; font-weight: bold">True</span>:
+    <span style="color: #6699cc; font-weight: bold">try</span>:
+        pair = <span style="color: #9966ff">next</span>(e)
+    <span style="color: #6699cc; font-weight: bold">except</span> <span style="color: #ff0000; font-weight: bold">StopIteration</span>:
+        <span style="color: #336666; font-style: italic"># it&#39;s at the end, time to stop</span>
+        <span style="color: #6699cc; font-weight: bold">break</span>
+    <span style="color: #336666; font-style: italic"># we got a pair</span>
+    <span style="color: #9966ff">print</span>(pair)
+</pre></div>
+<p>The for loop version is much simpler to write and I wrote the while loop
+version just to show how the for loop works.</p>
+<a name="converting-to-iterators" href="#converting-to-iterators"><h2>Converting to iterators</h2>
+</a><p>Now we know what iterating over an iterator does. But how about
+iterating over a list or a string? They are not iterators, so we can't
+call <code>next()</code> on them:</p>
+<div class="highlight" style="background: #111111"><pre style="line-height: 125%; margin: 0;"><span></span>&gt;&gt;&gt; <span style="color: #9966ff">next</span>(<span style="color: #ffff33">&#39;abc&#39;</span>)
+Traceback (most recent call last):
+  File <span style="color: #9966ff">&quot;&lt;stdin&gt;&quot;</span>, line 1, in &lt;module&gt;
+TypeError: &#39;str&#39; object is not an iterator
+&gt;&gt;&gt;
+</pre></div>
+<p>There's a built-in function called <code>iter()</code> that converts anything
+iterable to an iterator.</p>
+<div class="highlight" style="background: #111111"><pre style="line-height: 125%; margin: 0;"><span></span>&gt;&gt;&gt; i = <span style="color: #9966ff">iter</span>(<span style="color: #ffff33">&#39;abc&#39;</span>)
+&gt;&gt;&gt; i
+&lt;str_iterator object at 0x7f987b860160&gt;
+&gt;&gt;&gt; <span style="color: #9966ff">next</span>(i)
+&#39;a&#39;
+&gt;&gt;&gt; <span style="color: #9966ff">next</span>(i)
+&#39;b&#39;
+&gt;&gt;&gt; <span style="color: #9966ff">next</span>(i)
+&#39;c&#39;
+&gt;&gt;&gt; <span style="color: #9966ff">next</span>(i)
+Traceback (most recent call last):
+  File <span style="color: #9966ff">&quot;&lt;stdin&gt;&quot;</span>, line 1, in &lt;module&gt;
+StopIteration
+&gt;&gt;&gt;
+</pre></div>
+<p>Calling <code>iter()</code> on anything non-iterable gives us an error.</p>
+<div class="highlight" style="background: #111111"><pre style="line-height: 125%; margin: 0;"><span></span>&gt;&gt;&gt; <span style="color: #9966ff">iter</span>(123)
+Traceback (most recent call last):
+  File <span style="color: #9966ff">&quot;&lt;stdin&gt;&quot;</span>, line 1, in &lt;module&gt;
+TypeError: &#39;int&#39; object is not iterable
+&gt;&gt;&gt;
+</pre></div>
+<p>If we try to convert an iterator to an iterator using <code>iter()</code> we just
+get back the same iterator.</p>
+<div class="highlight" style="background: #111111"><pre style="line-height: 125%; margin: 0;"><span></span>&gt;&gt;&gt; e = <span style="color: #9966ff">enumerate</span>(<span style="color: #ffff33">&#39;abc&#39;</span>)
+&gt;&gt;&gt; <span style="color: #9966ff">iter</span>(e) is e
+True
+&gt;&gt;&gt;
+</pre></div>
+<p>So code like this...</p>
+<div class="highlight" style="background: #111111"><pre style="line-height: 125%; margin: 0;"><span></span><span style="color: #6699cc; font-weight: bold">for</span> thing in stuff:
+    <span style="color: #9966ff">print</span>(thing)
+</pre></div>
+<p>...works roughly like this:</p>
+<div class="highlight" style="background: #111111"><pre style="line-height: 125%; margin: 0;"><span></span>iterator = <span style="color: #9966ff">iter</span>(stuff)
+<span style="color: #6699cc; font-weight: bold">while</span> <span style="color: #6699cc; font-weight: bold">True</span>:
+    <span style="color: #6699cc; font-weight: bold">try</span>:
+        thing = <span style="color: #9966ff">next</span>(iterator)
+    <span style="color: #6699cc; font-weight: bold">except</span> <span style="color: #ff0000; font-weight: bold">StopIteration</span>:
+        <span style="color: #6699cc; font-weight: bold">break</span>
+    <span style="color: #9966ff">print</span>(thing)
+</pre></div>
+<a name="checking-if-object-is-iterable-or-not" href="#checking-if-object-is-iterable-or-not"><h2>Checking if object is iterable or not</h2>
+</a><p>There is an easy way of checking if an object in python is iterable or not. The following code will do the needful.</p>
+<div class="highlight" style="background: #111111"><pre style="line-height: 125%; margin: 0;"><span></span>&gt;&gt;&gt; <span style="color: #6699cc; font-weight: bold">def</span> check(A):
+...     <span style="color: #6699cc; font-weight: bold">try</span>:
+...         st = <span style="color: #9966ff">iter</span>(A)
+...         <span style="color: #9966ff">print</span>(<span style="color: #ffff33">&#39;yes&#39;</span>)
+...     <span style="color: #6699cc; font-weight: bold">except</span> <span style="color: #ff0000; font-weight: bold">TypeError</span>:
+...         <span style="color: #9966ff">print</span>(<span style="color: #ffff33">&#39;no&#39;</span>)
+...
+&gt;&gt;&gt; check(25)
+no
+&gt;&gt;&gt; check([25,35])
+yes
+&gt;&gt;&gt;
+</pre></div>
+<p>Here you can observe that the 25 is an integer, so it is not iterable, but [25,35] is a list which is iterable so it outputs no and yes respectively.</p>
+<a name="generators" href="#generators"><h2>Generators</h2>
+</a><p>It's possible to create a custom iterator with a class that defines an
+<code>__iter__</code> method that returns self and a <code>__next__</code> method that gets
+the next value. I'm not going to talk about it now because there's a
+much simpler way to implement iterators. Let's make a function that
+creates an iterator that behaves like <code>iter([1, 2, 3])</code> using the
+<code>yield</code> keyword:</p>
+<div class="highlight" style="background: #111111"><pre style="line-height: 125%; margin: 0;"><span></span>&gt;&gt;&gt; <span style="color: #6699cc; font-weight: bold">def</span> thingy():
+...     <span style="color: #6699cc; font-weight: bold">yield</span> 1
+...     <span style="color: #6699cc; font-weight: bold">yield</span> 2
+...     <span style="color: #6699cc; font-weight: bold">yield</span> 3
+...
+&gt;&gt;&gt;
+</pre></div>
+<p>We can only <code>yield</code> inside a function, yielding elsewhere raises an
+error.</p>
+<div class="highlight" style="background: #111111"><pre style="line-height: 125%; margin: 0;"><span></span>&gt;&gt;&gt; <span style="color: #6699cc; font-weight: bold">yield</span> <span style="color: #ffff33">&#39;hi&#39;</span>
+  File <span style="color: #9966ff">&quot;&lt;stdin&gt;&quot;</span>, line 1
+SyntaxError: &#39;yield&#39; outside function
+&gt;&gt;&gt;
+</pre></div>
+<p>Let's try out our thingy function and see how it works.</p>
+<div class="highlight" style="background: #111111"><pre style="line-height: 125%; margin: 0;"><span></span>&gt;&gt;&gt; thingy()
+&lt;generator object thingy at 0xb723d9b4&gt;
+&gt;&gt;&gt;
+</pre></div>
+<p>What the heck? We don't return anything from the function, but it still
+doesn't return None!</p>
+<p>Putting a <code>yield</code> anywhere in a function makes it return <strong>generators</strong>.
+<strong>Generators are iterators</strong> with some more features that we don't need
+to care about.</p>
+<p><a href="../images/generators.png"><img src="../images/generators.png" alt="Generators."></a></p>
+<p>The generators that thingy gives us work just like other iterators:</p>
+<div class="highlight" style="background: #111111"><pre style="line-height: 125%; margin: 0;"><span></span>&gt;&gt;&gt; t = thingy()
+&gt;&gt;&gt; t
+&lt;generator object thingy at 0xb72300f4&gt;
+&gt;&gt;&gt; <span style="color: #9966ff">next</span>(t)
+1
+&gt;&gt;&gt; <span style="color: #9966ff">next</span>(t)
+2
+&gt;&gt;&gt; <span style="color: #9966ff">next</span>(t)
+3
+&gt;&gt;&gt; <span style="color: #9966ff">next</span>(t)
+Traceback (most recent call last):
+  File <span style="color: #9966ff">&quot;&lt;stdin&gt;&quot;</span>, line 1, in &lt;module&gt;
+StopIteration
+&gt;&gt;&gt; <span style="color: #6699cc; font-weight: bold">for</span> number in thingy():
+...     <span style="color: #9966ff">print</span>(number)
+...
+1
+2
+3
+&gt;&gt;&gt;
+</pre></div>
+<p>This whole thing may feel kind of insane. If we add some parts between
+the yields, when do they run? How does Python know when to run what?</p>
+<p>Let's find out.</p>
+<div class="highlight" style="background: #111111"><pre style="line-height: 125%; margin: 0;"><span></span>&gt;&gt;&gt; <span style="color: #6699cc; font-weight: bold">def</span> printygen():
+...     <span style="color: #9966ff">print</span>(<span style="color: #ffff33">&quot;starting&quot;</span>)
+...     <span style="color: #6699cc; font-weight: bold">yield</span> 1
+...     <span style="color: #9966ff">print</span>(<span style="color: #ffff33">&quot;between 1 and 2&quot;</span>)
+...     <span style="color: #6699cc; font-weight: bold">yield</span> 2
+...     <span style="color: #9966ff">print</span>(<span style="color: #ffff33">&quot;between 2 and 3&quot;</span>)
+...     <span style="color: #6699cc; font-weight: bold">yield</span> 3
+...     <span style="color: #9966ff">print</span>(<span style="color: #ffff33">&quot;end&quot;</span>)
+...
+&gt;&gt;&gt; p = printygen()
+&gt;&gt;&gt;
+</pre></div>
+<p>That's weird! We called it, but it didn't print "starting"!</p>
+<p>Let's see what happens if we call <code>next()</code> on it.</p>
+<div class="highlight" style="background: #111111"><pre style="line-height: 125%; margin: 0;"><span></span>&gt;&gt;&gt; got = <span style="color: #9966ff">next</span>(p)
+starting
+&gt;&gt;&gt; got
+1
+&gt;&gt;&gt;
+</pre></div>
+<p>Now it started, but it's frozen! It's just stuck on that <code>yield 1</code>.</p>
+<p>An easy way to think about this is to compare it to our computers.
+When we suspend a computer it goes into some kind of stand-by mode,
+and we can later continue using the computer all of our programs are
+still there just like they were when we left.</p>
+<p>A similar thing happens here. Our function is running, but it's just
+stuck at the yield and waiting for us to call <code>next()</code> on it again.</p>
+<div class="highlight" style="background: #111111"><pre style="line-height: 125%; margin: 0;"><span></span>&gt;&gt;&gt; <span style="color: #9966ff">next</span>(p)
+between 1 and 2
+2
+&gt;&gt;&gt; <span style="color: #9966ff">next</span>(p)
+between 2 and 3
+3
+&gt;&gt;&gt; <span style="color: #9966ff">next</span>(p)
+end
+Traceback (most recent call last):
+  File <span style="color: #9966ff">&quot;&lt;stdin&gt;&quot;</span>, line 1, in &lt;module&gt;
+StopIteration
+&gt;&gt;&gt;
+</pre></div>
+<p>Here's a drawing of what's going on:</p>
+<p><a href="../images/freeze-melt.png"><img src="../images/freeze-melt.png" alt="A picture of printygen."></a></p>
+<p>The good news is that <strong>usually we don't need to worry about when
+exactly the parts between the yields run</strong>. Actually we don't even need
+to use <code>iter()</code> and <code>next()</code> most of the time, but I think it's nice to
+know how for loops work.</p>
+<p><code>yield</code> is useful when we want the function to output so many things
+that making a list of them would be too slow or the list wouldn't fit in
+the computer's memory. So instead of this...</p>
+<div class="highlight" style="background: #111111"><pre style="line-height: 125%; margin: 0;"><span></span><span style="color: #6699cc; font-weight: bold">def</span> get_things():
+    result = []
+    <span style="color: #336666; font-style: italic"># code that appends things to result</span>
+    <span style="color: #6699cc; font-weight: bold">return</span> result
+</pre></div>
+<p>...we can do this:</p>
+<div class="highlight" style="background: #111111"><pre style="line-height: 125%; margin: 0;"><span></span><span style="color: #6699cc; font-weight: bold">def</span> get_things():
+    <span style="color: #336666; font-style: italic"># code that yields stuff</span>
+</pre></div>
+<p>Both of these functions can be used like this:</p>
+<div class="highlight" style="background: #111111"><pre style="line-height: 125%; margin: 0;"><span></span><span style="color: #6699cc; font-weight: bold">for</span> thing in get_things():
+    <span style="color: #336666; font-style: italic"># do something with thing</span>
+</pre></div>
+<p>It's actually possible to create an iterator that yields an infinite
+number of things:</p>
+<div class="highlight" style="background: #111111"><pre style="line-height: 125%; margin: 0;"><span></span>&gt;&gt;&gt; <span style="color: #6699cc; font-weight: bold">def</span> count():
+...     current = 1
+...     <span style="color: #6699cc; font-weight: bold">while</span> <span style="color: #6699cc; font-weight: bold">True</span>:
+...         <span style="color: #6699cc; font-weight: bold">yield</span> current
+...         current += 1
+...
+&gt;&gt;&gt; c = count()
+&gt;&gt;&gt; <span style="color: #9966ff">next</span>(c)
+1
+&gt;&gt;&gt; <span style="color: #9966ff">next</span>(c)
+2
+&gt;&gt;&gt; <span style="color: #9966ff">next</span>(c)
+3
+&gt;&gt;&gt; <span style="color: #9966ff">next</span>(c)
+4
+&gt;&gt;&gt;
+</pre></div>
+<p><a href="https://docs.python.org/3/library/itertools.html">The itertools module</a>
+contains many useful things like this. For example, <code>itertools.count(1)</code>
+does the same thing as our <code>count()</code>.</p>
+<a name="summary" href="#summary"><h2>Summary</h2>
+</a><ul>
+<li>An iterable is something that we can for loop over.</li>
+<li>An iterator is an iterable that remembers its position.</li>
+<li>For loops create an iterator of the iterable and call its <code>__next__</code>
+  method until it raises a StopIteration.</li>
+<li>Functions that contain yields return generators. Calling <code>next()</code> on a
+generator runs it to the next yield and gives us the value it yielded.</li>
+<li><a href="https://docs.python.org/3/library/itertools.html">The itertools module</a>
+contains many useful iterator-related things.</li>
+</ul>
+<hr>
+<p>If you have trouble with this tutorial please <a href="../contact-me.html">tell me about
+it</a> and I'll make this tutorial better. If you
+like this tutorial, please <a href="../index.html#how-can-i-thank-you-for-writing-and-sharing-this-tutorial">give it a
+star</a>.</p>
+<p>You may use this tutorial freely at your own risk. See
+<a href="../LICENSE.txt">LICENSE</a>.</p>
+<p><a href="magicmethods.html">Previous</a> | <a href="../index.html">Next</a> |
+<a href="../index.html#advanced">List of contents</a></p>
+
+  </body>
+</html>
+

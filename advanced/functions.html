@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title>Advanced things with functions</title>
+    <link rel="stylesheet" type="text/css" href="../style.css">
+  </head>
+  <body>
+    <a name="advanced-things-with-functions" href="#advanced-things-with-functions"><h1>Advanced things with functions</h1>
+</a><p>Now we know <a href="../basics/defining-functions.html">how to define functions</a>.
+Functions can take arguments, and they will end up with local variables
+that have the same name. Like this:</p>
+<div class="highlight" style="background: #111111"><pre style="line-height: 125%; margin: 0;"><span></span><span style="color: #6699cc; font-weight: bold">def</span> print_box(message, border=<span style="color: #ffff33">&#39;*&#39;</span>):
+    <span style="color: #9966ff">print</span>(border * (<span style="color: #9966ff">len</span>(message) + 4))
+    <span style="color: #9966ff">print</span>(border, message, border)
+    <span style="color: #9966ff">print</span>(border * (<span style="color: #9966ff">len</span>(message) + 4))
+
+print_box(<span style="color: #ffff33">&quot;hello&quot;</span>)
+</pre></div>
+<p>In this chapter we'll learn more things we can do with defining
+functions and how they are useful.</p>
+<a name="multiple-return-values" href="#multiple-return-values"><h2>Multiple return values</h2>
+</a><p>Function can take multiple arguments, but they can only return one
+value. But sometimes it makes sense to return multiple values as well:</p>
+<div class="highlight" style="background: #111111"><pre style="line-height: 125%; margin: 0;"><span></span><span style="color: #6699cc; font-weight: bold">def</span> login():
+    username = <span style="color: #9966ff">input</span>(<span style="color: #ffff33">&quot;Username: &quot;</span>)
+    password = <span style="color: #9966ff">input</span>(<span style="color: #ffff33">&quot;Password: &quot;</span>)
+    <span style="color: #336666; font-style: italic"># how the heck are we going to return these?</span>
+</pre></div>
+<p>The best solution is to return a tuple of values, and just unpack that
+wherever the function is called:</p>
+<div class="highlight" style="background: #111111"><pre style="line-height: 125%; margin: 0;"><span></span><span style="color: #6699cc; font-weight: bold">def</span> login():
+    ...
+    <span style="color: #6699cc; font-weight: bold">return</span> (username, password)
+
+
+username, password = login()
+...
+</pre></div>
+<p>That gets kind of messy if there are more than three values to return,
+but I have never needed to return more than three values. If you think
+you need to return four or more values you probably want to use <a href="../basics/classes.html">a
+class</a> instead.</p>
+<p>For example, instead of this...</p>
+<div class="highlight" style="background: #111111"><pre style="line-height: 125%; margin: 0;"><span></span><span style="color: #6699cc; font-weight: bold">def</span> get_new_info(username):
+    <span style="color: #9966ff">print</span>(<span style="color: #ffff33">&quot;Changing user information of %s.&quot;</span> % username)
+    username = <span style="color: #9966ff">input</span>(<span style="color: #ffff33">&quot;New username: &quot;</span>)
+    password = <span style="color: #9966ff">input</span>(<span style="color: #ffff33">&quot;New password: &quot;</span>)
+    fullname = <span style="color: #9966ff">input</span>(<span style="color: #ffff33">&quot;Full name: &quot;</span>)
+    phonenumber = <span style="color: #9966ff">input</span>(<span style="color: #ffff33">&quot;Phone number: &quot;</span>)
+    <span style="color: #6699cc; font-weight: bold">return</span> (username, password, fullname, phonenumber)
+</pre></div>
+<p>...you could do this:</p>
+<div class="highlight" style="background: #111111"><pre style="line-height: 125%; margin: 0;"><span></span><span style="color: #6699cc; font-weight: bold">class</span> User:
+    <span style="color: #336666; font-style: italic"># you probably want to make many other user related things too, add</span>
+    <span style="color: #336666; font-style: italic"># them here</span>
+
+    <span style="color: #6699cc; font-weight: bold">def</span> change_info(<span style="color: #9966ff">self</span>):
+        <span style="color: #9966ff">print</span>(<span style="color: #ffff33">&quot;Changing user information of %s.&quot;</span> % <span style="color: #9966ff">self</span>.username)
+        <span style="color: #9966ff">self</span>.username = <span style="color: #9966ff">input</span>(<span style="color: #ffff33">&quot;New username: &quot;</span>)
+        <span style="color: #9966ff">self</span>.password = <span style="color: #9966ff">input</span>(<span style="color: #ffff33">&quot;New password: &quot;</span>)
+        <span style="color: #9966ff">self</span>.fullname = <span style="color: #9966ff">input</span>(<span style="color: #ffff33">&quot;Full name: &quot;</span>)
+        <span style="color: #9966ff">self</span>.phonenumber = <span style="color: #9966ff">input</span>(<span style="color: #ffff33">&quot;Phone number: &quot;</span>)
+</pre></div>
+<a name="args" href="#args"><h2>*args</h2>
+</a><p>Sometimes you might see code like this:</p>
+<div class="highlight" style="background: #111111"><pre style="line-height: 125%; margin: 0;"><span></span><span style="color: #6699cc; font-weight: bold">def</span> thing(*args, **kwargs):
+    ...
+</pre></div>
+<p>Functions like this are actually quite easy to understand. Let's make a
+function that takes <code>*args</code> and prints it.</p>
+<div class="highlight" style="background: #111111"><pre style="line-height: 125%; margin: 0;"><span></span>&gt;&gt;&gt; <span style="color: #6699cc; font-weight: bold">def</span> thing(*args):
+...     <span style="color: #9966ff">print</span>(<span style="color: #ffff33">&quot;now args is&quot;</span>, args)
+...
+&gt;&gt;&gt; thing()
+now args is ()
+&gt;&gt;&gt; thing(1, 2, 3)
+now args is (1, 2, 3)
+&gt;&gt;&gt;
+</pre></div>
+<p>So far we have learned that if we want to call a function like
+<code>thing(1, 2, 3)</code>, then we need to define the arguments when defining the
+function like <code>def thing(a, b, c)</code>. But <code>*args</code> just magically gets
+whatever positional arguments the function is given and turns them into
+a tuple, and never raises errors. Of course, we could also use whatever
+variable name we wanted instead of <code>args</code>.</p>
+<p>Our function with nothing but <code>*args</code> takes no keyword arguments:</p>
+<div class="highlight" style="background: #111111"><pre style="line-height: 125%; margin: 0;"><span></span>&gt;&gt;&gt; thing(a=1)
+Traceback (most recent call last):
+  File <span style="color: #9966ff">&quot;&lt;stdin&gt;&quot;</span>, line 1, in &lt;module&gt;
+TypeError: thing() got an unexpected keyword argument &#39;a&#39;
+&gt;&gt;&gt;
+</pre></div>
+<p>We can also save our arguments to a variable as a list, and then pass
+them to a function by adding a <code>*</code>. Actually it doesn't need to be a
+list or a tuple, anything <a href="../basics/loops.html#summary">iterable</a> will
+work.</p>
+<div class="highlight" style="background: #111111"><pre style="line-height: 125%; margin: 0;"><span></span>&gt;&gt;&gt; stuff = [<span style="color: #ffff33">&#39;hello&#39;</span>, <span style="color: #ffff33">&#39;world&#39;</span>, <span style="color: #ffff33">&#39;test&#39;</span>]
+&gt;&gt;&gt; <span style="color: #9966ff">print</span>(*stuff)
+hello world test
+&gt;&gt;&gt;
+</pre></div>
+<a name="kwargs" href="#kwargs"><h2>**kwargs</h2>
+</a><p><code>**kwargs</code> is the same thing as <code>*args</code>, but with keyword arguments
+instead of positional arguments.</p>
+<div class="highlight" style="background: #111111"><pre style="line-height: 125%; margin: 0;"><span></span>&gt;&gt;&gt; <span style="color: #6699cc; font-weight: bold">def</span> thing(**kwargs):
+...     <span style="color: #9966ff">print</span>(<span style="color: #ffff33">&#39;now kwargs is&#39;</span>, kwargs)
+...
+&gt;&gt;&gt; thing(a=1, b=2)
+now kwargs is {&#39;b&#39;: 2, &#39;a&#39;: 1}
+&gt;&gt;&gt; thing(1, 2)
+Traceback (most recent call last):
+  File <span style="color: #9966ff">&quot;&lt;stdin&gt;&quot;</span>, line 1, in &lt;module&gt;
+TypeError: thing() takes 0 positional arguments but 2 were given
+&gt;&gt;&gt; <span style="color: #6699cc; font-weight: bold">def</span> print_box(message, border):
+...     <span style="color: #9966ff">print</span>(border * <span style="color: #9966ff">len</span>(message))
+...     <span style="color: #9966ff">print</span>(message)
+...     <span style="color: #9966ff">print</span>(border * <span style="color: #9966ff">len</span>(message))
+...
+&gt;&gt;&gt; kwargs = {<span style="color: #ffff33">&#39;message&#39;</span>: <span style="color: #ffff33">&quot;Hello World!&quot;</span>, <span style="color: #ffff33">&#39;border&#39;</span>: <span style="color: #ffff33">&#39;*&#39;</span>}
+&gt;&gt;&gt; print_box(**kwargs)
+************
+Hello World!
+************
+&gt;&gt;&gt;
+</pre></div>
+<p>Sometimes it's handy to capture all arguments our function takes. We can
+combine <code>*args</code> and <code>**kwargs</code> easily:</p>
+<div class="highlight" style="background: #111111"><pre style="line-height: 125%; margin: 0;"><span></span>&gt;&gt;&gt; <span style="color: #6699cc; font-weight: bold">def</span> thing(*args, **kwargs):
+...     <span style="color: #9966ff">print</span>(<span style="color: #ffff33">&quot;now args is&quot;</span>, args, <span style="color: #ffff33">&quot;and kwargs is&quot;</span>, kwargs)
+...
+&gt;&gt;&gt; thing(1, 2, a=3, b=4)
+now args is (1, 2) and kwargs is {&#39;b&#39;: 4, &#39;a&#39;: 3}
+&gt;&gt;&gt;
+</pre></div>
+<p>This is often used for calling a function from another "fake function"
+that represents it. We'll find uses for this later.</p>
+<div class="highlight" style="background: #111111"><pre style="line-height: 125%; margin: 0;"><span></span>&gt;&gt;&gt; <span style="color: #6699cc; font-weight: bold">def</span> fake_print(*args, **kwargs):
+...     <span style="color: #9966ff">print</span>(*args, **kwargs)
+...
+&gt;&gt;&gt; <span style="color: #9966ff">print</span>(<span style="color: #ffff33">&#39;this&#39;</span>, <span style="color: #ffff33">&#39;is&#39;</span>, <span style="color: #ffff33">&#39;a&#39;</span>, <span style="color: #ffff33">&#39;test&#39;</span>, sep=<span style="color: #ffff33">&#39;-&#39;</span>)
+this-is-a-test
+&gt;&gt;&gt; fake_print(<span style="color: #ffff33">&#39;this&#39;</span>, <span style="color: #ffff33">&#39;is&#39;</span>, <span style="color: #ffff33">&#39;a&#39;</span>, <span style="color: #ffff33">&#39;test&#39;</span>, sep=<span style="color: #ffff33">&#39;-&#39;</span>)
+this-is-a-test
+&gt;&gt;&gt;
+</pre></div>
+<a name="keywordonly-arguments" href="#keywordonly-arguments"><h2>Keyword-only arguments</h2>
+</a><p>Let's say that we have a function that moves a file. It probably takes
+<code>source</code> and <code>destination</code> arguments, but it might also take other
+arguments that customize how it moves the file. For example, it might
+take an <code>overwrite</code> argument that makes it remove <code>destination</code> before
+moving if it exists already or a <code>backup</code> argument that makes it do a
+backup of the file just in case the moving fails. So our function would
+look like this:</p>
+<div class="highlight" style="background: #111111"><pre style="line-height: 125%; margin: 0;"><span></span><span style="color: #6699cc; font-weight: bold">def</span> move(source, destination, overwrite=<span style="color: #6699cc; font-weight: bold">False</span>, backup=<span style="color: #6699cc; font-weight: bold">False</span>):
+    <span style="color: #6699cc; font-weight: bold">if</span> overwrite:
+        <span style="color: #9966ff">print</span>(<span style="color: #ffff33">&quot;deleting&quot;</span>, destination)
+    <span style="color: #6699cc; font-weight: bold">if</span> backup:
+        <span style="color: #9966ff">print</span>(<span style="color: #ffff33">&quot;backing up&quot;</span>)
+    <span style="color: #9966ff">print</span>(<span style="color: #ffff33">&quot;moving&quot;</span>, source, <span style="color: #ffff33">&quot;to&quot;</span>, destination)
+</pre></div>
+<p>Then we can move files like this:</p>
+<div class="highlight" style="background: #111111"><pre style="line-height: 125%; margin: 0;"><span></span>&gt;&gt;&gt; move(<span style="color: #ffff33">&#39;file1.txt&#39;</span>, <span style="color: #ffff33">&#39;file2.txt&#39;</span>)
+moving file1.txt to file2.txt
+&gt;&gt;&gt; move(<span style="color: #ffff33">&#39;file1.txt&#39;</span>, <span style="color: #ffff33">&#39;file2.txt&#39;</span>, overwrite=<span style="color: #6699cc; font-weight: bold">True</span>)
+deleting file2.txt
+moving file1.txt to file2.txt
+&gt;&gt;&gt;
+</pre></div>
+<p>This works just fine, but if we accidentally give the function three
+filenames, bad things will happen:</p>
+<div class="highlight" style="background: #111111"><pre style="line-height: 125%; margin: 0;"><span></span>&gt;&gt;&gt; move(<span style="color: #ffff33">&#39;file1.txt&#39;</span>, <span style="color: #ffff33">&#39;file2.txt&#39;</span>, <span style="color: #ffff33">&#39;file3.txt&#39;</span>)
+deleting file2.txt
+moving file1.txt to file2.txt
+&gt;&gt;&gt;
+</pre></div>
+<p>Oh crap, that's not what we wanted at all. We have just lost the
+original <code>file2.txt</code>!</p>
+<p>The problem was that now <code>overwrite</code> was <code>'file3.txt'</code>, and the
+<code>if overwrite</code> part <a href="../basics/what-is-true.html">treated the string as
+True</a> and deleted the file. That's not nice.</p>
+<p>The solution is to change our move function so that <code>overwrite</code> and
+<code>backup</code> are keyword-only:</p>
+<div class="highlight" style="background: #111111"><pre style="line-height: 125%; margin: 0;"><span></span><span style="color: #6699cc; font-weight: bold">def</span> move(source, destination, *, overwrite=<span style="color: #6699cc; font-weight: bold">False</span>, backup=<span style="color: #6699cc; font-weight: bold">False</span>):
+    ...
+</pre></div>
+<p>The <code>*</code> between <code>destination</code> and <code>overwrite</code> means that <code>overwrite</code> and
+<code>backup</code> must be given as keyword arguments. The basic idea is really
+simple: now it's impossible to overwrite by doing <code>move('file1.txt',
+'file2.txt', True)</code> and the overwrite must be always given like
+<code>overwrite=True</code>.</p>
+<div class="highlight" style="background: #111111"><pre style="line-height: 125%; margin: 0;"><span></span>&gt;&gt;&gt; move(<span style="color: #ffff33">&#39;file1.txt&#39;</span>, <span style="color: #ffff33">&#39;file2.txt&#39;</span>)
+moving file1.txt to file2.txt
+&gt;&gt;&gt; move(<span style="color: #ffff33">&#39;file1.txt&#39;</span>, <span style="color: #ffff33">&#39;file2.txt&#39;</span>, <span style="color: #6699cc; font-weight: bold">True</span>)
+Traceback (most recent call last):
+  File <span style="color: #9966ff">&quot;&lt;stdin&gt;&quot;</span>, line 1, in &lt;module&gt;
+TypeError: move() takes 2 positional arguments but 3 were given
+&gt;&gt;&gt; move(<span style="color: #ffff33">&#39;file1.txt&#39;</span>, <span style="color: #ffff33">&#39;file2.txt&#39;</span>, <span style="color: #ffff33">&#39;file3.txt&#39;</span>)
+Traceback (most recent call last):
+  File <span style="color: #9966ff">&quot;&lt;stdin&gt;&quot;</span>, line 1, in &lt;module&gt;
+TypeError: move() takes 2 positional arguments but 3 were given
+&gt;&gt;&gt; move(<span style="color: #ffff33">&#39;file1.txt&#39;</span>, <span style="color: #ffff33">&#39;file2.txt&#39;</span>, overwrite=<span style="color: #ffff33">&#39;file3.txt&#39;</span>)
+deleting file2.txt
+moving file1.txt to file2.txt
+&gt;&gt;&gt;
+</pre></div>
+<p>Doing <code>overwrite='file3.txt'</code> doesn't make much sense and it's easy to
+notice that something's wrong.</p>
+<a name="when-should-we-use-these-things" href="#when-should-we-use-these-things"><h2>When should we use these things?</h2>
+</a><p>There's nothing wrong with returning a tuple from a function, and you
+are free to do that whenever you need it.</p>
+<p>We don't need <code>*args</code> and <code>**kwargs</code> for most of the functions we write.
+When we need to make something that takes whatever arguments it's given
+or call a function with arguments that come from a list we need <code>*args</code>
+and <code>**kwargs</code>, and there's no need to avoid them.</p>
+<p>I don't recommend using keyword-only arguments with functions like our
+<code>print_box</code>. It's easy enough to guess or remember what
+<code>print_box('hello', '-')</code> does, and there's no need to deny that. It's
+much harder to remember what <code>move('file1.txt', 'file2.txt', True, False)</code>
+does, so using keyword-only arguments makes sense.</p>
+<a name="summary" href="#summary"><h2>Summary</h2>
+</a><ul>
+<li>If you want to return multiple values from a function you can return
+  a tuple.</li>
+<li>Defining a function that takes <code>*args</code> as an argument makes <code>args</code> a
+  tuple of positional arguments. <code>**kwargs</code> is the same thing with
+  dictionaries and keyword arguments.</li>
+<li>Adding a <code>*</code> in a function definition makes all arguments after it
+  keyword-only. This is useful when using positional arguments would
+  look implicit, like the True and False in
+  <code>move('file1.txt', 'file2.txt', True, False)</code>.</li>
+</ul>
+<hr>
+<p>If you have trouble with this tutorial please <a href="../contact-me.html">tell me about
+it</a> and I'll make this tutorial better. If you
+like this tutorial, please <a href="../index.html#how-can-i-thank-you-for-writing-and-sharing-this-tutorial">give it a
+star</a>.</p>
+<p>You may use this tutorial freely at your own risk. See
+<a href="../LICENSE.txt">LICENSE</a>.</p>
+<p><a href="datatypes.html">Previous</a> | <a href="magicmethods.html">Next</a> |
+<a href="../index.html#advanced">List of contents</a></p>
+
+  </body>
+</html>
+

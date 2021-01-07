@@ -1,0 +1,458 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title>Defining custom functions</title>
+    <link rel="stylesheet" type="text/css" href="../style.css">
+  </head>
+  <body>
+    <a name="defining-custom-functions" href="#defining-custom-functions"><h1>Defining custom functions</h1>
+</a><p>It's probably been a while since you read about using functions.
+<a href="using-functions.html">Read about it again</a> if you need to.</p>
+<a name="why-should-i-use-custom-functions" href="#why-should-i-use-custom-functions"><h2>Why should I use custom functions?</h2>
+</a><p>Have a look at this code:</p>
+<div class="highlight" style="background: #111111"><pre style="line-height: 125%; margin: 0;"><span></span><span style="color: #9966ff">print</span>(<span style="color: #ffff33">&quot;************&quot;</span>)
+<span style="color: #9966ff">print</span>(<span style="color: #ffff33">&quot;Hello World!&quot;</span>)
+<span style="color: #9966ff">print</span>(<span style="color: #ffff33">&quot;************&quot;</span>)
+
+<span style="color: #9966ff">print</span>(<span style="color: #ffff33">&quot;*************&quot;</span>)
+<span style="color: #9966ff">print</span>(<span style="color: #ffff33">&quot;Enter a word:&quot;</span>)
+<span style="color: #9966ff">print</span>(<span style="color: #ffff33">&quot;*************&quot;</span>)
+
+word = <span style="color: #9966ff">input</span>()
+
+<span style="color: #6699cc; font-weight: bold">if</span> word == <span style="color: #ffff33">&#39;python&#39;</span>:
+    <span style="color: #9966ff">print</span>(<span style="color: #ffff33">&quot;*******************&quot;</span>)
+    <span style="color: #9966ff">print</span>(<span style="color: #ffff33">&quot;You entered Python!&quot;</span>)
+    <span style="color: #9966ff">print</span>(<span style="color: #ffff33">&quot;*******************&quot;</span>)
+<span style="color: #6699cc; font-weight: bold">else</span>:
+    <span style="color: #9966ff">print</span>(<span style="color: #ffff33">&quot;**************************&quot;</span>)
+    <span style="color: #9966ff">print</span>(<span style="color: #ffff33">&quot;You didn&#39;t enter Python :(&quot;</span>)
+    <span style="color: #9966ff">print</span>(<span style="color: #ffff33">&quot;**************************&quot;</span>)
+</pre></div>
+<p>Then compare it to this code:</p>
+<div class="highlight" style="background: #111111"><pre style="line-height: 125%; margin: 0;"><span></span>print_box(<span style="color: #ffff33">&quot;Hello World!&quot;</span>)
+print_box(<span style="color: #ffff33">&quot;Enter a word:&quot;</span>)
+word = <span style="color: #9966ff">input</span>()
+<span style="color: #6699cc; font-weight: bold">if</span> word == <span style="color: #ffff33">&#39;python&#39;</span>:
+    print_box(<span style="color: #ffff33">&quot;You entered Python!&quot;</span>)
+<span style="color: #6699cc; font-weight: bold">else</span>:
+    print_box(<span style="color: #ffff33">&quot;You didn&#39;t enter Python :(&quot;</span>)
+</pre></div>
+<p>In this tutorial we'll learn to define a <code>print_box</code> function
+that prints text in a box. We can write the code for printing the
+box once, and then use it multiple times anywhere in the program.</p>
+<p><a href="larger-program.html">Dividing a long program into simple functions</a> also
+makes the code easier to work with. If there's a problem with the code
+we can test the functions one by one and find the problem easily.</p>
+<a name="first-functions" href="#first-functions"><h2>First functions</h2>
+</a><p>The <code>pass</code> keyword does nothing.</p>
+<div class="highlight" style="background: #111111"><pre style="line-height: 125%; margin: 0;"><span></span>&gt;&gt;&gt; <span style="color: #6699cc; font-weight: bold">pass</span>
+&gt;&gt;&gt;
+</pre></div>
+<p>Let's use it to define a function that does nothing.</p>
+<div class="highlight" style="background: #111111"><pre style="line-height: 125%; margin: 0;"><span></span>&gt;&gt;&gt; <span style="color: #6699cc; font-weight: bold">def</span> do_nothing():
+...     <span style="color: #6699cc; font-weight: bold">pass</span>
+...
+&gt;&gt;&gt; do_nothing
+&lt;function do_nothing at 0x7f56b74e9598&gt;
+&gt;&gt;&gt;
+</pre></div>
+<p>Seems to be working so far, we have a function. It's just a value that
+is assigned to a variable called <code>do_nothing</code>. You can ignore the
+<code>0xblablabla</code> stuff for now.</p>
+<p>The <code>pass</code> is needed here because without it, Python doesn't know when
+the function ends and it gives us a syntax error. We don't need the
+<code>pass</code> when our functions contain something else.</p>
+<p>Let's see what happens if we call our function.</p>
+<div class="highlight" style="background: #111111"><pre style="line-height: 125%; margin: 0;"><span></span>&gt;&gt;&gt; do_nothing()
+&gt;&gt;&gt;
+</pre></div>
+<p>There we go. It did nothing at all.</p>
+<p>Maybe we could just do something in the function instead?</p>
+<div class="highlight" style="background: #111111"><pre style="line-height: 125%; margin: 0;"><span></span>&gt;&gt;&gt; <span style="color: #6699cc; font-weight: bold">def</span> print_hi():
+...     <span style="color: #9966ff">print</span>(<span style="color: #ffff33">&quot;Hi!&quot;</span>)
+...
+&gt;&gt;&gt; print_hi()
+Hi!
+&gt;&gt;&gt;
+</pre></div>
+<p>It's working. How about printing a variable in the function?</p>
+<div class="highlight" style="background: #111111"><pre style="line-height: 125%; margin: 0;"><span></span>&gt;&gt;&gt; <span style="color: #6699cc; font-weight: bold">def</span> print_message():
+...     <span style="color: #9966ff">print</span>(message)
+...
+&gt;&gt;&gt; message = <span style="color: #ffff33">&quot;Hello World!&quot;</span>
+&gt;&gt;&gt; print_message()
+Hello World!
+&gt;&gt;&gt;
+</pre></div>
+<p>Again, it works. How about setting a variable in the function?</p>
+<div class="highlight" style="background: #111111"><pre style="line-height: 125%; margin: 0;"><span></span>&gt;&gt;&gt; <span style="color: #6699cc; font-weight: bold">def</span> get_username():
+...     username = <span style="color: #9966ff">input</span>(<span style="color: #ffff33">&quot;Username: &quot;</span>)
+...
+&gt;&gt;&gt; get_username()
+Username: me
+&gt;&gt;&gt; username
+Traceback (most recent call last):
+  File <span style="color: #9966ff">&quot;&lt;stdin&gt;&quot;</span>, line 1, in &lt;module&gt;
+NameError: name &#39;username&#39; is not defined
+&gt;&gt;&gt;
+</pre></div>
+<p>That was weird! Why didn't that work?</p>
+<a name="locals-and-globals" href="#locals-and-globals"><h2>Locals and globals</h2>
+</a><p>So far we have used nothing but <strong>global variables</strong>. They are called
+globals because the same variables are available anywhere in our
+program, even in functions.</p>
+<div class="highlight" style="background: #111111"><pre style="line-height: 125%; margin: 0;"><span></span>&gt;&gt;&gt; a = 1
+&gt;&gt;&gt; b = <span style="color: #ffff33">&quot;hi&quot;</span>
+&gt;&gt;&gt; c = <span style="color: #ffff33">&quot;hello&quot;</span>
+&gt;&gt;&gt; <span style="color: #6699cc; font-weight: bold">def</span> print_abc():
+...     <span style="color: #9966ff">print</span>(a, b, c)
+...
+&gt;&gt;&gt; print_abc()
+1 hi hello
+&gt;&gt;&gt;
+</pre></div>
+<p>But there are also <strong>local variables</strong>. They exist only <strong>inside</strong>
+functions, and they are deleted when the function exits.</p>
+<div class="highlight" style="background: #111111"><pre style="line-height: 125%; margin: 0;"><span></span>&gt;&gt;&gt; <span style="color: #6699cc; font-weight: bold">def</span> thingy():
+...     d = <span style="color: #ffff33">&quot;hello again, i&#39;m a local variable&quot;</span>
+...     <span style="color: #9966ff">print</span>(<span style="color: #ffff33">&#39;inside thingy:&#39;</span>, d)
+...
+&gt;&gt;&gt; thingy()
+inside thingy: hello again, i&#39;m a local variable
+&gt;&gt;&gt; d
+Traceback (most recent call last):
+  File <span style="color: #9966ff">&quot;&lt;stdin&gt;&quot;</span>, line 1, in &lt;module&gt;
+NameError: name &#39;d&#39; is not defined
+&gt;&gt;&gt;
+</pre></div>
+<p>Let's draw a diagram of these variables:</p>
+<p><a href="../images/locals-and-globals.png"><img src="../images/locals-and-globals.png" alt="Locals and globals."></a></p>
+<p>However, modifying a global variable in-place from a function is easy.</p>
+<div class="highlight" style="background: #111111"><pre style="line-height: 125%; margin: 0;"><span></span>&gt;&gt;&gt; stuff = [<span style="color: #ffff33">&#39;global stuff&#39;</span>]
+&gt;&gt;&gt; <span style="color: #6699cc; font-weight: bold">def</span> add_stuff():
+...     stuff.append(<span style="color: #ffff33">&#39;local stuff&#39;</span>)
+...
+&gt;&gt;&gt; add_stuff()
+&gt;&gt;&gt; stuff
+[&#39;global stuff&#39;, &#39;local stuff&#39;]
+&gt;&gt;&gt;
+</pre></div>
+<p>This only works for changing in-place, we cannot assign a new value to
+the variable.</p>
+<div class="highlight" style="background: #111111"><pre style="line-height: 125%; margin: 0;"><span></span>&gt;&gt;&gt; <span style="color: #6699cc; font-weight: bold">def</span> set_stuff_to_something_new():
+...     stuff = [<span style="color: #ffff33">&#39;more local stuff&#39;</span>]
+...
+&gt;&gt;&gt; set_stuff_to_something_new()
+&gt;&gt;&gt; stuff
+[&#39;global stuff&#39;, &#39;local stuff&#39;]
+&gt;&gt;&gt;
+</pre></div>
+<a name="input" href="#input"><h2>Input</h2>
+</a><p><strong>Note:</strong> This section has nothing to do with the <code>input</code> function that
+is used like <code>word = input("enter something: ")</code>.</p>
+<p>So far our functions seem to be really isolated from the rest of our
+code, and it sucks! But they really are not as isolated as you might
+think they are.</p>
+<p>Let's think about what the print function does. It takes an argument
+and prints it. Maybe a custom function could also take an argument?</p>
+<div class="highlight" style="background: #111111"><pre style="line-height: 125%; margin: 0;"><span></span>&gt;&gt;&gt; <span style="color: #6699cc; font-weight: bold">def</span> print_twice(message):
+...     <span style="color: #9966ff">print</span>(message)
+...     <span style="color: #9966ff">print</span>(message)
+...
+&gt;&gt;&gt;
+</pre></div>
+<p>Here <code>message</code> is an argument. When we call the function we'll get a
+local variable called message that will point to whatever we passed
+to <code>print_twice</code>.</p>
+<p>This function can be called in two ways:</p>
+<ul>
+<li><p>Using a <strong>positional argument</strong>.</p>
+<p>This is the recommended way for functions that take only one or two
+  arguments. I would do this in my code.</p>
+<div class="highlight" style="background: #111111"><pre style="line-height: 125%; margin: 0;"><span></span>  &gt;&gt;&gt; print_twice(<span style="color: #ffff33">&quot;hi&quot;</span>)
+  hi
+  hi
+  &gt;&gt;&gt;
+</pre></div>
+<p>When the function was running it had a local <code>message</code> variable
+  that pointed to <code>"hi"</code>. The function printed it twice.</p>
+<p>Positional arguments are great for simple things, but if our
+  function takes many positional arguments it may be hard to tell
+  which argument is which.</p>
+</li>
+<li><p>Using a <strong>keyword argument</strong>:</p>
+<div class="highlight" style="background: #111111"><pre style="line-height: 125%; margin: 0;"><span></span>  &gt;&gt;&gt; print_twice(message=<span style="color: #ffff33">&quot;hi&quot;</span>)
+  hi
+  hi
+  &gt;&gt;&gt;
+</pre></div>
+<p>The name "keyword argument" is a little bit confusing because
+  keyword arguments don't actually have anything to do with keywords
+  (<code>if</code>, <code>else</code> etc). Keyword arguments are just a way to give names
+  for our arguments.</p>
+<p>Keyword arguments are great when our function needs to take many
+  arguments, because each argument has a name and it's easy to see
+  which argument is which.</p>
+<p>Also note that there are no spaces around the <code>=</code> sign. This is
+  just a small style detail that Python programmers like to do
+  because <code>message = "hi"</code> and <code>some_function(message="hi")</code> do two
+  completely different things.</p>
+</li>
+</ul>
+<p>Now it's time to solve our box printing problem:</p>
+<div class="highlight" style="background: #111111"><pre style="line-height: 125%; margin: 0;"><span></span><span style="color: #6699cc; font-weight: bold">def</span> print_box(message):
+    <span style="color: #9966ff">print</span>(<span style="color: #ffff33">&#39;*&#39;</span> * <span style="color: #9966ff">len</span>(message))
+    <span style="color: #9966ff">print</span>(message)
+    <span style="color: #9966ff">print</span>(<span style="color: #ffff33">&#39;*&#39;</span> * <span style="color: #9966ff">len</span>(message))
+</pre></div>
+<a name="default-values" href="#default-values"><h2>Default values</h2>
+</a><p>What if we want to print different characters instead of always
+printing stars?</p>
+<p>We could change our <code>print_box</code> function to take two arguments:</p>
+<div class="highlight" style="background: #111111"><pre style="line-height: 125%; margin: 0;"><span></span><span style="color: #6699cc; font-weight: bold">def</span> print_box(message, character):
+    <span style="color: #9966ff">print</span>(character * <span style="color: #9966ff">len</span>(message))
+    <span style="color: #9966ff">print</span>(message)
+    <span style="color: #9966ff">print</span>(character * <span style="color: #9966ff">len</span>(message))
+</pre></div>
+<p>Then we could change our code to always call <code>print_box</code> with a star as
+the second argument:</p>
+<div class="highlight" style="background: #111111"><pre style="line-height: 125%; margin: 0;"><span></span>print_box(<span style="color: #ffff33">&quot;Hello World&quot;</span>, <span style="color: #ffff33">&quot;*&quot;</span>)
+...
+</pre></div>
+<p>But we don't need to change our existing code. We can make the second
+argument <strong>optional</strong> by giving it a default value.</p>
+<div class="highlight" style="background: #111111"><pre style="line-height: 125%; margin: 0;"><span></span><span style="color: #6699cc; font-weight: bold">def</span> print_box(message, character=<span style="color: #ffff33">&#39;*&#39;</span>):
+    <span style="color: #9966ff">print</span>(character * <span style="color: #9966ff">len</span>(message))
+    <span style="color: #9966ff">print</span>(message)
+    <span style="color: #9966ff">print</span>(character * <span style="color: #9966ff">len</span>(message))
+</pre></div>
+<p>We can print a row of stars using the function without specifying a
+different character in two ways:</p>
+<ul>
+<li><p>Using a positional argument.</p>
+<div class="highlight" style="background: #111111"><pre style="line-height: 125%; margin: 0;"><span></span>  print_box(<span style="color: #ffff33">&quot;Hello World!&quot;</span>)
+</pre></div>
+</li>
+<li><p>Using a keyword argument.</p>
+<div class="highlight" style="background: #111111"><pre style="line-height: 125%; margin: 0;"><span></span>  print_box(message=<span style="color: #ffff33">&quot;Hello World!&quot;</span>)
+</pre></div>
+</li>
+</ul>
+<p>Or we can give it a different character in a few different ways if we
+need to:</p>
+<ul>
+<li><p>Using two positional arguments.</p>
+<div class="highlight" style="background: #111111"><pre style="line-height: 125%; margin: 0;"><span></span>  print_box(<span style="color: #ffff33">&quot;Enter a word:&quot;</span>, <span style="color: #ffff33">&quot;?&quot;</span>)
+</pre></div>
+</li>
+<li><p>Using two keyword arguments.</p>
+<div class="highlight" style="background: #111111"><pre style="line-height: 125%; margin: 0;"><span></span>  print_box(message=<span style="color: #ffff33">&quot;Enter a word:&quot;</span>, character=<span style="color: #ffff33">&quot;?&quot;</span>)
+  print_box(character=<span style="color: #ffff33">&quot;?&quot;</span>, message=<span style="color: #ffff33">&quot;Enter a word:&quot;</span>)
+</pre></div>
+</li>
+<li><p>Using one positional argument and one keyword argument.</p>
+<p>I would probably do this. If an argument has a default value, I
+  like to use a keyword argument to change it if needed.</p>
+<div class="highlight" style="background: #111111"><pre style="line-height: 125%; margin: 0;"><span></span>  print_box(<span style="color: #ffff33">&quot;Enter a word:&quot;</span>, character=<span style="color: #ffff33">&quot;?&quot;</span>)
+</pre></div>
+<p>However, this doesn't work:</p>
+<div class="highlight" style="background: #111111"><pre style="line-height: 125%; margin: 0;"><span></span>  print_box(character=<span style="color: #ffff33">&quot;?&quot;</span>, <span style="color: #ffff33">&quot;Enter a word:&quot;</span>)
+</pre></div>
+<p>The problem is that we have a keyword argument before a positional
+  argument. Python doesn't allow this. We don't need to worry about
+  this, because if we accidentally call a function like this we
+  will get an error message.</p>
+</li>
+</ul>
+<a name="output" href="#output"><h2>Output</h2>
+</a><p>The built-in input function <a href="using-functions.html#return-values">returns a value</a>.
+Can our function return a value too?</p>
+<div class="highlight" style="background: #111111"><pre style="line-height: 125%; margin: 0;"><span></span>&gt;&gt;&gt; <span style="color: #6699cc; font-weight: bold">def</span> times_two(thing):
+...     <span style="color: #6699cc; font-weight: bold">return</span> thing * 2
+...
+&gt;&gt;&gt; times_two(3)
+6
+&gt;&gt;&gt; times_two(5)
+10
+&gt;&gt;&gt;
+</pre></div>
+<p>Yes, it can. Now typing <code>times_two(3)</code> to the prompt does the same
+thing as typing <code>6</code> to the prompt.</p>
+<p>We can call the <code>times_two</code> function and use the result however we
+want, just like we can use built-in functions:</p>
+<div class="highlight" style="background: #111111"><pre style="line-height: 125%; margin: 0;"><span></span>&gt;&gt;&gt; times_two(2) + times_two(3)     <span style="color: #336666; font-style: italic"># calculate 4 + 6</span>
+10
+&gt;&gt;&gt; <span style="color: #9966ff">print</span>(<span style="color: #ffff33">&#39;2 * 5 is&#39;</span>, times_two(5))
+2 * 5 is 10
+&gt;&gt;&gt;
+</pre></div>
+<p>Note that <strong>returning from a function ends it immediately</strong>.</p>
+<div class="highlight" style="background: #111111"><pre style="line-height: 125%; margin: 0;"><span></span>&gt;&gt;&gt; <span style="color: #6699cc; font-weight: bold">def</span> return_before_print():
+...     <span style="color: #6699cc; font-weight: bold">return</span> <span style="color: #6699cc; font-weight: bold">None</span>
+...     <span style="color: #9966ff">print</span>(<span style="color: #ffff33">&quot;This never gets printed.&quot;</span>)
+...
+&gt;&gt;&gt; return_before_print()
+&gt;&gt;&gt;
+</pre></div>
+<p>If we don't have any return statements or we have a return statement
+that doesn't specify what to return, our function will return None.</p>
+<div class="highlight" style="background: #111111"><pre style="line-height: 125%; margin: 0;"><span></span>&gt;&gt;&gt; <span style="color: #6699cc; font-weight: bold">def</span> return_none_1():
+...     <span style="color: #6699cc; font-weight: bold">pass</span>
+...
+&gt;&gt;&gt; <span style="color: #6699cc; font-weight: bold">def</span> return_none_2():
+...     <span style="color: #6699cc; font-weight: bold">return</span>
+...
+&gt;&gt;&gt; <span style="color: #9966ff">print</span>(return_none_1())
+None
+&gt;&gt;&gt; <span style="color: #9966ff">print</span>(return_none_2())
+None
+&gt;&gt;&gt;
+</pre></div>
+<a name="return-or-print" href="#return-or-print"><h2>Return or print?</h2>
+</a><p>There are two ways to output information from functions. They can print
+something or they can return something. So, should we print or return?</p>
+<p>Most of the time <strong>returning makes functions much easier to use</strong>. Think
+about the <code>input()</code> function. It asks the user to enter something, and
+then the user enters something and that value is returned. If the input
+function would print the value instead of returning it, things like
+<code>name = input("Name: ")</code> wouldn't work and assigning the result to a
+variable would be much more difficult. Printing things is fine when we
+know that we'll only need to print the result and we'll never need to
+assign it to a variable.</p>
+<p>If our function returns a value we can always print it, like this:</p>
+<div class="highlight" style="background: #111111"><pre style="line-height: 125%; margin: 0;"><span></span>&gt;&gt;&gt; <span style="color: #6699cc; font-weight: bold">def</span> return_hi():
+...     <span style="color: #6699cc; font-weight: bold">return</span> <span style="color: #ffff33">&quot;hi&quot;</span>
+...
+&gt;&gt;&gt; <span style="color: #9966ff">print</span>(return_hi())
+hi
+&gt;&gt;&gt;
+</pre></div>
+<a name="common-problems" href="#common-problems"><h2>Common problems</h2>
+</a><p>Functions are easy to understand, but you need to pay attention to how
+you're calling them. Note that <code>some_function</code> and <code>some_function()</code> do
+two completely different things.</p>
+<div class="highlight" style="background: #111111"><pre style="line-height: 125%; margin: 0;"><span></span>&gt;&gt;&gt; <span style="color: #6699cc; font-weight: bold">def</span> say_hi():
+...     <span style="color: #9966ff">print</span>(<span style="color: #ffff33">&quot;howdy hi&quot;</span>)
+...
+&gt;&gt;&gt; say_hi     <span style="color: #336666; font-style: italic"># just checking what it is, doesn&#39;t run anything</span>
+&lt;function say_hi at 0x7f997d2a8510&gt;
+&gt;&gt;&gt; say_hi()   <span style="color: #336666; font-style: italic"># this runs it</span>
+howdy hi
+&gt;&gt;&gt;
+</pre></div>
+<p>Typing <code>say_hi</code> just gives us the value of the <code>say_hi</code> variable, which
+is the function we defined. But <code>say_hi()</code> <strong>calls</strong> that function, so
+it runs and gives us a return value. The return value is None so the
+<code>&gt;&gt;&gt;</code> prompt <a href="#variables.md#none">doesn't show it</a>.</p>
+<p>But we know that the print function shows None, so what happens if we
+wrap the whole thing in <code>print()</code>?</p>
+<div class="highlight" style="background: #111111"><pre style="line-height: 125%; margin: 0;"><span></span>&gt;&gt;&gt; <span style="color: #9966ff">print</span>(say_hi)       <span style="color: #336666; font-style: italic"># prints the function, just like plain say_hi</span>
+&lt;function say_hi at 0x7fd913f58488&gt;
+&gt;&gt;&gt; <span style="color: #9966ff">print</span>(say_hi())     <span style="color: #336666; font-style: italic"># runs the function and then prints the return value</span>
+howdy hi
+None
+&gt;&gt;&gt;
+</pre></div>
+<p>The <code>print(say_hi())</code> thing looks a bit weird at first, but it's easy to
+understand. There's a print inside <code>say_hi</code> and there's also the print
+we just wrote, so two things are printed. Python first ran <code>say_hi()</code>,
+and it returned None so Python did <code>print(None)</code>. Adding an extra
+<code>print()</code> around a function call is actually a common mistake, and I
+have helped many people with this problem.</p>
+<a name="examples" href="#examples"><h2>Examples</h2>
+</a><p>Ask yes/no questions.</p>
+<div class="highlight" style="background: #111111"><pre style="line-height: 125%; margin: 0;"><span></span><span style="color: #6699cc; font-weight: bold">def</span> ask_yes_no(prompt):
+    <span style="color: #6699cc; font-weight: bold">while</span> <span style="color: #6699cc; font-weight: bold">True</span>:
+        answer = <span style="color: #9966ff">input</span>(prompt + <span style="color: #ffff33">&#39; (y or n) &#39;</span>)
+        <span style="color: #6699cc; font-weight: bold">if</span> answer == <span style="color: #ffff33">&#39;y&#39;</span> or answer == <span style="color: #ffff33">&#39;Y&#39;</span>:
+            <span style="color: #6699cc; font-weight: bold">return</span> <span style="color: #6699cc; font-weight: bold">True</span>    <span style="color: #336666; font-style: italic"># returning ends the function</span>
+        <span style="color: #6699cc; font-weight: bold">if</span> answer == <span style="color: #ffff33">&#39;n&#39;</span> or answer == <span style="color: #ffff33">&#39;N&#39;</span>:
+            <span style="color: #6699cc; font-weight: bold">return</span> <span style="color: #6699cc; font-weight: bold">False</span>
+        <span style="color: #9966ff">print</span>(<span style="color: #ffff33">&quot;Answer &#39;y&#39; or &#39;n&#39;.&quot;</span>)
+
+<span style="color: #6699cc; font-weight: bold">if</span> ask_yes_no(<span style="color: #ffff33">&quot;Do you like ice cream?&quot;</span>):
+    <span style="color: #9966ff">print</span>(<span style="color: #ffff33">&quot;You like ice cream!&quot;</span>)
+<span style="color: #6699cc; font-weight: bold">else</span>:
+    <span style="color: #9966ff">print</span>(<span style="color: #ffff33">&quot;You don&#39;t like ice cream.&quot;</span>)
+</pre></div>
+<p>Ask questions with multiple answers.</p>
+<div class="highlight" style="background: #111111"><pre style="line-height: 125%; margin: 0;"><span></span><span style="color: #6699cc; font-weight: bold">def</span> ask_until_correct(prompt, correct_options,
+                      error_message=<span style="color: #ffff33">&quot;I don&#39;t know what you meant.&quot;</span>):
+    <span style="color: #6699cc; font-weight: bold">while</span> <span style="color: #6699cc; font-weight: bold">True</span>:
+        answer = <span style="color: #9966ff">input</span>(prompt + <span style="color: #ffff33">&#39; &#39;</span>)
+        <span style="color: #6699cc; font-weight: bold">if</span> answer in correct_options:
+            <span style="color: #6699cc; font-weight: bold">return</span> answer
+        <span style="color: #9966ff">print</span>(error_message)
+
+
+colors = [<span style="color: #ffff33">&#39;red&#39;</span>, <span style="color: #ffff33">&#39;yellow&#39;</span>, <span style="color: #ffff33">&#39;blue&#39;</span>, <span style="color: #ffff33">&#39;green&#39;</span>, <span style="color: #ffff33">&#39;orange&#39;</span>, <span style="color: #ffff33">&#39;pink&#39;</span>, <span style="color: #ffff33">&#39;black&#39;</span>,
+          <span style="color: #ffff33">&#39;gray&#39;</span>, <span style="color: #ffff33">&#39;white&#39;</span>, <span style="color: #ffff33">&#39;brown&#39;</span>]
+choice = ask_until_correct(<span style="color: #ffff33">&quot;What&#39;s your favorite color?&quot;</span>, colors,
+                           error_message=<span style="color: #ffff33">&quot;I don&#39;t know that color.&quot;</span>)
+<span style="color: #9966ff">print</span>(<span style="color: #ffff33">&quot;Your favorite color is %s!&quot;</span> % choice)
+</pre></div>
+<a name="summary" href="#summary"><h2>Summary</h2>
+</a><ul>
+<li>Functions are a way to write code once, and then use that same
+  code in multiple places.</li>
+<li>Variables inside functions are <strong>locals</strong>, and variables outside
+  functions are <strong>globals</strong>. Functions can access all variables, but
+  by default, they can only create and change the value of local
+  variables.</li>
+<li>Functions can take <strong>arguments</strong> and they can behave differently
+  depending on what arguments they get. Arguments are just local
+  variables.</li>
+<li>Functions can also <strong>return</strong> one value, like the built-in input
+  function does. Returning also ends the function immediately.</li>
+<li>Return a value instead of printing it if you need to do something with
+  it after calling the function.</li>
+<li>Remember that <code>thing</code>, <code>thing()</code>, <code>print(thing)</code> and <code>print(thing())</code>
+  do different things.</li>
+</ul>
+<a name="exercises" href="#exercises"><h2>Exercises</h2>
+</a><p><strong>There are many things to learn about functions, and I don't expect
+you to learn everything at once.</strong> However, there are also many free
+exercises about defining functions you can do.</p>
+<ol>
+<li><p>What's wrong with this code?</p>
+<div class="highlight" style="background: #111111"><pre style="line-height: 125%; margin: 0;"><span></span> <span style="color: #6699cc; font-weight: bold">def</span> ask_name():
+     name = <span style="color: #9966ff">input</span>(<span style="color: #ffff33">&quot;Enter your name: &quot;</span>)
+
+ ask_name()
+ <span style="color: #9966ff">print</span>(<span style="color: #ffff33">&quot;Your name is&quot;</span>, name)
+</pre></div>
+</li>
+<li><p>How about this code?</p>
+<div class="highlight" style="background: #111111"><pre style="line-height: 125%; margin: 0;"><span></span> <span style="color: #6699cc; font-weight: bold">def</span> get_greeting():
+     <span style="color: #6699cc; font-weight: bold">return</span> <span style="color: #ffff33">&quot;Hello World!&quot;</span>
+
+ <span style="color: #9966ff">print</span>(get_greeting)
+</pre></div>
+</li>
+<li><p>Why does this print None after greeting the world?</p>
+<div class="highlight" style="background: #111111"><pre style="line-height: 125%; margin: 0;"><span></span> <span style="color: #6699cc; font-weight: bold">def</span> greet(target):
+     <span style="color: #9966ff">print</span>(<span style="color: #ffff33">&quot;Hello&quot;</span>, target)
+
+ <span style="color: #9966ff">print</span>(greet(<span style="color: #ffff33">&quot;World&quot;</span>))
+</pre></div>
+</li>
+<li><p>Find more exercises about defining functions online.</p>
+</li>
+</ol>
+<p>Answers for the first, second and third exercise are
+<a href="answers.html#defining-functions">here</a>.</p>
+<hr>
+<p>If you have trouble with this tutorial please <a href="../contact-me.html">tell me about
+it</a> and I'll make this tutorial better. If you
+like this tutorial, please <a href="../index.html#how-can-i-thank-you-for-writing-and-sharing-this-tutorial">give it a
+star</a>.</p>
+<p>You may use this tutorial freely at your own risk. See
+<a href="../LICENSE.txt">LICENSE</a>.</p>
+<p><a href="dicts.html">Previous</a> | <a href="larger-program.html">Next</a> |
+<a href="../index.html#basics">List of contents</a></p>
+
+  </body>
+</html>
+

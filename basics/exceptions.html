@@ -1,0 +1,395 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title>Exceptions</title>
+    <link rel="stylesheet" type="text/css" href="../style.css">
+  </head>
+  <body>
+    <a name="exceptions" href="#exceptions"><h1>Exceptions</h1>
+</a><p>So far we have made programs that ask the user to enter a string, and
+we also know how to convert that to an integer.</p>
+<div class="highlight" style="background: #111111"><pre style="line-height: 125%; margin: 0;"><span></span>text = <span style="color: #9966ff">input</span>(<span style="color: #ffff33">&quot;Enter something: &quot;</span>)
+number = <span style="color: #9966ff">int</span>(text)
+<span style="color: #9966ff">print</span>(<span style="color: #ffff33">&quot;Your number doubled:&quot;</span>, number*2)
+</pre></div>
+<p>That works.</p>
+<pre><code>Enter a number: 3
+Your number doubled: 6
+</code></pre>
+<p>But that doesn't work if the user does not enter a number.</p>
+<div class="highlight" style="background: #111111"><pre style="line-height: 125%; margin: 0;"><span></span>Enter a number: lol
+Traceback (most recent call last):
+  File <span style="color: #ffff33">&quot;/some/place/file.py&quot;</span>, line 2, in &lt;module&gt;
+    number = <span style="color: #9966ff">int</span>(text)
+<span style="color: #ff0000; font-weight: bold">ValueError</span>: invalid literal <span style="color: #6699cc; font-weight: bold">for</span> <span style="color: #9966ff">int</span>() <span style="color: #6699cc; font-weight: bold">with</span> base 10: <span style="color: #ffff33">&#39;lol&#39;</span>
+</pre></div>
+<p>So how can we fix that?</p>
+<a name="what-are-exceptions" href="#what-are-exceptions"><h2>What are exceptions?</h2>
+</a><p>In the previous example we got a ValueError. ValueError is an
+<strong>exception</strong>. In other words, ValueError is an error that can occur
+in our program. If an exception occurs, the program will stop and we
+get an error message. The interactive prompt will display an error
+message and keep going.</p>
+<div class="highlight" style="background: #111111"><pre style="line-height: 125%; margin: 0;"><span></span>&gt;&gt;&gt; <span style="color: #9966ff">int</span>(<span style="color: #ffff33">&#39;lol&#39;</span>)
+Traceback (most recent call last):
+  File <span style="color: #9966ff">&quot;&lt;stdin&gt;&quot;</span>, line 1, in &lt;module&gt;
+ValueError: invalid literal for int() with base 10: &#39;lol&#39;
+&gt;&gt;&gt;
+</pre></div>
+<p>Exceptions are <a href="classes.html">classes</a>.</p>
+<div class="highlight" style="background: #111111"><pre style="line-height: 125%; margin: 0;"><span></span>&gt;&gt;&gt; <span style="color: #ff0000; font-weight: bold">ValueError</span>
+&lt;class &#39;ValueError&#39;&gt;
+&gt;&gt;&gt;
+</pre></div>
+<p>We can also create exceptions. We won't get an error message by doing
+that, but we'll use this for displaying our own error messages later.</p>
+<div class="highlight" style="background: #111111"><pre style="line-height: 125%; margin: 0;"><span></span>&gt;&gt;&gt; the_problem = <span style="color: #ff0000; font-weight: bold">ValueError</span>(<span style="color: #ffff33">&#39;oh no&#39;</span>)
+&gt;&gt;&gt; the_problem
+ValueError(&#39;oh no&#39;,)
+&gt;&gt;&gt;
+</pre></div>
+<a name="catching-exceptions" href="#catching-exceptions"><h2>Catching exceptions</h2>
+</a><p>If we need to try to do something and see if we get an exception, we
+can use <code>try</code> and <code>except</code>. This is also known as <strong>catching</strong> the
+exception.</p>
+<div class="highlight" style="background: #111111"><pre style="line-height: 125%; margin: 0;"><span></span>&gt;&gt;&gt; <span style="color: #6699cc; font-weight: bold">try</span>:
+...     <span style="color: #9966ff">print</span>(<span style="color: #9966ff">int</span>(<span style="color: #ffff33">&#39;lol&#39;</span>))
+... <span style="color: #6699cc; font-weight: bold">except</span> <span style="color: #ff0000; font-weight: bold">ValueError</span>:
+...     <span style="color: #9966ff">print</span>(<span style="color: #ffff33">&quot;Oops!&quot;</span>)
+...
+Oops!
+&gt;&gt;&gt;
+</pre></div>
+<p>The except part doesn't run if the try part succeeds.</p>
+<div class="highlight" style="background: #111111"><pre style="line-height: 125%; margin: 0;"><span></span>&gt;&gt;&gt; <span style="color: #6699cc; font-weight: bold">try</span>:
+...     <span style="color: #9966ff">print</span>(<span style="color: #ffff33">&quot;Hello World!&quot;</span>)
+... <span style="color: #6699cc; font-weight: bold">except</span> <span style="color: #ff0000; font-weight: bold">ValueError</span>:
+...     <span style="color: #9966ff">print</span>(<span style="color: #ffff33">&quot;What the heck? Printing failed!&quot;</span>)
+...
+Hello World!
+&gt;&gt;&gt;
+</pre></div>
+<p>ValueError is raised when something gets an invalid value, but the
+value's type is correct. In this case, <code>int</code> can take a string as an
+argument, but the string needs to contain a number, not <code>lol</code>. If
+the type is wrong, we will get a TypeError instead.</p>
+<div class="highlight" style="background: #111111"><pre style="line-height: 125%; margin: 0;"><span></span>&gt;&gt;&gt; 123 + <span style="color: #ffff33">&#39;hello&#39;</span>
+Traceback (most recent call last):
+  File <span style="color: #9966ff">&quot;&lt;stdin&gt;&quot;</span>, line 1, in &lt;module&gt;
+TypeError: unsupported operand type(s) for +: &#39;int&#39; and &#39;str&#39;
+&gt;&gt;&gt;
+</pre></div>
+<p>Exceptions always interrupt the code even if we catch them. Here the
+print never runs because it's after the error but inside the <code>try</code>
+block. Everything after the try block runs normally.</p>
+<div class="highlight" style="background: #111111"><pre style="line-height: 125%; margin: 0;"><span></span>&gt;&gt;&gt; <span style="color: #6699cc; font-weight: bold">try</span>:
+...     123 + <span style="color: #ffff33">&#39;hello&#39;</span>
+...     <span style="color: #9966ff">print</span>(<span style="color: #ffff33">&quot;This doesn&#39;t get printed.&quot;</span>)
+... <span style="color: #6699cc; font-weight: bold">except</span> <span style="color: #ff0000; font-weight: bold">TypeError</span>:
+...     <span style="color: #9966ff">print</span>(<span style="color: #ffff33">&quot;Oops!&quot;</span>)
+...
+Oops!
+&gt;&gt;&gt;
+</pre></div>
+<p>Does an <code>except ValueError</code> also catch TypeErrors?</p>
+<div class="highlight" style="background: #111111"><pre style="line-height: 125%; margin: 0;"><span></span>&gt;&gt;&gt; <span style="color: #6699cc; font-weight: bold">try</span>:
+...     <span style="color: #9966ff">print</span>(123 + <span style="color: #ffff33">&#39;hello&#39;</span>)
+... <span style="color: #6699cc; font-weight: bold">except</span> <span style="color: #ff0000; font-weight: bold">ValueError</span>:
+...     <span style="color: #9966ff">print</span>(<span style="color: #ffff33">&quot;Oops!&quot;</span>)
+...
+Traceback (most recent call last):
+  File <span style="color: #9966ff">&quot;&lt;stdin&gt;&quot;</span>, line 2, in &lt;module&gt;
+TypeError: unsupported operand type(s) for +: &#39;int&#39; and &#39;str&#39;
+&gt;&gt;&gt;
+</pre></div>
+<p>No, it doesn't. But maybe we could except for both ValueError and
+TypeError?</p>
+<div class="highlight" style="background: #111111"><pre style="line-height: 125%; margin: 0;"><span></span>&gt;&gt;&gt; <span style="color: #6699cc; font-weight: bold">try</span>:
+...     <span style="color: #9966ff">int</span>(<span style="color: #ffff33">&#39;lol&#39;</span>)
+... <span style="color: #6699cc; font-weight: bold">except</span> <span style="color: #ff0000; font-weight: bold">ValueError</span>:
+...     <span style="color: #9966ff">print</span>(<span style="color: #ffff33">&#39;wrong value&#39;</span>)
+... <span style="color: #6699cc; font-weight: bold">except</span> <span style="color: #ff0000; font-weight: bold">TypeError</span>:
+...     <span style="color: #9966ff">print</span>(<span style="color: #ffff33">&#39;wrong type&#39;</span>)
+...
+wrong value
+&gt;&gt;&gt; <span style="color: #6699cc; font-weight: bold">try</span>:
+...     123 + <span style="color: #ffff33">&#39;hello&#39;</span>
+... <span style="color: #6699cc; font-weight: bold">except</span> <span style="color: #ff0000; font-weight: bold">ValueError</span>:
+...     <span style="color: #9966ff">print</span>(<span style="color: #ffff33">&#39;wrong value&#39;</span>)
+... <span style="color: #6699cc; font-weight: bold">except</span> <span style="color: #ff0000; font-weight: bold">TypeError</span>:
+...     <span style="color: #9966ff">print</span>(<span style="color: #ffff33">&#39;wrong type&#39;</span>)
+...
+wrong type
+&gt;&gt;&gt;
+</pre></div>
+<p>Seems to be working.</p>
+<p>We can also also catch multiple exceptions by catching
+<a href="lists-and-tuples.html#tuples">a tuple</a> of exceptions:</p>
+<div class="highlight" style="background: #111111"><pre style="line-height: 125%; margin: 0;"><span></span>&gt;&gt;&gt; <span style="color: #6699cc; font-weight: bold">try</span>:
+...     123 + <span style="color: #ffff33">&#39;hello&#39;</span>
+... <span style="color: #6699cc; font-weight: bold">except</span> (<span style="color: #ff0000; font-weight: bold">ValueError</span>, <span style="color: #ff0000; font-weight: bold">TypeError</span>):
+...     <span style="color: #9966ff">print</span>(<span style="color: #ffff33">&#39;wrong value or type&#39;</span>)
+...
+wrong value or type
+&gt;&gt;&gt; <span style="color: #6699cc; font-weight: bold">try</span>:
+...     <span style="color: #9966ff">int</span>(<span style="color: #ffff33">&#39;lol&#39;</span>)
+... <span style="color: #6699cc; font-weight: bold">except</span> (<span style="color: #ff0000; font-weight: bold">ValueError</span>, <span style="color: #ff0000; font-weight: bold">TypeError</span>):
+...     <span style="color: #9966ff">print</span>(<span style="color: #ffff33">&#39;wrong value or type&#39;</span>)
+...
+wrong value or type
+&gt;&gt;&gt;
+</pre></div>
+<p>Catching <code>Exception</code> will catch all errors. We'll learn more about why
+it does that in a moment.</p>
+<div class="highlight" style="background: #111111"><pre style="line-height: 125%; margin: 0;"><span></span>&gt;&gt;&gt; <span style="color: #6699cc; font-weight: bold">try</span>:
+...     123 + <span style="color: #ffff33">&#39;hello&#39;</span>
+... <span style="color: #6699cc; font-weight: bold">except</span> <span style="color: #ff0000; font-weight: bold">Exception</span>:
+...     <span style="color: #9966ff">print</span>(<span style="color: #ffff33">&quot;Oops!&quot;</span>)
+...
+Oops!
+&gt;&gt;&gt; <span style="color: #6699cc; font-weight: bold">try</span>:
+...     <span style="color: #9966ff">int</span>(<span style="color: #ffff33">&#39;lol&#39;</span>)
+... <span style="color: #6699cc; font-weight: bold">except</span> <span style="color: #ff0000; font-weight: bold">Exception</span>:
+...     <span style="color: #9966ff">print</span>(<span style="color: #ffff33">&quot;Oops!&quot;</span>)
+...
+Oops!
+&gt;&gt;&gt;
+</pre></div>
+<p>It's also possible to catch an exception and store it in a variable.
+Here we are catching an exception that Python created and storing it in
+<code>our_error</code>.</p>
+<div class="highlight" style="background: #111111"><pre style="line-height: 125%; margin: 0;"><span></span>&gt;&gt;&gt; <span style="color: #6699cc; font-weight: bold">try</span>:
+...     123 + <span style="color: #ffff33">&#39;hello&#39;</span>
+... <span style="color: #6699cc; font-weight: bold">except</span> <span style="color: #ff0000; font-weight: bold">TypeError</span> <span style="color: #6699cc; font-weight: bold">as</span> e:
+...     our_error = e
+...
+&gt;&gt;&gt; our_error
+TypeError(&quot;unsupported operand type(s) for +: &#39;int&#39; and &#39;str&#39;&quot;,)
+&gt;&gt;&gt; <span style="color: #9966ff">type</span>(our_error)
+&lt;class &#39;TypeError&#39;&gt;
+&gt;&gt;&gt;
+</pre></div>
+<a name="when-should-we-catch-exceptions" href="#when-should-we-catch-exceptions"><h2>When should we catch exceptions?</h2>
+</a><p>Do <strong>not</strong> do things like this:</p>
+<div class="highlight" style="background: #111111"><pre style="line-height: 125%; margin: 0;"><span></span><span style="color: #6699cc; font-weight: bold">try</span>:
+    <span style="color: #336666; font-style: italic"># many lines of code</span>
+<span style="color: #6699cc; font-weight: bold">except</span> <span style="color: #ff0000; font-weight: bold">Exception</span>:
+    <span style="color: #9966ff">print</span>(<span style="color: #ffff33">&quot;Oops! Something went wrong.&quot;</span>)
+</pre></div>
+<p>There's many things that can go wrong in the <code>try</code> block. If something
+goes wrong all we have is an oops message that doesn't tell us which
+line caused the problem. This makes fixing the program really annoying.
+If we want to catch exceptions we need to be specific about what exactly
+we want to catch and where instead of catching everything we can in the
+whole program.</p>
+<p>There's nothing wrong with doing things like this:</p>
+<div class="highlight" style="background: #111111"><pre style="line-height: 125%; margin: 0;"><span></span><span style="color: #6699cc; font-weight: bold">try</span>:
+    <span style="color: #6699cc; font-weight: bold">with</span> <span style="color: #9966ff">open</span>(<span style="color: #ffff33">&#39;some file&#39;</span>, <span style="color: #ffff33">&#39;r&#39;</span>) <span style="color: #6699cc; font-weight: bold">as</span> f:
+        content = f.read()
+<span style="color: #6699cc; font-weight: bold">except</span> <span style="color: #ff0000; font-weight: bold">OSError</span>:     <span style="color: #336666; font-style: italic"># we can&#39;t read the file but we can work without it</span>
+    content = some_default_content
+</pre></div>
+<p>Usually catching errors that the user has caused is also a good idea:</p>
+<div class="highlight" style="background: #111111"><pre style="line-height: 125%; margin: 0;"><span></span><span style="color: #6699cc; font-weight: bold">import</span> sys
+
+text = <span style="color: #9966ff">input</span>(<span style="color: #ffff33">&quot;Enter a number: &quot;</span>)
+<span style="color: #6699cc; font-weight: bold">try</span>:
+    number = <span style="color: #9966ff">int</span>(text)
+<span style="color: #6699cc; font-weight: bold">except</span> <span style="color: #ff0000; font-weight: bold">ValueError</span>:
+    <span style="color: #9966ff">print</span>(<span style="color: #ffff33">&quot;&#39;%s&#39; is not a number.&quot;</span> % text, file=sys.stderr)
+    sys.exit(1)
+<span style="color: #9966ff">print</span>(<span style="color: #ffff33">&quot;Your number doubled is %d.&quot;</span> % (number * 2))
+</pre></div>
+<a name="raising-exceptions" href="#raising-exceptions"><h2>Raising exceptions</h2>
+</a><p>Now we know how to create exceptions and how to handle errors that
+Python creates. But we can also create error messages manually. This
+is known as <strong>raising an exception</strong> and <strong>throwing an exception</strong>.</p>
+<p>Raising an exception is easy. All we need to do is to type <code>raise</code>
+and then an exception we want to raise:</p>
+<div class="highlight" style="background: #111111"><pre style="line-height: 125%; margin: 0;"><span></span>&gt;&gt;&gt; <span style="color: #6699cc; font-weight: bold">raise</span> <span style="color: #ff0000; font-weight: bold">ValueError</span>(<span style="color: #ffff33">&quot;lol is not a number&quot;</span>)
+Traceback (most recent call last):
+  File <span style="color: #9966ff">&quot;&lt;stdin&gt;&quot;</span>, line 1, in &lt;module&gt;
+ValueError: lol is not a number
+&gt;&gt;&gt;
+</pre></div>
+<p>Of course, we can also raise an exception from a variable.</p>
+<div class="highlight" style="background: #111111"><pre style="line-height: 125%; margin: 0;"><span></span>&gt;&gt;&gt; oops = <span style="color: #ff0000; font-weight: bold">ValueError</span>(<span style="color: #ffff33">&quot;lol is not a number&quot;</span>)
+&gt;&gt;&gt; <span style="color: #6699cc; font-weight: bold">raise</span> oops
+Traceback (most recent call last):
+  File <span style="color: #9966ff">&quot;&lt;stdin&gt;&quot;</span>, line 1, in &lt;module&gt;
+ValueError: lol is not a number
+&gt;&gt;&gt;
+</pre></div>
+<p>If we <a href="defining-functions.html">define a function</a> that raises an
+exception and call it we'll notice that the error message also
+says which functions we ran to get to that error.</p>
+<div class="highlight" style="background: #111111"><pre style="line-height: 125%; margin: 0;"><span></span>&gt;&gt;&gt; <span style="color: #6699cc; font-weight: bold">def</span> oops():
+...     <span style="color: #6699cc; font-weight: bold">raise</span> <span style="color: #ff0000; font-weight: bold">ValueError</span>(<span style="color: #ffff33">&quot;oh no!&quot;</span>)
+...
+&gt;&gt;&gt; <span style="color: #6699cc; font-weight: bold">def</span> do_the_oops():
+...     oops()
+...
+&gt;&gt;&gt; do_the_oops()
+Traceback (most recent call last):
+  File <span style="color: #9966ff">&quot;&lt;stdin&gt;&quot;</span>, line 1, in &lt;module&gt;
+  File <span style="color: #9966ff">&quot;&lt;stdin&gt;&quot;</span>, line 2, in do_the_oops
+  File <span style="color: #9966ff">&quot;&lt;stdin&gt;&quot;</span>, line 2, in oops
+ValueError: oh no!
+&gt;&gt;&gt;
+</pre></div>
+<p>If our code was in a file we would also see the line of code
+that raised the error.</p>
+<a name="when-should-we-raise-exceptions" href="#when-should-we-raise-exceptions"><h2>When should we raise exceptions?</h2>
+</a><p>Back in <a href="modules.html">the module chapter</a> we learned to display error
+messages by printing to <code>sys.stderr</code> and then calling <code>sys.exit(1)</code>, so
+when should we use that and when should we raise an exception?</p>
+<p>Exceptions are meant for <strong>programmers</strong>, so if we are writing something
+that other people will import we should use exceptions. If our program
+is working like it should be and the <strong>user</strong> has done something wrong,
+it's usually better to use <code>sys.stderr</code> and <code>sys.exit</code>.</p>
+<a name="exception-hierarchy" href="#exception-hierarchy"><h2>Exception hierarchy</h2>
+</a><p>Exceptions are organized like this. I made this tree with <a href="https://github.com/Akuli/classtree/">this
+program</a> on Python 3.7. You may
+have more or less exceptions than I have if your Python is newer or
+older than mine, but they should be mostly similar.</p>
+<pre><code>Exception
+├── ArithmeticError
+│   ├── FloatingPointError
+│   ├── OverflowError
+│   └── ZeroDivisionError
+├── AssertionError
+├── AttributeError
+├── BufferError
+├── EOFError
+├── ImportError
+│   └── ModuleNotFoundError
+├── LookupError
+│   ├── IndexError
+│   └── KeyError
+├── MemoryError
+├── NameError
+│   └── UnboundLocalError
+├── OSError
+│   ├── BlockingIOError
+│   ├── ChildProcessError
+│   ├── ConnectionError
+│   │   ├── BrokenPipeError
+│   │   ├── ConnectionAbortedError
+│   │   ├── ConnectionRefusedError
+│   │   └── ConnectionResetError
+│   ├── FileExistsError
+│   ├── FileNotFoundError
+│   ├── InterruptedError
+│   ├── IsADirectoryError
+│   ├── NotADirectoryError
+│   ├── PermissionError
+│   ├── ProcessLookupError
+│   └── TimeoutError
+├── ReferenceError
+├── RuntimeError
+│   ├── NotImplementedError
+│   └── RecursionError
+├── StopAsyncIteration
+├── StopIteration
+├── SyntaxError
+│   └── IndentationError
+│       └── TabError
+├── SystemError
+├── TypeError
+├── ValueError
+│   └── UnicodeError
+│       ├── UnicodeDecodeError
+│       ├── UnicodeEncodeError
+│       └── UnicodeTranslateError
+└── Warning
+    ├── BytesWarning
+    ├── DeprecationWarning
+    ├── FutureWarning
+    ├── ImportWarning
+    ├── PendingDeprecationWarning
+    ├── ResourceWarning
+    ├── RuntimeWarning
+    ├── SyntaxWarning
+    ├── UnicodeWarning
+    └── UserWarning
+</code></pre>
+<p>Catching an exception also catches everything that's under it in this
+tree. For example, catching <code>OSError</code> catches errors that we typically
+get when <a href="files.html">processing files</a>, and catching Exception catches
+all of these errors. You don't need to remember this tree, running
+<code>help('builtins')</code> should display a larger tree that this is a part of.</p>
+<p>There are also a few exceptions that are not in this tree like
+SystemExit and KeyboardInterrupt, but most of the time we shouldn't
+catch them. Catching Exception doesn't catch them either.</p>
+<a name="summary" href="#summary"><h2>Summary</h2>
+</a><ul>
+<li>Exceptions are classes and they can be used just like all other classes.</li>
+<li>ValueError and TypeError are some of the most commonly used exceptions.</li>
+<li>The <code>try</code> and <code>except</code> keywords can be used for attempting to do
+  something and then doing something else if we get an error. This is
+  known as catching exceptions.</li>
+<li>It's possible to raise exceptions with the <code>raise</code> keyword. This
+  is also known as throwing exceptions.</li>
+<li>Raise exceptions if they are meant to be displayed for programmers and
+  use <code>sys.stderr</code> and <code>sys.exit</code> otherwise.</li>
+</ul>
+<a name="examples" href="#examples"><h2>Examples</h2>
+</a><p>Keep asking a number from the user until it's entered correctly.</p>
+<div class="highlight" style="background: #111111"><pre style="line-height: 125%; margin: 0;"><span></span><span style="color: #6699cc; font-weight: bold">while</span> <span style="color: #6699cc; font-weight: bold">True</span>:
+    <span style="color: #6699cc; font-weight: bold">try</span>:
+        number = <span style="color: #9966ff">int</span>(<span style="color: #9966ff">input</span>(<span style="color: #ffff33">&quot;Enter a number: &quot;</span>))
+        <span style="color: #6699cc; font-weight: bold">break</span>
+    <span style="color: #6699cc; font-weight: bold">except</span> <span style="color: #ff0000; font-weight: bold">ValueError</span>:
+        <span style="color: #9966ff">print</span>(<span style="color: #ffff33">&quot;That&#39;s not a valid number! Try again.&quot;</span>)
+
+<span style="color: #9966ff">print</span>(<span style="color: #ffff33">&quot;Your number doubled is:&quot;</span>, number * 2)
+</pre></div>
+<p>This program allows the user to customize the message it prints by
+modifying a file the greeting is stored in, and it can create the
+file for the user if it doesn't exist already. This example also uses
+things from <a href="files.html">the file chapter</a>, <a href="defining-functions.html">the function defining
+chapter</a> and <a href="modules.html">the module chapter</a>.</p>
+<div class="highlight" style="background: #111111"><pre style="line-height: 125%; margin: 0;"><span></span><span style="color: #336666; font-style: italic"># These are here so you can change them to customize the program</span>
+<span style="color: #336666; font-style: italic"># easily.</span>
+default_greeting = <span style="color: #ffff33">&quot;Hello World!&quot;</span>
+filename = <span style="color: #ffff33">&quot;greeting.txt&quot;</span>
+
+
+<span style="color: #6699cc; font-weight: bold">import</span> sys
+
+<span style="color: #6699cc; font-weight: bold">def</span> askyesno(question):
+    <span style="color: #6699cc; font-weight: bold">while</span> <span style="color: #6699cc; font-weight: bold">True</span>:
+        answer = <span style="color: #9966ff">input</span>(question + <span style="color: #ffff33">&#39; (y or n) &#39;</span>)
+        <span style="color: #6699cc; font-weight: bold">if</span> answer == <span style="color: #ffff33">&#39;Y&#39;</span> or answer == <span style="color: #ffff33">&#39;y&#39;</span>:
+            <span style="color: #6699cc; font-weight: bold">return</span> <span style="color: #6699cc; font-weight: bold">True</span>
+        <span style="color: #6699cc; font-weight: bold">if</span> answer == <span style="color: #ffff33">&#39;N&#39;</span> or answer == <span style="color: #ffff33">&#39;n&#39;</span>:
+            <span style="color: #6699cc; font-weight: bold">return</span> <span style="color: #6699cc; font-weight: bold">False</span>
+
+<span style="color: #6699cc; font-weight: bold">def</span> greet():
+    <span style="color: #6699cc; font-weight: bold">with</span> <span style="color: #9966ff">open</span>(filename, <span style="color: #ffff33">&#39;r&#39;</span>) <span style="color: #6699cc; font-weight: bold">as</span> f:
+        <span style="color: #6699cc; font-weight: bold">for</span> line in f:
+            <span style="color: #9966ff">print</span>(line.rstrip(<span style="color: #ffff33">&#39;\n&#39;</span>))
+
+<span style="color: #6699cc; font-weight: bold">try</span>:
+    greet()
+<span style="color: #6699cc; font-weight: bold">except</span> <span style="color: #ff0000; font-weight: bold">OSError</span>:
+    <span style="color: #9966ff">print</span>(<span style="color: #ffff33">&quot;Cannot read &#39;%s&#39;!&quot;</span> % filename, file=sys.stderr)
+    <span style="color: #6699cc; font-weight: bold">if</span> askyesno(<span style="color: #ffff33">&quot;Would you like to create a default greeting file?&quot;</span>):
+        <span style="color: #6699cc; font-weight: bold">with</span> <span style="color: #9966ff">open</span>(filename, <span style="color: #ffff33">&#39;w&#39;</span>) <span style="color: #6699cc; font-weight: bold">as</span> f:
+            <span style="color: #9966ff">print</span>(default_greeting, file=f)
+        greet()
+</pre></div>
+<hr>
+<p>If you have trouble with this tutorial please <a href="../contact-me.html">tell me about
+it</a> and I'll make this tutorial better. If you
+like this tutorial, please <a href="../index.html#how-can-i-thank-you-for-writing-and-sharing-this-tutorial">give it a
+star</a>.</p>
+<p>You may use this tutorial freely at your own risk. See
+<a href="../LICENSE.txt">LICENSE</a>.</p>
+<p><a href="modules.html">Previous</a> | <a href="classes.html">Next</a> |
+<a href="../index.html#basics">List of contents</a></p>
+
+  </body>
+</html>
+

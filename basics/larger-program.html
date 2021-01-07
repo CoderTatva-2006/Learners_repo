@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title>Writing a larger program</title>
+    <link rel="stylesheet" type="text/css" href="../style.css">
+  </head>
+  <body>
+    <a name="writing-a-larger-program" href="#writing-a-larger-program"><h1>Writing a larger program</h1>
+</a><p>Now we know enough about Python for creating a program that is actually
+useful. Awesome!</p>
+<p>In this tutorial we'll write a program that reads questions and answers
+in a text file and asks them. For example, this file would make the
+program ask what "text displaying function" and "text asking function"
+are:</p>
+<pre><code>text displaying function = print
+text asking function = input
+</code></pre>
+<p><strong>Save this example file to questions.txt</strong>, we'll need it later.</p>
+<p>This might seem useless to you right now, but a program like this can
+actually be really useful for learning different kinds of things. I
+originally wrote a program like this to study words of a foreign
+language, but then I realized that I could study pretty much anything
+with it.</p>
+<p>But there are many things the program needs to do and writing it seems
+really difficult and complicated! How the heck can we do this?</p>
+<a name="write-functions" href="#write-functions"><h2>Write functions</h2>
+</a><p>Our program will need to do several different things:</p>
+<ol>
+<li>Read the questions from a file.</li>
+<li>Ask the questions.</li>
+<li>Print statistics about how many questions were answered correctly
+and how many wrong.</li>
+</ol>
+<p>Now everything seems much easier. We know how to do each of these steps
+one by one, but doing it all at once would be difficult. In situations
+like this it's important to <a href="defining-functions.html">define functions</a>.
+We are going to write a <code>read_questions</code> function, an <code>ask_questions</code>
+function and a <code>stats</code> function.</p>
+<p>Let's start with the function that reads the question file:</p>
+<div class="highlight" style="background: #111111"><pre style="line-height: 125%; margin: 0;"><span></span><span style="color: #6699cc; font-weight: bold">def</span> read_questions(filename):
+    answers = {}
+    <span style="color: #6699cc; font-weight: bold">with</span> <span style="color: #9966ff">open</span>(filename, <span style="color: #ffff33">&#39;r&#39;</span>) <span style="color: #6699cc; font-weight: bold">as</span> f:
+        <span style="color: #6699cc; font-weight: bold">for</span> line in f:
+            line = line.strip()
+            <span style="color: #6699cc; font-weight: bold">if</span> line != <span style="color: #ffff33">&#39;&#39;</span>:
+                question, answer = line.split(<span style="color: #ffff33">&#39;=&#39;</span>)
+                answers[question.strip()] = answer.strip()
+    <span style="color: #6699cc; font-weight: bold">return</span> answers
+</pre></div>
+<p>At this point it's best to try out the function to see how it works. You
+need to create a <code>questions.txt</code> file like the one in the beginning of
+this tutorial if you didn't create it already.</p>
+<p><strong>TODO:</strong> Instructions for using the -i switch.</p>
+<div class="highlight" style="background: #111111"><pre style="line-height: 125%; margin: 0;"><span></span>&gt;&gt;&gt; read_questions(<span style="color: #ffff33">&#39;questions.txt&#39;</span>)
+{&#39;text displaying function&#39;: &#39;print&#39;, &#39;text asking function&#39;: &#39;input&#39;}
+&gt;&gt;&gt;
+</pre></div>
+<p>If your function doesn't work correctly it doesn't matter, and fixing
+the problem is easy because the function is so short. This is one of the
+reasons why we write functions.</p>
+<p>Next we'll write the rest of the functions the same way, first writing
+and then testing and fixing. Here are my versions of them:</p>
+<div class="highlight" style="background: #111111"><pre style="line-height: 125%; margin: 0;"><span></span><span style="color: #6699cc; font-weight: bold">def</span> ask_questions(answers):
+    correct = []
+    wrong = []
+
+    <span style="color: #6699cc; font-weight: bold">for</span> question, answer in answers.items():
+        <span style="color: #6699cc; font-weight: bold">if</span> <span style="color: #9966ff">input</span>(question + <span style="color: #ffff33">&#39; = &#39;</span>).strip() == answer:
+            <span style="color: #9966ff">print</span>(<span style="color: #ffff33">&quot;Correct!&quot;</span>)
+            correct.append(question)
+        <span style="color: #6699cc; font-weight: bold">else</span>:
+            <span style="color: #9966ff">print</span>(<span style="color: #ffff33">&quot;Wrong! The correct answer is %s.&quot;</span> % answer)
+            wrong.append(question)
+
+    <span style="color: #6699cc; font-weight: bold">return</span> (correct, wrong)
+
+
+<span style="color: #6699cc; font-weight: bold">def</span> stats(correct, wrong, answers):
+    <span style="color: #9966ff">print</span>(<span style="color: #ffff33">&quot;\n**** STATS ****\n&quot;</span>)
+    <span style="color: #9966ff">print</span>(<span style="color: #ffff33">&quot;You answered&quot;</span>, <span style="color: #9966ff">len</span>(correct), <span style="color: #ffff33">&quot;questions correctly and&quot;</span>,
+          <span style="color: #9966ff">len</span>(wrong), <span style="color: #ffff33">&quot;questions wrong.&quot;</span>)
+
+    <span style="color: #6699cc; font-weight: bold">if</span> wrong:
+        <span style="color: #9966ff">print</span>(<span style="color: #ffff33">&quot;These would have been the correct answers:&quot;</span>)
+        <span style="color: #6699cc; font-weight: bold">for</span> question in wrong:
+            <span style="color: #9966ff">print</span>(<span style="color: #ffff33">&#39; &#39;</span>, question, <span style="color: #ffff33">&#39;=&#39;</span>, answers[question])
+</pre></div>
+<p>Note that these functions have some empty lines in them and there are
+two empty lines between the functions. This makes the code a bit longer,
+but it's a lot easier to read this way.</p>
+<p>Let's try out the functions.</p>
+<div class="highlight" style="background: #111111"><pre style="line-height: 125%; margin: 0;"><span></span>&gt;&gt;&gt; answers = read_questions(<span style="color: #ffff33">&#39;questions.txt&#39;</span>)
+&gt;&gt;&gt; correct, wrong = ask_questions(answers)
+text displaying function = print
+Correct!
+text asking function = elif
+Wrong! The correct answer is input.
+&gt;&gt;&gt; correct
+[&#39;text displaying function&#39;]
+&gt;&gt;&gt; wrong
+[&#39;text asking function&#39;]
+&gt;&gt;&gt; stats(correct, wrong, answers)
+
+**** STATS ****
+
+You answered 1 questions right and 1 questions wrong.
+These would have been the correct answers:
+  text asking function = input
+&gt;&gt;&gt;
+</pre></div>
+<p>Everything is working! Now we just need something that runs everything
+because we don't want to type this out on the <code>&gt;&gt;&gt;</code> prompt every time.</p>
+<p>You might have noticed that the stats function printed <code>1 questions</code>
+instead of <code>1 question</code>, and it looks a bit weird. You can modify the
+<code>print_stats</code> function to fix this if you want to.</p>
+<a name="the-main-function" href="#the-main-function"><h2>The main function</h2>
+</a><p>The last function in a program like this is usually called <code>main</code> and it
+runs the program using other functions. Our main function consists of
+mostly the same pieces of code that we just tried out on the <code>&gt;&gt;&gt;</code>
+prompt.</p>
+<div class="highlight" style="background: #111111"><pre style="line-height: 125%; margin: 0;"><span></span><span style="color: #6699cc; font-weight: bold">def</span> main():
+    filename = <span style="color: #9966ff">input</span>(<span style="color: #ffff33">&quot;Name of the question file: &quot;</span>)
+    answers = read_questions(filename)
+    correct, wrong = ask_questions(answers)
+    stats(correct, wrong, answers)
+</pre></div>
+<p>The last thing we need to add is these two lines:</p>
+<div class="highlight" style="background: #111111"><pre style="line-height: 125%; margin: 0;"><span></span><span style="color: #6699cc; font-weight: bold">if</span> __name__ == <span style="color: #ffff33">&#39;__main__&#39;</span>:
+    main()
+</pre></div>
+<p>The <code>__name__</code> variable is set differently depending on how we run the
+file, and it's <code>'__main__'</code> when we run the file directly instead of
+importing. So if we run the file normally it asks us the words, and if
+we import it instead we can still run the functions one by one. If you
+want to know more about <code>__name__</code> just make a file that prints it and
+run it in different ways.</p>
+<p>Now the whole program looks like this:</p>
+<div class="highlight" style="background: #111111"><pre style="line-height: 125%; margin: 0;"><span></span><span style="color: #6699cc; font-weight: bold">def</span> read_questions(filename):
+    answers = {}
+    <span style="color: #6699cc; font-weight: bold">with</span> <span style="color: #9966ff">open</span>(filename, <span style="color: #ffff33">&#39;r&#39;</span>) <span style="color: #6699cc; font-weight: bold">as</span> f:
+        <span style="color: #6699cc; font-weight: bold">for</span> line in f:
+            line = line.strip()
+            <span style="color: #6699cc; font-weight: bold">if</span> line != <span style="color: #ffff33">&#39;&#39;</span>:
+                question, answer = line.split(<span style="color: #ffff33">&#39;=&#39;</span>)
+                answers[question.strip()] = answer.strip()
+    <span style="color: #6699cc; font-weight: bold">return</span> answers
+
+
+<span style="color: #6699cc; font-weight: bold">def</span> ask_questions(answers):
+    correct = []
+    wrong = []
+
+    <span style="color: #6699cc; font-weight: bold">for</span> question, answer in answers.items():
+        <span style="color: #6699cc; font-weight: bold">if</span> <span style="color: #9966ff">input</span>(<span style="color: #ffff33">&#39;%s = &#39;</span> % question).strip() == answer:
+            <span style="color: #9966ff">print</span>(<span style="color: #ffff33">&quot;Correct!&quot;</span>)
+            correct.append(question)
+        <span style="color: #6699cc; font-weight: bold">else</span>:
+            <span style="color: #9966ff">print</span>(<span style="color: #ffff33">&quot;Wrong! The correct answer is %s.&quot;</span> % answer)
+            wrong.append(question)
+
+    <span style="color: #6699cc; font-weight: bold">return</span> (correct, wrong)
+
+
+<span style="color: #6699cc; font-weight: bold">def</span> stats(correct, wrong, answers):
+    <span style="color: #9966ff">print</span>(<span style="color: #ffff33">&quot;\n**** STATS ****\n&quot;</span>)
+    <span style="color: #9966ff">print</span>(<span style="color: #ffff33">&quot;You answered&quot;</span>, <span style="color: #9966ff">len</span>(correct), <span style="color: #ffff33">&quot;questions correctly and&quot;</span>,
+          <span style="color: #9966ff">len</span>(wrong), <span style="color: #ffff33">&quot;questions wrong.&quot;</span>)
+
+    <span style="color: #6699cc; font-weight: bold">if</span> wrong:
+        <span style="color: #9966ff">print</span>(<span style="color: #ffff33">&quot;These would have been the correct answers:&quot;</span>)
+        <span style="color: #6699cc; font-weight: bold">for</span> question in wrong:
+            <span style="color: #9966ff">print</span>(<span style="color: #ffff33">&#39; &#39;</span>, question, <span style="color: #ffff33">&#39;=&#39;</span>, answers[question])
+
+
+<span style="color: #6699cc; font-weight: bold">def</span> main():
+    filename = <span style="color: #9966ff">input</span>(<span style="color: #ffff33">&quot;Name of the question file: &quot;</span>)
+    answers = read_questions(filename)
+    correct, wrong = ask_questions(answers)
+    stats(correct, wrong, answers)
+
+<span style="color: #6699cc; font-weight: bold">if</span> __name__ == <span style="color: #ffff33">&#39;__main__&#39;</span>:
+    main()
+</pre></div>
+<p>This is just the beginning. Now <a href="../LICENSE.txt">you can</a> take your word
+asking program and make your own version of it that suits <strong>your</strong>
+needs. Then you can share it with your friends so they will find it
+useful as well.</p>
+<a name="summary" href="#summary"><h2>Summary</h2>
+</a><ul>
+<li>Make multiple functions when your program needs to do multiple things.
+Each function should do one thing.</li>
+<li>Try out the functions on the <code>&gt;&gt;&gt;</code> prompt when you want to check if
+  they work correctly.</li>
+<li><code>__name__</code> is <code>'__main__'</code> when the program is supposed to run, and
+something else when it's imported.</li>
+</ul>
+<hr>
+<p>If you have trouble with this tutorial please <a href="../contact-me.html">tell me about
+it</a> and I'll make this tutorial better. If you
+like this tutorial, please <a href="../index.html#how-can-i-thank-you-for-writing-and-sharing-this-tutorial">give it a
+star</a>.</p>
+<p>You may use this tutorial freely at your own risk. See
+<a href="../LICENSE.txt">LICENSE</a>.</p>
+<p><a href="defining-functions.html">Previous</a> | <a href="what-is-true.html">Next</a> |
+<a href="../index.html#basics">List of contents</a></p>
+
+  </body>
+</html>
+

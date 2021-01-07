@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title>Magic methods</title>
+    <link rel="stylesheet" type="text/css" href="../style.css">
+  </head>
+  <body>
+    <a name="magic-methods" href="#magic-methods"><h1>Magic methods</h1>
+</a><p>In <a href="../basics/classes.html">the class tutorial</a> we learned to define a
+class like this:</p>
+<div class="highlight" style="background: #111111"><pre style="line-height: 125%; margin: 0;"><span></span><span style="color: #6699cc; font-weight: bold">class</span> Website:
+
+    <span style="color: #6699cc; font-weight: bold">def</span> __init__(<span style="color: #9966ff">self</span>, url, founding_year, free_to_use):
+        <span style="color: #9966ff">self</span>.url = url
+        <span style="color: #9966ff">self</span>.founding_year = founding_year
+        <span style="color: #9966ff">self</span>.free_to_use = free_to_use
+
+    <span style="color: #6699cc; font-weight: bold">def</span> info(<span style="color: #9966ff">self</span>):
+        <span style="color: #9966ff">print</span>(<span style="color: #ffff33">&quot;URL:&quot;</span>, <span style="color: #9966ff">self</span>.url)
+        <span style="color: #9966ff">print</span>(<span style="color: #ffff33">&quot;Founding year:&quot;</span>, <span style="color: #9966ff">self</span>.founding_year)
+        <span style="color: #9966ff">print</span>(<span style="color: #ffff33">&quot;Free to use:&quot;</span>, <span style="color: #9966ff">self</span>.free_to_use)
+</pre></div>
+<p>After doing that we can create a new Website object like
+<code>Website('https://github.com/', 2008, True)</code>. Python first creates the
+Website object, and then calls <code>__init__</code> with the arguments we passed
+to Website to set it up. Methods that have a name <code>__like_this__</code> and a
+special meaning are called <strong>magic methods</strong> or <strong>special methods</strong>.</p>
+<p>Most magic methods define what the object has or what it can do, like
+"does it have a length" or "can we for loop over it". There are other
+magic methods that do other things also, like <code>__init__</code>.</p>
+<p>Some magic methods have a default implementation that is used if the
+class doesn't define anything else. For example, if we don't define an
+<code>__init__</code> then our class will take no arguments and it won't have any
+attributes by default. We'll learn more about this when we'll talk about
+<a href="classes2.html">inheritance</a>.</p>
+<p><strong>TODO:</strong> write a <code>classes2.md</code>.</p>
+<a name="custom-length" href="#custom-length"><h2>Custom length</h2>
+</a><p>Let's get started by defining an object that has a length:</p>
+<div class="highlight" style="background: #111111"><pre style="line-height: 125%; margin: 0;"><span></span>&gt;&gt;&gt; <span style="color: #6699cc; font-weight: bold">class</span> Thing:
+...     <span style="color: #6699cc; font-weight: bold">def</span> __len__(<span style="color: #9966ff">self</span>):
+...         <span style="color: #6699cc; font-weight: bold">return</span> 5
+...
+&gt;&gt;&gt; t = Thing()
+&gt;&gt;&gt; t
+&lt;__main__.Thing object at 0x7f05e4597198&gt;
+&gt;&gt;&gt; t.__len__()
+5
+&gt;&gt;&gt; <span style="color: #9966ff">len</span>(t)
+5
+&gt;&gt;&gt;
+</pre></div>
+<p>This is what most magic methods are like. So far we have learned to use
+<code>len()</code> with lists, strings and other built-in types, but now we can
+call <code>len()</code> on our own Thing object. Many things can be fully
+customized with magic methods.</p>
+<p>Note that magic methods like <code>__len__</code> need to be defined in the class,
+just attaching an attribute called <code>__len__</code> doesn't work:</p>
+<div class="highlight" style="background: #111111"><pre style="line-height: 125%; margin: 0;"><span></span>&gt;&gt;&gt; <span style="color: #6699cc; font-weight: bold">class</span> EmptyThing:
+...     <span style="color: #6699cc; font-weight: bold">pass</span>
+...
+&gt;&gt;&gt; <span style="color: #6699cc; font-weight: bold">def</span> length():
+...     <span style="color: #6699cc; font-weight: bold">return</span> 5
+...
+&gt;&gt;&gt; e = EmptyThing()
+&gt;&gt;&gt; e.__len__ = length
+&gt;&gt;&gt; e.__len__()
+5
+&gt;&gt;&gt; <span style="color: #9966ff">len</span>(e)
+Traceback (most recent call last):
+  File <span style="color: #9966ff">&quot;&lt;stdin&gt;&quot;</span>, line 1, in &lt;module&gt;
+TypeError: object of type &#39;EmptyThing&#39; has no len()
+&gt;&gt;&gt;
+</pre></div>
+<p>You don't really need to worry about why Python works like this, but
+it's explained
+<a href="https://docs.python.org/3/reference/datamodel.html#special-method-lookup">here</a>
+if you want to know more about it.</p>
+<a name="string-representations" href="#string-representations"><h2>String representations</h2>
+</a><p>You have probably noticed that typing something to the interactive <code>&gt;&gt;&gt;</code>
+prompt is not quite the same thing as printing it. For example,
+strings behave like this:</p>
+<div class="highlight" style="background: #111111"><pre style="line-height: 125%; margin: 0;"><span></span>&gt;&gt;&gt; <span style="color: #ffff33">&#39;hello&#39;</span>
+&#39;hello&#39;
+&gt;&gt;&gt; <span style="color: #9966ff">print</span>(<span style="color: #ffff33">&#39;hello&#39;</span>)
+hello
+&gt;&gt;&gt;
+</pre></div>
+<p>If you want to print something the way it's displayed on the <code>&gt;&gt;&gt;</code>
+prompt you can use the <code>repr()</code> function. Here "repr" is short for
+"representation".</p>
+<div class="highlight" style="background: #111111"><pre style="line-height: 125%; margin: 0;"><span></span>&gt;&gt;&gt; message = <span style="color: #ffff33">&#39;hello&#39;</span>
+&gt;&gt;&gt; <span style="color: #9966ff">print</span>(<span style="color: #ffff33">&quot;the message is&quot;</span>, <span style="color: #9966ff">repr</span>(message))
+the message is &#39;hello&#39;
+&gt;&gt;&gt;
+</pre></div>
+<p>Combining <code>repr()</code> with <a href="../basics/handy-stuff-strings.html#string-formatting">string
+formatting</a> is also
+easy. <code>%</code> formatting has a <code>%r</code> formatter, and <code>.format()</code> formatting
+has a <code>!r</code> flag.</p>
+<div class="highlight" style="background: #111111"><pre style="line-height: 125%; margin: 0;"><span></span>&gt;&gt;&gt; <span style="color: #9966ff">print</span>(<span style="color: #ffff33">&quot;the message is %r&quot;</span> % (message,))
+the message is &#39;hello&#39;
+&gt;&gt;&gt; <span style="color: #9966ff">print</span>(<span style="color: #ffff33">&quot;the message is {!r}&quot;</span>.format(message))
+the message is &#39;hello&#39;
+&gt;&gt;&gt;
+</pre></div>
+<p>The <code>__repr__</code> magic method can be used to customize this. For example,
+we can do this:</p>
+<div class="highlight" style="background: #111111"><pre style="line-height: 125%; margin: 0;"><span></span>&gt;&gt;&gt; <span style="color: #6699cc; font-weight: bold">class</span> Website:
+...     <span style="color: #6699cc; font-weight: bold">def</span> __repr__(<span style="color: #9966ff">self</span>):
+...         <span style="color: #6699cc; font-weight: bold">return</span> <span style="color: #ffff33">&#39;&lt;a Website object&gt;&#39;</span>
+...
+&gt;&gt;&gt; w = Website()
+&gt;&gt;&gt; w.__repr__()
+&#39;&lt;a Website object&gt;&#39;
+&gt;&gt;&gt; <span style="color: #9966ff">str</span>(w)
+&#39;&lt;a Website object&gt;&#39;
+&gt;&gt;&gt; <span style="color: #9966ff">print</span>(w)
+&lt;a Website object&gt;
+&gt;&gt;&gt; w
+&lt;a Website object&gt;
+&gt;&gt;&gt;
+</pre></div>
+<p>The <code>__repr__</code> method can return any string, but usually you should
+follow one of these styles:</p>
+<ol>
+<li><p>A piece of code that describes how another, similar object can be
+ created.</p>
+<div class="highlight" style="background: #111111"><pre style="line-height: 125%; margin: 0;"><span></span> &gt;&gt;&gt; <span style="color: #6699cc; font-weight: bold">class</span> Website:
+ ...     <span style="color: #6699cc; font-weight: bold">def</span> __init__(<span style="color: #9966ff">self</span>, name, founding_year):
+ ...         <span style="color: #9966ff">self</span>.name = name
+ ...         <span style="color: #9966ff">self</span>.founding_year = founding_year
+ ...     <span style="color: #6699cc; font-weight: bold">def</span> __repr__(<span style="color: #9966ff">self</span>):
+ ...         <span style="color: #6699cc; font-weight: bold">return</span> <span style="color: #ffff33">&#39;Website(name=%r, founding_year=%r)&#39;</span> % (
+ ...             <span style="color: #9966ff">self</span>.name, <span style="color: #9966ff">self</span>.founding_year)
+ ...
+ &gt;&gt;&gt; github = Website(<span style="color: #ffff33">&#39;GitHub&#39;</span>, 2008)
+ &gt;&gt;&gt; github
+ Website(name=<span style="color: #ffff33">&#39;GitHub&#39;</span>, founding_year=2008)
+ &gt;&gt;&gt;
+</pre></div>
+<p>This is useful for simple data containers like this Website class.</p>
+</li>
+<li><p>A description of the object wrapped between <code>&lt;</code> and <code>&gt;</code>.</p>
+<div class="highlight" style="background: #111111"><pre style="line-height: 125%; margin: 0;"><span></span> &gt;&gt;&gt; <span style="color: #6699cc; font-weight: bold">class</span> Website:
+ ...     <span style="color: #6699cc; font-weight: bold">def</span> __init__(<span style="color: #9966ff">self</span>, name, founding_year):
+ ...         <span style="color: #9966ff">self</span>.name = name
+ ...         <span style="color: #9966ff">self</span>.founding_year = founding_year
+ ...     <span style="color: #6699cc; font-weight: bold">def</span> __repr__(<span style="color: #9966ff">self</span>):
+ ...         <span style="color: #6699cc; font-weight: bold">return</span> <span style="color: #ffff33">&#39;&lt;Website %r, founded in %r&gt;&#39;</span> % (
+ ...             <span style="color: #9966ff">self</span>.name, <span style="color: #9966ff">self</span>.founding_year)
+ ...
+ &gt;&gt;&gt; github = Website(<span style="color: #ffff33">&#39;GitHub&#39;</span>, 2008)
+ &gt;&gt;&gt; github
+ &lt;Website <span style="color: #ffff33">&#39;GitHub&#39;</span>, founded in 2008&gt;
+ &gt;&gt;&gt;
+</pre></div>
+<p>This style is good when you want to tell more about the object than
+ you can by showing the <code>__init__</code> arguments. Python's built-in
+ things also use this style more:</p>
+<div class="highlight" style="background: #111111"><pre style="line-height: 125%; margin: 0;"><span></span> &gt;&gt;&gt; <span style="color: #6699cc; font-weight: bold">import</span> random
+ &gt;&gt;&gt; random
+ &lt;module <span style="color: #ffff33">&#39;random&#39;</span> <span style="color: #6699cc; font-weight: bold">from</span> <span style="color: #ffff33">&#39;/some/path/random.py&#39;</span>&gt;
+ &gt;&gt;&gt;
+</pre></div>
+</li>
+</ol>
+<a name="other-magic-methods" href="#other-magic-methods"><h2>Other magic methods</h2>
+</a><p>There are many more magic methods, and I don't see any reason to list
+them all here. <a href="https://docs.python.org/3/reference/datamodel.html">The official
+documentation</a> has
+more information about magic methods if you need it. We'll go through
+using the most important magic methods in the rest of this tutorial, so
+if you just keep reading you'll learn more about them.</p>
+<a name="when-should-we-use-magic-methods" href="#when-should-we-use-magic-methods"><h2>When should we use magic methods?</h2>
+</a><p>There's nothing wrong with using <code>__init__</code> everywhere, but other than
+that, magic methods are usually not needed. <code>website.has_user(user)</code> and
+<code>user in website.userlist</code> are way better than something weird that we
+could do with magic methods like <code>user @ website</code>. People expect
+<code>website.has_user(user)</code> check if a user has registered on the website,
+but nobody can guess what <code>user @ website</code> does. Explicit is better than
+implicit, and simple is better than complex.</p>
+<p>On the other hand, using magic methods when needed can turn something
+good into something great. Especially the <code>__repr__</code> method is useful
+because people can get a good idea of what an object is by just looking
+at it on the <code>&gt;&gt;&gt;</code> prompt or printing it. I recommend using <code>__repr__</code>
+methods in things that other people will import and use in their
+projects, but <code>__repr__</code> methods aren't worth it for simple scripts that
+are not meant to be imported.</p>
+<a name="summary" href="#summary"><h2>Summary</h2>
+</a><ul>
+<li>Magic methods define what instances of a class can do and how, like
+  "does it have a length" or "what does it look like when I print it".</li>
+<li>Python uses magic methods to implement many things internally, and we
+  can customize everything by implementing the magic methods
+  ourselves.</li>
+<li>Defining custom <code>__repr__</code> methods is often a good idea when making
+  things that other people will import and use in their own projects,
+  and the <code>__init__</code> method is very useful for many things.
+  Other than that, magic methods are usually not worth it.</li>
+</ul>
+<hr>
+<p>If you have trouble with this tutorial please <a href="../contact-me.html">tell me about
+it</a> and I'll make this tutorial better. If you
+like this tutorial, please <a href="../index.html#how-can-i-thank-you-for-writing-and-sharing-this-tutorial">give it a
+star</a>.</p>
+<p>You may use this tutorial freely at your own risk. See
+<a href="../LICENSE.txt">LICENSE</a>.</p>
+<p><a href="functions.html">Previous</a> | <a href="iters.html">Next</a> |
+<a href="../index.html#advanced">List of contents</a></p>
+
+  </body>
+</html>
+

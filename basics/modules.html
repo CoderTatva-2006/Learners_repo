@@ -1,0 +1,409 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title>Modules</title>
+    <link rel="stylesheet" type="text/css" href="../style.css">
+  </head>
+  <body>
+    <a name="modules" href="#modules"><h1>Modules</h1>
+</a><p>Let's say we want to generate a random number between 1 and 3.
+The random module is a really easy way to do this:</p>
+<div class="highlight" style="background: #111111"><pre style="line-height: 125%; margin: 0;"><span></span>&gt;&gt;&gt; <span style="color: #6699cc; font-weight: bold">import</span> random
+&gt;&gt;&gt; random.randint(1, 3)
+3
+&gt;&gt;&gt; random.randint(1, 3)
+1
+&gt;&gt;&gt; random.randint(1, 3)
+3
+&gt;&gt;&gt; random.randint(1, 3)
+2
+&gt;&gt;&gt; random.randint(1, 3)
+2
+&gt;&gt;&gt;
+</pre></div>
+<p>That's cool... but how does that work?</p>
+<a name="what-are-modules" href="#what-are-modules"><h2>What are modules?</h2>
+</a><p>The first line in the example, <code>import random</code>, was an
+<strong>import statement.</strong> But what is that random thing that it
+gave us?</p>
+<div class="highlight" style="background: #111111"><pre style="line-height: 125%; margin: 0;"><span></span>&gt;&gt;&gt; random
+&lt;module &#39;random&#39; from &#39;/usr/lib/python3.7/random.py&#39;&gt;
+&gt;&gt;&gt;
+</pre></div>
+<p>So it's a module, and it comes from a path... but what does
+all that mean?</p>
+<p>Now open the folder that contains your <code>random.py</code>. On my
+system it's <code>/usr/lib/python3.7</code>, but yours will probably be
+different. To open a folder in your file manager you can press
+Windows-R on Windows or Alt+F2 on most Linux distributions,
+and just type your path there. I don't have an up-to-date copy
+of OSX so unfortunately I have no idea what you need to do on
+OSX.</p>
+<p>You'll see a bunch of files and a few directories in the folder
+that opens:</p>
+<p><a href="../images/modules.png"><img src="../images/modules.png" alt="My Python&#39;s modules."></a></p>
+<p>All of these <code>.py</code> files can be imported like we just imported
+<code>random.py</code>. In random.py, there's a line like <code>randint = something</code>,
+so we can use its randint variable with <code>random.randint</code> after
+importing it.</p>
+<p>You're probably wondering how a computer can generate random numbers.
+The random module does different things on different operating systems,
+but on most systems it reads random noise that several programs on the
+computer produce and creates random numbers based on that.</p>
+<a name="where-do-modules-come-from" href="#where-do-modules-come-from"><h2>Where do modules come from?</h2>
+</a><p>Create a <code>random.py</code> file with the following content:</p>
+<div class="highlight" style="background: #111111"><pre style="line-height: 125%; margin: 0;"><span></span><span style="color: #6699cc; font-weight: bold">import</span> random
+
+<span style="color: #9966ff">print</span>(<span style="color: #ffff33">&quot;A random number between 1 and 3:&quot;</span>, random.randint(1, 3))
+</pre></div>
+<p>Now run the program.</p>
+<div class="highlight" style="background: #111111"><pre style="line-height: 125%; margin: 0;"><span></span>Traceback (most recent call last):
+  File <span style="color: #ffff33">&quot;random.py&quot;</span>, line 1, in &lt;module&gt;
+    <span style="color: #6699cc; font-weight: bold">import</span> random
+  File <span style="color: #ffff33">&quot;/home/akuli/random.py&quot;</span>, line 4, in &lt;module&gt;
+    <span style="color: #9966ff">print</span>(<span style="color: #ffff33">&quot;A random number between 1 and 3:&quot;</span>, random.randint(1, 3))
+<span style="color: #ff0000; font-weight: bold">AttributeError</span>: <span style="color: #ffff33">&#39;module&#39;</span> <span style="color: #9966ff">object</span> has no attribute <span style="color: #ffff33">&#39;randint&#39;</span>
+</pre></div>
+<p>But what was that? Why didn't it work?</p>
+<p><strong>TODO:</strong> update the <code>-i</code> instructions.</p>
+<p>Let's go ahead and check what's wrong. If you don't use IDLE, you'll
+need to pass the <code>-i</code> option to Python, so if you would normally run
+<code>python3 random.py</code> you should now do <code>python3 -i random.py</code>. This will
+run the file and then give you a <code>&gt;&gt;&gt;</code> prompt that we can use to check
+what's wrong. If you use IDLE, just run the file normally.</p>
+<p>We should end up with the same error message, and then a <code>&gt;&gt;&gt;</code>.
+Like this:</p>
+<div class="highlight" style="background: #111111"><pre style="line-height: 125%; margin: 0;"><span></span>Traceback (most recent call last):
+  File <span style="color: #ffff33">&quot;random.py&quot;</span>, line 1, in &lt;module&gt;
+    <span style="color: #6699cc; font-weight: bold">import</span> random
+  File <span style="color: #ffff33">&quot;/home/akuli/random.py&quot;</span>, line 4, in &lt;module&gt;
+    <span style="color: #9966ff">print</span>(<span style="color: #ffff33">&quot;A random number between 1 and 3:&quot;</span>, random.randint(1, 3))
+<span style="color: #ff0000; font-weight: bold">AttributeError</span>: <span style="color: #ffff33">&#39;module&#39;</span> <span style="color: #9966ff">object</span> has no attribute <span style="color: #ffff33">&#39;randint&#39;</span>
+&gt;&gt;&gt;
+</pre></div>
+<p>So first of all, what is that <code>random</code> variable?</p>
+<div class="highlight" style="background: #111111"><pre style="line-height: 125%; margin: 0;"><span></span>&gt;&gt;&gt; random
+&lt;module &#39;random&#39; from &#39;/home/akuli/random.py&#39;&gt;
+&gt;&gt;&gt;
+</pre></div>
+<p>What the heck? It's a module called random... but it's not the
+<code>random.py</code> we thought it was. <strong>Our</strong> <code>random.py</code> has imported
+itself!</p>
+<p>So let's go ahead and rename our file from <code>random.py</code> to
+something like <code>ourrandom.py</code> and try again:</p>
+<pre><code>A random number between 1 and 3: 3
+</code></pre>
+<p>There we go, now we don't have our own <code>random.py</code> so it works.</p>
+<p>So seems like that modules can be imported from the directory that
+our Python file is in, and also from the directory that the real
+<code>random.py</code> is in. But where else can they come from?</p>
+<p>There's a module called <strong>sys</strong> that contains various things built
+into Python. Actually the whole module is built-in, so there's no
+<code>sys.py</code> anywhere. The sys module has a list that contains all
+places that modules are searched from:</p>
+<div class="highlight" style="background: #111111"><pre style="line-height: 125%; margin: 0;"><span></span>&gt;&gt;&gt; <span style="color: #6699cc; font-weight: bold">import</span> sys
+&gt;&gt;&gt; sys
+&lt;module &#39;sys&#39; (built-in)&gt;
+&gt;&gt;&gt; sys.path
+[&#39;&#39;,
+ &#39;/usr/lib/python37.zip&#39;,
+ &#39;/usr/lib/python3.7&#39;,
+ &#39;/usr/lib/python3.7/lib-dynload&#39;,
+ &#39;/home/akuli/.local/lib/python3.7/site-packages&#39;,
+ &#39;/usr/local/lib/python3.7/dist-packages&#39;,
+ &#39;/usr/lib/python3/dist-packages&#39;]
+&gt;&gt;&gt;
+</pre></div>
+<p>So that's where my Python finds its modules. The first thing in my
+sys.path is an empty string, and in this case it means the current
+working directory.</p>
+<a name="caching-modules" href="#caching-modules"><h2>Caching modules</h2>
+</a><p>Let's create a file called <code>hello.py</code> that contains a classic greeting:</p>
+<div class="highlight" style="background: #111111"><pre style="line-height: 125%; margin: 0;"><span></span><span style="color: #9966ff">print</span>(<span style="color: #ffff33">&quot;Hello World!&quot;</span>)
+</pre></div>
+<p>Let's go ahead and import it, and see how it works.</p>
+<div class="highlight" style="background: #111111"><pre style="line-height: 125%; margin: 0;"><span></span>&gt;&gt;&gt; <span style="color: #6699cc; font-weight: bold">import</span> hello
+Hello World!
+&gt;&gt;&gt;
+</pre></div>
+<p>Works as expected, but what happens if we try to import it again?</p>
+<div class="highlight" style="background: #111111"><pre style="line-height: 125%; margin: 0;"><span></span>&gt;&gt;&gt; <span style="color: #6699cc; font-weight: bold">import</span> hello
+&gt;&gt;&gt;
+</pre></div>
+<p>Nothing happened at all.</p>
+<p>The reason why the module wasn't loaded twice is simple. In a
+large project with many files it's normal to import the same
+module in many files, so it gets imported multiple times. If
+Python would reload the module every time it's imported,
+dividing code to multiple files would make the code run slower.</p>
+<p>If we need to load the module again we can just exit out of Python and
+launch it again.</p>
+<a name="brief-overview-of-the-standard-library" href="#brief-overview-of-the-standard-library"><h2>Brief overview of the standard library</h2>
+</a><p>The <strong>standard library</strong> consists of modules that Python comes
+with. Here's a very brief overview of what it can do. All of
+these modules can also do other things, and you can read more
+about that in the official documentation.</p>
+<a name="random-numbers" href="#random-numbers"><h3>Random numbers</h3>
+</a><p>The official documentation is
+<a href="https://docs.python.org/3/library/random.html">here</a>.</p>
+<div class="highlight" style="background: #111111"><pre style="line-height: 125%; margin: 0;"><span></span>&gt;&gt;&gt; <span style="color: #6699cc; font-weight: bold">import</span> random
+&gt;&gt;&gt; random.randint(1, 3)      <span style="color: #336666; font-style: italic"># 1, 2 or 3</span>
+3
+&gt;&gt;&gt; colors = [<span style="color: #ffff33">&#39;red&#39;</span>, <span style="color: #ffff33">&#39;blue&#39;</span>, <span style="color: #ffff33">&#39;yellow&#39;</span>]
+&gt;&gt;&gt; random.choice(colors)     <span style="color: #336666; font-style: italic"># choose one color</span>
+&#39;red&#39;
+&gt;&gt;&gt; random.sample(colors, 2)  <span style="color: #336666; font-style: italic"># choose two different colors</span>
+[&#39;yellow&#39;, &#39;red&#39;]
+&gt;&gt;&gt; random.shuffle(colors)    <span style="color: #336666; font-style: italic"># mix the color list in-place</span>
+&gt;&gt;&gt; colors
+[&#39;yellow&#39;, &#39;red&#39;, &#39;blue&#39;]
+&gt;&gt;&gt;
+</pre></div>
+<a name="things-that-are-built-into-python" href="#things-that-are-built-into-python"><h3>Things that are built into Python</h3>
+</a><p>The module name "sys" is short for "system", and it contains things
+that are built into Python. The official documentation is
+<a href="https://docs.python.org/3/library/sys.html">here</a>.</p>
+<p><code>sys.stdin</code>, <code>sys.stdout</code> and <code>sys.stderr</code> are <a href="files.html">file objects</a>,
+just like the file objects that <code>open()</code> gives us.</p>
+<div class="highlight" style="background: #111111"><pre style="line-height: 125%; margin: 0;"><span></span>&gt;&gt;&gt; <span style="color: #6699cc; font-weight: bold">import</span> sys
+&gt;&gt;&gt; <span style="color: #9966ff">print</span>(<span style="color: #ffff33">&quot;Hello!&quot;</span>, file=sys.stdout)  <span style="color: #336666; font-style: italic"># this is where prints go by default</span>
+Hello!
+&gt;&gt;&gt; <span style="color: #9966ff">print</span>(<span style="color: #ffff33">&quot;Hello!&quot;</span>, file=sys.stderr)  <span style="color: #336666; font-style: italic"># use this for error messages</span>
+Hello!
+&gt;&gt;&gt; line = sys.stdin.readline()  <span style="color: #336666; font-style: italic"># i will type hello and press enter</span>
+hello
+&gt;&gt;&gt; line
+&#39;hello\n&#39;
+&gt;&gt;&gt;
+&gt;&gt;&gt; <span style="color: #336666; font-style: italic"># information about Python&#39;s version, behaves like a tuple</span>
+&gt;&gt;&gt; sys.version_info
+sys.version_info(major=3, minor=7, micro=3, releaselevel=&#39;final&#39;, serial=0)
+&gt;&gt;&gt; sys.version_info[:3]  <span style="color: #336666; font-style: italic"># this is Python 3.7.3</span>
+(3, 7, 3)
+&gt;&gt;&gt;
+&gt;&gt;&gt; sys.exit()  <span style="color: #336666; font-style: italic"># exit out of Python</span>
+</pre></div>
+<p><strong>TODO:</strong> why stderr instead of stdout, when to use <code>sys.stdin.readline()</code> instead of <code>input()</code></p>
+<p><code>sys.exit()</code> does the same thing as <code>sys.exit(0)</code>. The zero means that
+the program succeeded, and everything's fine. If our program has an
+error we should print an error message to <code>sys.stderr</code> and then call
+<code>sys.exit(1)</code>. Like this:</p>
+<div class="highlight" style="background: #111111"><pre style="line-height: 125%; margin: 0;"><span></span><span style="color: #6699cc; font-weight: bold">if</span> something_went_wrong:
+    <span style="color: #336666; font-style: italic"># of course, we need to make real error messages more</span>
+    <span style="color: #336666; font-style: italic"># informative than this example is</span>
+    <span style="color: #9966ff">print</span>(<span style="color: #ffff33">&quot;Oh crap! Something went wrong.&quot;</span>, file=sys.stderr)
+    sys.exit(1)
+</pre></div>
+<a name="mathematics" href="#mathematics"><h3>Mathematics</h3>
+</a><p>There's no math.py anywhere, math is a built-in module like
+sys. The official documentation is
+<a href="https://docs.python.org/3/library/math.html">here</a>.</p>
+<div class="highlight" style="background: #111111"><pre style="line-height: 125%; margin: 0;"><span></span>&gt;&gt;&gt; <span style="color: #6699cc; font-weight: bold">import</span> math
+&gt;&gt;&gt; math
+&lt;module &#39;math&#39; (built-in)&gt;
+&gt;&gt;&gt; math.pi                  <span style="color: #336666; font-style: italic"># approximate value of π</span>
+3.141592653589793
+&gt;&gt;&gt; math.sqrt(2)             <span style="color: #336666; font-style: italic"># square root of 2</span>
+1.4142135623730951
+&gt;&gt;&gt; math.radians(180)        <span style="color: #336666; font-style: italic"># convert degrees to radians</span>
+3.141592653589793
+&gt;&gt;&gt; math.degrees(math.pi/2)  <span style="color: #336666; font-style: italic"># convert radians to degrees</span>
+90.0
+&gt;&gt;&gt; math.sin(math.pi/2)      <span style="color: #336666; font-style: italic"># sin of 90 degrees or 1/2 π radians</span>
+1.0
+&gt;&gt;&gt;
+</pre></div>
+<a name="timerelated-things" href="#timerelated-things"><h3>Time-related things</h3>
+</a><p>The official documentation for the time module is
+<a href="https://docs.python.org/3/library/time.html">here</a>.</p>
+<div class="highlight" style="background: #111111"><pre style="line-height: 125%; margin: 0;"><span></span>&gt;&gt;&gt; <span style="color: #6699cc; font-weight: bold">import</span> time
+&gt;&gt;&gt; time.sleep(1)   <span style="color: #336666; font-style: italic"># wait one second</span>
+&gt;&gt;&gt; time.time()     <span style="color: #336666; font-style: italic"># return time in seconds since beginning of the year 1970</span>
+1474896325.2394648
+&gt;&gt;&gt; time.strftime(<span style="color: #ffff33">&#39;%d.%m.%Y %H:%M:%S&#39;</span>)  <span style="color: #336666; font-style: italic"># format current time nicely</span>
+&#39;07.04.2017 19:08:33&#39;
+&gt;&gt;&gt;
+</pre></div>
+<p>You are probably wondering how <code>time.time()</code> can be used and why its
+timing starts from the beginning of 1970. <code>time.time()</code> is useful for
+measuring time differences because we can save its return value to a
+variable before doing something, and then afterwards check how much it
+changed. There's an example that does this in <a href="#examples">the example
+section</a>.</p>
+<p>If you want to know why it starts from 1970 you can read something like
+<a href="http://stackoverflow.com/questions/1090869/why-is-1-1-1970-the-epoch-time">this</a>.
+See <code>help(time.strftime)</code> if you want to know about more format
+specifiers like <code>%d</code>, <code>%m</code> etc. that <code>time.strftime</code> can take.</p>
+<a name="operating-system-related-things" href="#operating-system-related-things"><h3>Operating system related things</h3>
+</a><p>The module name "os" is short for "operating system", and it contains
+handy functions for interacting with the operating system that Python
+is running on. The official documentation is
+<a href="https://docs.python.org/3/library/os.html">here</a>.</p>
+<div class="highlight" style="background: #111111"><pre style="line-height: 125%; margin: 0;"><span></span>&gt;&gt;&gt; <span style="color: #6699cc; font-weight: bold">import</span> os
+&gt;&gt;&gt; os.getcwd()        <span style="color: #336666; font-style: italic"># short for &quot;get current working directory&quot;</span>
+&#39;/home/akuli&#39;
+&gt;&gt;&gt; os.mkdir(<span style="color: #ffff33">&#39;stuff&#39;</span>)  <span style="color: #336666; font-style: italic"># create a folder, short for &quot;make directory&quot;</span>
+&gt;&gt;&gt;
+&gt;&gt;&gt; os.path.isfile(<span style="color: #ffff33">&#39;hello.txt&#39;</span>)  <span style="color: #336666; font-style: italic"># check if it&#39;s a file</span>
+True
+&gt;&gt;&gt; os.path.isfile(<span style="color: #ffff33">&#39;stuff&#39;</span>)
+False
+&gt;&gt;&gt; os.path.isdir(<span style="color: #ffff33">&#39;hello.txt&#39;</span>)   <span style="color: #336666; font-style: italic"># check if it&#39;s a directory</span>
+False
+&gt;&gt;&gt; os.path.isdir(<span style="color: #ffff33">&#39;stuff&#39;</span>)
+True
+&gt;&gt;&gt; os.path.exists(<span style="color: #ffff33">&#39;hello.txt&#39;</span>)  <span style="color: #336666; font-style: italic"># check if it&#39;s anything</span>
+True
+&gt;&gt;&gt; os.path.exists(<span style="color: #ffff33">&#39;stuff&#39;</span>)
+True
+&gt;&gt;&gt;
+&gt;&gt;&gt; <span style="color: #336666; font-style: italic"># this joins with &#39;\\&#39; on windows and &#39;/&#39; on most other systems</span>
+&gt;&gt;&gt; path = os.path.join(<span style="color: #ffff33">&#39;stuff&#39;</span>, <span style="color: #ffff33">&#39;hello-world.txt&#39;</span>)
+&gt;&gt;&gt; path
+&#39;stuff/hello-world.txt&#39;
+&gt;&gt;&gt; <span style="color: #6699cc; font-weight: bold">with</span> <span style="color: #9966ff">open</span>(path, <span style="color: #ffff33">&#39;w&#39;</span>) <span style="color: #6699cc; font-weight: bold">as</span> f:
+...     <span style="color: #336666; font-style: italic"># now this goes to the stuff folder we created</span>
+...     <span style="color: #9966ff">print</span>(<span style="color: #ffff33">&quot;Hello World!&quot;</span>, file=f)
+...
+&gt;&gt;&gt; os.listdir(<span style="color: #ffff33">&#39;stuff&#39;</span>)  <span style="color: #336666; font-style: italic"># create a list of everything in stuff</span>
+[&#39;hello-world.txt&#39;]
+&gt;&gt;&gt;
+</pre></div>
+<a name="examples" href="#examples"><h2>Examples</h2>
+</a><p>Mix a list of things.</p>
+<div class="highlight" style="background: #111111"><pre style="line-height: 125%; margin: 0;"><span></span><span style="color: #6699cc; font-weight: bold">import</span> random
+
+<span style="color: #9966ff">print</span>(<span style="color: #ffff33">&quot;Enter things to mix, and press Enter without typing&quot;</span>,
+      <span style="color: #ffff33">&quot;anything when you&#39;re done.&quot;</span>)
+things = []
+<span style="color: #6699cc; font-weight: bold">while</span> <span style="color: #6699cc; font-weight: bold">True</span>:
+    thing = <span style="color: #9966ff">input</span>(<span style="color: #ffff33">&quot;Next thing: &quot;</span>)
+    <span style="color: #6699cc; font-weight: bold">if</span> thing == <span style="color: #ffff33">&quot;&quot;</span>:
+        <span style="color: #6699cc; font-weight: bold">break</span>
+    things.append(thing)
+
+random.shuffle(things)
+
+<span style="color: #9966ff">print</span>(<span style="color: #ffff33">&quot;After mixing:&quot;</span>)
+<span style="color: #6699cc; font-weight: bold">for</span> thing in things:
+    <span style="color: #9966ff">print</span>(thing)
+</pre></div>
+<p>Measure how long it takes for the user to answer a question.
+The <code>%.2f</code> rounds to 2 decimals, and you can find more formatting
+tricks <a href="https://pyformat.info/">here</a>.</p>
+<div class="highlight" style="background: #111111"><pre style="line-height: 125%; margin: 0;"><span></span><span style="color: #6699cc; font-weight: bold">import</span> time
+
+start = time.time()
+answer = <span style="color: #9966ff">input</span>(<span style="color: #ffff33">&quot;What is 1 + 2? &quot;</span>)
+end = time.time()
+difference = end - start
+
+<span style="color: #6699cc; font-weight: bold">if</span> answer == <span style="color: #ffff33">&#39;3&#39;</span>:
+    <span style="color: #9966ff">print</span>(<span style="color: #ffff33">&quot;Correct! That took %.2f seconds.&quot;</span> % difference)
+<span style="color: #6699cc; font-weight: bold">else</span>:
+    <span style="color: #9966ff">print</span>(<span style="color: #ffff33">&quot;That&#39;s not correct...&quot;</span>)
+</pre></div>
+<p>Wait a given number of seconds.</p>
+<div class="highlight" style="background: #111111"><pre style="line-height: 125%; margin: 0;"><span></span><span style="color: #6699cc; font-weight: bold">import</span> sys
+<span style="color: #6699cc; font-weight: bold">import</span> time
+
+
+answer = <span style="color: #9966ff">input</span>(<span style="color: #ffff33">&quot;How long do you want to wait in seconds? &quot;</span>)
+waitingtime = <span style="color: #9966ff">float</span>(answer)
+<span style="color: #6699cc; font-weight: bold">if</span> waitingtime &lt; 0:
+    <span style="color: #9966ff">print</span>(<span style="color: #ffff33">&quot;Error: cannot wait a negative time.&quot;</span>, file=sys.stderr)
+    sys.exit(1)
+
+<span style="color: #9966ff">print</span>(<span style="color: #ffff33">&quot;Waiting...&quot;</span>)
+time.sleep(waitingtime)
+<span style="color: #9966ff">print</span>(<span style="color: #ffff33">&quot;Done!&quot;</span>)
+</pre></div>
+<p>Check what a path points to.</p>
+<div class="highlight" style="background: #111111"><pre style="line-height: 125%; margin: 0;"><span></span><span style="color: #6699cc; font-weight: bold">import</span> os
+<span style="color: #6699cc; font-weight: bold">import</span> sys
+
+<span style="color: #9966ff">print</span>(<span style="color: #ffff33">&quot;You are currently in %s.&quot;</span> % os.getcwd())
+
+<span style="color: #6699cc; font-weight: bold">while</span> <span style="color: #6699cc; font-weight: bold">True</span>:
+    path = <span style="color: #9966ff">input</span>(<span style="color: #ffff33">&quot;A path, or nothing at all to quit: &quot;</span>)
+    <span style="color: #6699cc; font-weight: bold">if</span> path == <span style="color: #ffff33">&#39;&#39;</span>:
+        <span style="color: #336666; font-style: italic"># We could just break out of the loop, but I&#39;ll show how</span>
+        <span style="color: #336666; font-style: italic"># this can be done with sys.exit. The difference is that</span>
+        <span style="color: #336666; font-style: italic"># break only breaks the innermost loop it is in, and</span>
+        <span style="color: #336666; font-style: italic"># sys.exit ends the whole program.</span>
+        sys.exit()
+    <span style="color: #6699cc; font-weight: bold">if</span> os.path.isfile(path):
+        <span style="color: #9966ff">print</span>(<span style="color: #ffff33">&quot;It&#39;s a file!&quot;</span>)
+    <span style="color: #6699cc; font-weight: bold">elif</span> os.path.isdir(path):
+        <span style="color: #9966ff">print</span>(<span style="color: #ffff33">&quot;It&#39;s a folder!&quot;</span>)
+    <span style="color: #6699cc; font-weight: bold">elif</span> os.path.exists(path):
+        <span style="color: #336666; font-style: italic"># i have no idea when this code would actually run</span>
+        <span style="color: #9966ff">print</span>(<span style="color: #ffff33">&quot;Interesting, it exists but it&#39;s not a file or a folder.&quot;</span>)
+    <span style="color: #6699cc; font-weight: bold">else</span>:
+        <span style="color: #9966ff">print</span>(<span style="color: #ffff33">&quot;I can&#39;t find it :(&quot;</span>, file=sys.stderr)
+</pre></div>
+<a name="more-modules" href="#more-modules"><h2>More modules!</h2>
+</a><p>Python's standard library has many awesome modules and I just
+can't tell about each and every module I use here. Here's some of
+my favorite modules from the standard library. Don't study them
+one by one, but look into them when you think you might need them.
+When reading the documentation it's usually easiest to find what
+you are looking for by pressing Ctrl+F in your web browser, and
+then typing in what you want to search for.</p>
+<ul>
+<li><a href="https://docs.python.org/3/howto/argparse.html">argparse</a>:
+  a full-featured command-line argument parser</li>
+<li><a href="https://docs.python.org/3/library/collections.html">collections</a>,
+  <a href="https://docs.python.org/3/library/functools.html">functools</a> and
+  <a href="https://docs.python.org/3/library/itertools.html">itertools</a>:
+  handy utilities</li>
+<li><a href="https://docs.python.org/3/library/configparser.html">configparser</a>:
+  load and save setting files</li>
+<li><a href="https://docs.python.org/3/library/csv.html">csv</a>:
+  store comma-separated lines in files</li>
+<li><a href="https://docs.python.org/3/library/json.html">json</a>:
+  yet another way to store data in files and strings</li>
+<li><a href="https://docs.python.org/3/library/textwrap.html">textwrap</a>:
+  break long text into multiple lines</li>
+<li><a href="https://pymotw.com/3/warnings/">warnings</a>:
+  like <a href="exceptions.html">exceptions</a>, but they don't interrupt the
+  whole program</li>
+<li><a href="https://pymotw.com/3/webbrowser/">webbrowser</a>:
+  open a web browser from Python</li>
+</ul>
+<p>There are also lots of awesome modules that don't come with Python.
+You can search for those on the <a href="https://pypi.org/">Python package index</a>,
+or PyPI for short. It's often better to find a library that does something
+difficult than to spend a lot of time trying to do it yourself.</p>
+<p>I recommend reading <a href="https://docs.python.org/3/installing/">the official documentation about installing
+modules</a> from PyPI. If you're using
+Linux, then also read the "Installing into the system Python on Linux"
+section at the bottom.</p>
+<a name="summary" href="#summary"><h2>Summary</h2>
+</a><ul>
+<li>Most modules are files on our computers, but some of them are built
+  in to Python. We can use modules in our projects by importing them,
+  and after that using <code>modulename.variable</code> to get a variable from
+  the module.</li>
+<li>Some of the most commonly used modules are random, sys, math, time
+  and os.</li>
+<li>Avoid creating <code>.py</code> files that have the same name as a name of a
+  module you want to use.</li>
+<li>Python comes with many modules, and we can install even more modules
+  if we want to.</li>
+</ul>
+<p><strong>TODO:</strong> exercises</p>
+<hr>
+<p>If you have trouble with this tutorial please <a href="../contact-me.html">tell me about
+it</a> and I'll make this tutorial better. If you
+like this tutorial, please <a href="../index.html#how-can-i-thank-you-for-writing-and-sharing-this-tutorial">give it a
+star</a>.</p>
+<p>You may use this tutorial freely at your own risk. See
+<a href="../LICENSE.txt">LICENSE</a>.</p>
+<p><a href="files.html">Previous</a> | <a href="exceptions.html">Next</a> |
+<a href="../index.html#basics">List of contents</a></p>
+
+  </body>
+</html>
+

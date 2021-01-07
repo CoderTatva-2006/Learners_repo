@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title>What is true?</title>
+    <link rel="stylesheet" type="text/css" href="../style.css">
+  </head>
+  <body>
+    <a name="what-is-true" href="#what-is-true"><h1>What is true?</h1>
+</a><p>Now we understand how code like this works.</p>
+<div class="highlight" style="background: #111111"><pre style="line-height: 125%; margin: 0;"><span></span>message = <span style="color: #9966ff">input</span>(<span style="color: #ffff33">&quot;Enter something: &quot;</span>)
+<span style="color: #6699cc; font-weight: bold">if</span> message == <span style="color: #ffff33">&#39;&#39;</span>:
+    <span style="color: #9966ff">print</span>(<span style="color: #ffff33">&quot;You didn&#39;t enter anything!&quot;</span>)
+<span style="color: #6699cc; font-weight: bold">else</span>:
+    <span style="color: #9966ff">print</span>(<span style="color: #ffff33">&quot;You entered:&quot;</span>, message)
+</pre></div>
+<p>But most Python programmers would write that code like this
+instead:</p>
+<div class="highlight" style="background: #111111"><pre style="line-height: 125%; margin: 0;"><span></span>message = <span style="color: #9966ff">input</span>(<span style="color: #ffff33">&quot;Enter something: &quot;</span>)
+<span style="color: #6699cc; font-weight: bold">if</span> message:
+    <span style="color: #9966ff">print</span>(<span style="color: #ffff33">&quot;You entered:&quot;</span>, message)
+<span style="color: #6699cc; font-weight: bold">else</span>:
+    <span style="color: #9966ff">print</span>(<span style="color: #ffff33">&quot;You didn&#39;t enter anything!&quot;</span>)
+</pre></div>
+<p>What the heck was that? We did <code>if message</code>, but <code>message</code>
+was a string, not True or False!</p>
+<p>Python converted our message to a Boolean and then checked if
+the Boolean it ended up with was True. But when will it be true?</p>
+<a name="converting-to-booleans" href="#converting-to-booleans"><h2>Converting to Booleans</h2>
+</a><p>The <code>if message:</code> actually did the same thing as <code>if bool(message)</code>,
+which is same as <code>if bool(message) == True:</code>. Usually we just don't
+write the <code>==True</code> part anywhere because we don't need it.</p>
+<p>We can convert things to Booleans like Python did by doing
+<code>bool(things)</code>. Let's try that with strings.</p>
+<div class="highlight" style="background: #111111"><pre style="line-height: 125%; margin: 0;"><span></span>&gt;&gt;&gt; <span style="color: #9966ff">bool</span>(<span style="color: #ffff33">&#39;hello&#39;</span>)
+True
+&gt;&gt;&gt; <span style="color: #9966ff">bool</span>(<span style="color: #ffff33">&#39;there&#39;</span>)
+True
+&gt;&gt;&gt; <span style="color: #9966ff">bool</span>(<span style="color: #ffff33">&#39;True&#39;</span>)
+True
+&gt;&gt;&gt; <span style="color: #9966ff">bool</span>(<span style="color: #ffff33">&#39;False&#39;</span>)    <span style="color: #336666; font-style: italic"># this isn&#39;t special in any way</span>
+True
+&gt;&gt;&gt;
+</pre></div>
+<p>As we can see, the Boolean value of most strings is True. The
+only string that has a false Boolean value is the empty string,
+<code>''</code> or <code>""</code>:</p>
+<div class="highlight" style="background: #111111"><pre style="line-height: 125%; margin: 0;"><span></span>&gt;&gt;&gt; <span style="color: #9966ff">bool</span>(<span style="color: #ffff33">&#39;&#39;</span>)
+False
+&gt;&gt;&gt;
+</pre></div>
+<p>Most other things are also treated as False if they're empty and
+True if they're not empty.</p>
+<div class="highlight" style="background: #111111"><pre style="line-height: 125%; margin: 0;"><span></span>&gt;&gt;&gt; <span style="color: #9966ff">bool</span>([1, 2, 3])
+True
+&gt;&gt;&gt; <span style="color: #9966ff">bool</span>([])
+False
+&gt;&gt;&gt; <span style="color: #9966ff">bool</span>((1, 2, 3))
+True
+&gt;&gt;&gt; <span style="color: #9966ff">bool</span>(())
+False
+&gt;&gt;&gt; <span style="color: #9966ff">bool</span>({<span style="color: #ffff33">&#39;a&#39;</span>: 1, <span style="color: #ffff33">&#39;b&#39;</span>: 2})
+True
+&gt;&gt;&gt; <span style="color: #9966ff">bool</span>({})
+False
+&gt;&gt;&gt;
+</pre></div>
+<p>None and zero are also falsy, but positive and negative numbers
+are treated as True.</p>
+<div class="highlight" style="background: #111111"><pre style="line-height: 125%; margin: 0;"><span></span>&gt;&gt;&gt; <span style="color: #9966ff">bool</span>(<span style="color: #6699cc; font-weight: bold">None</span>)
+False
+&gt;&gt;&gt; <span style="color: #9966ff">bool</span>(0)
+False
+&gt;&gt;&gt; <span style="color: #9966ff">bool</span>(0.0)
+False
+&gt;&gt;&gt; <span style="color: #9966ff">bool</span>(1)
+True
+&gt;&gt;&gt; <span style="color: #9966ff">bool</span>(-1)
+True
+&gt;&gt;&gt;
+</pre></div>
+<p>Most other things are also treated as True.</p>
+<div class="highlight" style="background: #111111"><pre style="line-height: 125%; margin: 0;"><span></span>&gt;&gt;&gt; <span style="color: #9966ff">bool</span>(<span style="color: #ff0000; font-weight: bold">OSError</span>)
+True
+&gt;&gt;&gt; <span style="color: #9966ff">bool</span>(<span style="color: #9966ff">print</span>)
+True
+&gt;&gt;&gt;
+</pre></div>
+<a name="when-and-why-should-we-use-boolean-values-of-things" href="#when-and-why-should-we-use-boolean-values-of-things"><h2>When and why should we use Boolean values of things?</h2>
+</a><p>It's recommended to rely on the Boolean value when we're doing
+something with things like lists and tuples. This way our code
+will work even if it gets a value of a different type than we
+expected it to get originally.</p>
+<p>For example, this code doesn't work right if we give it
+something else than a list. It thinks that empty tuples,
+strings and dictionaries aren't empty just because they aren't
+empty lists:</p>
+<div class="highlight" style="background: #111111"><pre style="line-height: 125%; margin: 0;"><span></span>&gt;&gt;&gt; <span style="color: #6699cc; font-weight: bold">def</span> is_this_empty(thing):
+...     <span style="color: #6699cc; font-weight: bold">if</span> thing == []:
+...         <span style="color: #9966ff">print</span>(<span style="color: #ffff33">&quot;It&#39;s empty!&quot;</span>)
+...     <span style="color: #6699cc; font-weight: bold">else</span>:
+...         <span style="color: #9966ff">print</span>(<span style="color: #ffff33">&quot;It&#39;s not empty.&quot;</span>)
+...
+&gt;&gt;&gt; is_this_empty([1, 2, 3])
+It&#39;s not empty.
+&gt;&gt;&gt; is_this_empty([])
+It&#39;s empty!
+&gt;&gt;&gt; is_this_empty(())
+It&#39;s not empty.
+&gt;&gt;&gt; is_this_empty(<span style="color: #ffff33">&#39;&#39;</span>)
+It&#39;s not empty.
+&gt;&gt;&gt; is_this_empty({})
+It&#39;s not empty.
+&gt;&gt;&gt;
+</pre></div>
+<p>We could improve the code by checking against different empty
+things.</p>
+<div class="highlight" style="background: #111111"><pre style="line-height: 125%; margin: 0;"><span></span>&gt;&gt;&gt; <span style="color: #6699cc; font-weight: bold">def</span> is_this_empty(thing):
+...     <span style="color: #6699cc; font-weight: bold">if</span> thing == [] or thing == () or thing == <span style="color: #ffff33">&#39;&#39;</span> or thing == {}:
+...         <span style="color: #9966ff">print</span>(<span style="color: #ffff33">&quot;It&#39;s empty!&quot;</span>)
+...     <span style="color: #6699cc; font-weight: bold">else</span>:
+...         <span style="color: #9966ff">print</span>(<span style="color: #ffff33">&quot;It&#39;s not empty.&quot;</span>)
+...
+&gt;&gt;&gt;
+</pre></div>
+<p>But Python has many other data types that can be empty and we
+haven't talked about in this tutorial. Trying to check all of
+them would be pointless because functions like this already
+work with all of them:</p>
+<div class="highlight" style="background: #111111"><pre style="line-height: 125%; margin: 0;"><span></span>&gt;&gt;&gt; <span style="color: #6699cc; font-weight: bold">def</span> is_this_empty(thing):
+...     <span style="color: #6699cc; font-weight: bold">if</span> thing:
+...         <span style="color: #9966ff">print</span>(<span style="color: #ffff33">&quot;It&#39;s not empty.&quot;</span>)
+...     <span style="color: #6699cc; font-weight: bold">else</span>:
+...         <span style="color: #9966ff">print</span>(<span style="color: #ffff33">&quot;It&#39;s empty!&quot;</span>)
+...
+&gt;&gt;&gt;
+</pre></div>
+<p>There's also cases when we should not rely on the Boolean value.
+When we're doing things with numbers and None it's best to
+simply compare to None or zero. Like this:</p>
+<div class="highlight" style="background: #111111"><pre style="line-height: 125%; margin: 0;"><span></span><span style="color: #6699cc; font-weight: bold">if</span> number != 0:
+    <span style="color: #9966ff">print</span>(<span style="color: #ffff33">&quot;number is not zero&quot;</span>)
+
+<span style="color: #6699cc; font-weight: bold">if</span> value is not <span style="color: #6699cc; font-weight: bold">None</span>:
+    <span style="color: #9966ff">print</span>(<span style="color: #ffff33">&quot;value is not None&quot;</span>)
+</pre></div>
+<p>Not like this:</p>
+<div class="highlight" style="background: #111111"><pre style="line-height: 125%; margin: 0;"><span></span><span style="color: #6699cc; font-weight: bold">if</span> number:
+    <span style="color: #9966ff">print</span>(<span style="color: #ffff33">&quot;number is not zero&quot;</span>)
+
+<span style="color: #6699cc; font-weight: bold">if</span> value:
+    <span style="color: #9966ff">print</span>(<span style="color: #ffff33">&quot;value is not None&quot;</span>)
+</pre></div>
+<p>We used <code>is not</code> instead of <code>!=</code> in the first example because
+the official style guide recommends it. The reason is that it's
+possible to create a value that isn't really None but seems like
+None when we compare it with None using <code>==</code> or <code>!=</code>, and we want
+to make sure that we don't treat values like that as None.</p>
+<p>So here's how we should check if something is None:</p>
+<div class="highlight" style="background: #111111"><pre style="line-height: 125%; margin: 0;"><span></span><span style="color: #6699cc; font-weight: bold">if</span> not value: ...      <span style="color: #336666; font-style: italic"># not good if we want to check if it&#39;s None</span>
+<span style="color: #6699cc; font-weight: bold">if</span> value == <span style="color: #6699cc; font-weight: bold">None</span>: ...  <span style="color: #336666; font-style: italic"># better</span>
+<span style="color: #6699cc; font-weight: bold">if</span> value is <span style="color: #6699cc; font-weight: bold">None</span>: ...  <span style="color: #336666; font-style: italic"># best</span>
+</pre></div>
+<a name="summary" href="#summary"><h2>Summary</h2>
+</a><ul>
+<li><code>if thing:</code> does the same thing as <code>if bool(thing):</code>. This also
+  works with while loops and most other things that are usually used
+  with Booleans.</li>
+<li><code>bool()</code> of most things is True, but <code>bool()</code> values of None,
+  zero and most empty things are False.</li>
+<li>Use <code>is</code> and <code>is not</code> when comparing to None, <code>==</code> and <code>!=</code> when
+  checking if a number is zero and rely on the Boolean value
+  when checking if something is empty.</li>
+</ul>
+<hr>
+<p>If you have trouble with this tutorial please <a href="../contact-me.html">tell me about
+it</a> and I'll make this tutorial better. If you
+like this tutorial, please <a href="../index.html#how-can-i-thank-you-for-writing-and-sharing-this-tutorial">give it a
+star</a>.</p>
+<p>You may use this tutorial freely at your own risk. See
+<a href="../LICENSE.txt">LICENSE</a>.</p>
+<p><a href="larger-program.html">Previous</a> | <a href="files.html">Next</a> |
+<a href="../index.html#basics">List of contents</a></p>
+
+  </body>
+</html>
+

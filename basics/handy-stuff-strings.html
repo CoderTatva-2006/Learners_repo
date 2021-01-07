@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title>Handy stuff: Strings</title>
+    <link rel="stylesheet" type="text/css" href="../style.css">
+  </head>
+  <body>
+    <a name="handy-stuff-strings" href="#handy-stuff-strings"><h1>Handy stuff: Strings</h1>
+</a><p>Python strings are just pieces of text.</p>
+<div class="highlight" style="background: #111111"><pre style="line-height: 125%; margin: 0;"><span></span>&gt;&gt;&gt; our_string = <span style="color: #ffff33">&quot;Hello World!&quot;</span>
+&gt;&gt;&gt; our_string
+&#39;Hello World!&#39;
+&gt;&gt;&gt;
+</pre></div>
+<p>So far we know how to add them together.</p>
+<div class="highlight" style="background: #111111"><pre style="line-height: 125%; margin: 0;"><span></span>&gt;&gt;&gt; <span style="color: #ffff33">&quot;I said: &quot;</span> + our_string
+&#39;I said: Hello World!&#39;
+&gt;&gt;&gt;
+</pre></div>
+<p>We also know how to repeat them multiple times.</p>
+<div class="highlight" style="background: #111111"><pre style="line-height: 125%; margin: 0;"><span></span>&gt;&gt;&gt; our_string * 3
+&#39;Hello World!Hello World!Hello World!&#39;
+&gt;&gt;&gt;
+</pre></div>
+<p>Python strings are <a href="https://docs.python.org/3/glossary.html#term-immutable">immutable</a>.
+That's just a fancy way to say that
+they cannot be changed in-place, and we need to create a new string to
+change them. Even <code>some_string += another_string</code> creates a new string.
+Python will treat that as <code>some_string = some_string + another_string</code>,
+so it creates a new string but it puts it back to the same variable.</p>
+<p><code>+</code> and <code>*</code> are nice, but what else can we do with strings?</p>
+<a name="slicing" href="#slicing"><h2>Slicing</h2>
+</a><p>Slicing is really simple. It just means getting a part of the string.
+For example, to get all characters between the second place between the
+characters and the fifth place between the characters, we can do this:</p>
+<div class="highlight" style="background: #111111"><pre style="line-height: 125%; margin: 0;"><span></span>&gt;&gt;&gt; our_string[2:5]
+&#39;llo&#39;
+&gt;&gt;&gt;
+</pre></div>
+<p>So the syntax is like <code>some_string[start:end]</code>.</p>
+<p>This picture explains how the slicing works:</p>
+<p><a href="../images/slicing1.png"><img src="../images/slicing1.png" alt="Slicing with non-negative values"></a></p>
+<p>But what happens if we slice with negative values?</p>
+<div class="highlight" style="background: #111111"><pre style="line-height: 125%; margin: 0;"><span></span>&gt;&gt;&gt; our_string[-5:-2]
+&#39;orl&#39;
+&gt;&gt;&gt;
+</pre></div>
+<p>It turns out that slicing with negative values simply starts counting
+from the end of the string.</p>
+<p><a href="../images/slicing2.png"><img src="../images/slicing2.png" alt="Slicing with negative values"></a></p>
+<p>If we don't specify the beginning it defaults to 0, and if we don't
+specify the end it defaults to the length of the string. For example, we
+can get everything except the first or last character like this:</p>
+<div class="highlight" style="background: #111111"><pre style="line-height: 125%; margin: 0;"><span></span>&gt;&gt;&gt; our_string[1:]
+&#39;ello World!&#39;
+&gt;&gt;&gt; our_string[:-1]
+&#39;Hello World&#39;
+&gt;&gt;&gt;
+</pre></div>
+<p>Remember that strings can't be changed in-place.</p>
+<div class="highlight" style="background: #111111"><pre style="line-height: 125%; margin: 0;"><span></span>&gt;&gt;&gt; our_string[:5] = <span style="color: #ffff33">&#39;Howdy&#39;</span>
+Traceback (most recent call last):
+  File <span style="color: #9966ff">&quot;&lt;stdin&gt;&quot;</span>, line 1, in &lt;module&gt;
+TypeError: &#39;str&#39; object does not support item assignment
+&gt;&gt;&gt;
+</pre></div>
+<p>There's also a step argument we can give to our slices, but I'm not
+going to talk about it now.</p>
+<a name="indexing" href="#indexing"><h2>Indexing</h2>
+</a><p>So now we know how slicing works. But what happens if we forget the <code>:</code>?</p>
+<div class="highlight" style="background: #111111"><pre style="line-height: 125%; margin: 0;"><span></span>&gt;&gt;&gt; our_string[1]
+&#39;e&#39;
+&gt;&gt;&gt;
+</pre></div>
+<p>That's interesting. We got a string that is only one character long. But
+the first character of <code>Hello World!</code> should be <code>H</code>, not <code>e</code>, so why did
+we get an e?</p>
+<p>Programming starts at zero. Indexing strings also starts at zero. The
+first character is <code>our_string[0]</code>, the second character is
+<code>our_string[1]</code>, and so on.</p>
+<div class="highlight" style="background: #111111"><pre style="line-height: 125%; margin: 0;"><span></span>&gt;&gt;&gt; our_string[0]
+&#39;H&#39;
+&gt;&gt;&gt; our_string[1]
+&#39;e&#39;
+&gt;&gt;&gt; our_string[2]
+&#39;l&#39;
+&gt;&gt;&gt; our_string[3]
+&#39;l&#39;
+&gt;&gt;&gt; our_string[4]
+&#39;o&#39;
+&gt;&gt;&gt;
+</pre></div>
+<p>So string indexes work like this:</p>
+<p><a href="../images/indexing1.png"><img src="../images/indexing1.png" alt="Indexing with non-negative values"></a></p>
+<p>How about negative values?</p>
+<div class="highlight" style="background: #111111"><pre style="line-height: 125%; margin: 0;"><span></span>&gt;&gt;&gt; our_string[-1]
+&#39;!&#39;
+&gt;&gt;&gt;
+</pre></div>
+<p>We got the last character.</p>
+<p>But why didn't that start at zero? <code>our_string[-1]</code> is the last
+character, but <code>our_string[1]</code> is not the first character!</p>
+<p>That's because 0 and -0 are equal, so indexing with -0 would do the same
+thing as indexing with 0.</p>
+<p>Indexing with negative values works like this:</p>
+<p><a href="../images/indexing2.png"><img src="../images/indexing2.png" alt="Indexing with negative values"></a></p>
+<a name="string-methods" href="#string-methods"><h2>String methods</h2>
+</a><p>Python's strings have many useful methods.
+<a href="https://docs.python.org/3/library/stdtypes.html#string-methods">The official documentation</a>
+covers them all, but I'm going to just show some of the most commonly
+used ones briefly. Python also comes with built-in documentation about
+the string methods and we can run <code>help(str)</code> to read it. We can also
+get help about one string method at a time, like <code>help(str.upper)</code>.</p>
+<p>Again, nothing can modify strings in-place. Most string methods
+return a new string, but things like <code>our_string = our_string.upper()</code>
+still work because the new string is assigned to the old variable.</p>
+<p>Also note that all of these methods are used like <code>our_string.stuff()</code>,
+not like <code>stuff(our_string)</code>. The idea with that is that our string
+knows how to do all these things, like <code>our_string.stuff()</code>, we don't
+need a separate function that does these things like <code>stuff(our_string)</code>.
+We'll learn more about methods <a href="classes.html">later</a>.</p>
+<p>Here's an example with some of the most commonly used string methods:</p>
+<div class="highlight" style="background: #111111"><pre style="line-height: 125%; margin: 0;"><span></span>&gt;&gt;&gt; our_string.upper()
+&#39;HELLO WORLD!&#39;
+&gt;&gt;&gt; our_string.lower()
+&#39;hello world!&#39;
+&gt;&gt;&gt; our_string.startswith(<span style="color: #ffff33">&#39;Hello&#39;</span>)
+True
+&gt;&gt;&gt; our_string.endswith(<span style="color: #ffff33">&#39;World!&#39;</span>)
+True
+&gt;&gt;&gt; our_string.endswith(<span style="color: #ffff33">&#39;world!&#39;</span>)  <span style="color: #336666; font-style: italic"># Python is case-sensitive</span>
+False
+&gt;&gt;&gt; our_string.replace(<span style="color: #ffff33">&#39;World&#39;</span>, <span style="color: #ffff33">&#39;there&#39;</span>)
+&#39;Hello there!&#39;
+&gt;&gt;&gt; our_string.replace(<span style="color: #ffff33">&#39;o&#39;</span>, <span style="color: #ffff33">&#39;@&#39;</span>, 1)   <span style="color: #336666; font-style: italic"># only replace one o</span>
+&#39;Hell@ World!&#39;
+&gt;&gt;&gt; <span style="color: #ffff33">&#39;  hello 123  &#39;</span>.lstrip()    <span style="color: #336666; font-style: italic"># left strip</span>
+&#39;hello 123  &#39;
+&gt;&gt;&gt; <span style="color: #ffff33">&#39;  hello 123  &#39;</span>.rstrip()    <span style="color: #336666; font-style: italic"># right strip</span>
+&#39;  hello 123&#39;
+&gt;&gt;&gt; <span style="color: #ffff33">&#39;  hello 123  &#39;</span>.strip()     <span style="color: #336666; font-style: italic"># strip from both sides</span>
+&#39;hello 123&#39;
+&gt;&gt;&gt; <span style="color: #ffff33">&#39;  hello abc&#39;</span>.rstrip(<span style="color: #ffff33">&#39;cb&#39;</span>)  <span style="color: #336666; font-style: italic"># strip c&#39;s and b&#39;s from right</span>
+&#39;  hello a&#39;
+&gt;&gt;&gt; our_string.ljust(30, <span style="color: #ffff33">&#39;-&#39;</span>)
+&#39;Hello World!------------------&#39;
+&gt;&gt;&gt; our_string.rjust(30, <span style="color: #ffff33">&#39;-&#39;</span>)
+&#39;------------------Hello World!&#39;
+&gt;&gt;&gt; our_string.center(30, <span style="color: #ffff33">&#39;-&#39;</span>)
+&#39;---------Hello World!---------&#39;
+&gt;&gt;&gt; our_string.count(<span style="color: #ffff33">&#39;o&#39;</span>)   <span style="color: #336666; font-style: italic"># it contains two o&#39;s</span>
+2
+&gt;&gt;&gt; our_string.index(<span style="color: #ffff33">&#39;o&#39;</span>)   <span style="color: #336666; font-style: italic"># the first o is our_string[4]</span>
+4
+&gt;&gt;&gt; our_string.rindex(<span style="color: #ffff33">&#39;o&#39;</span>)  <span style="color: #336666; font-style: italic"># the last o is our_string[7]</span>
+7
+&gt;&gt;&gt; <span style="color: #ffff33">&#39;-&#39;</span>.join([<span style="color: #ffff33">&#39;hello&#39;</span>, <span style="color: #ffff33">&#39;world&#39;</span>, <span style="color: #ffff33">&#39;test&#39;</span>])
+&#39;hello-world-test&#39;
+&gt;&gt;&gt; <span style="color: #ffff33">&#39;hello-world-test&#39;</span>.split(<span style="color: #ffff33">&#39;-&#39;</span>)
+[&#39;hello&#39;, &#39;world&#39;, &#39;test&#39;]
+&gt;&gt;&gt; our_string.upper()[3:].startswith(<span style="color: #ffff33">&#39;LO WOR&#39;</span>)  <span style="color: #336666; font-style: italic"># combining multiple things</span>
+True
+&gt;&gt;&gt;
+</pre></div>
+<p>The things in square brackets that the split method gave us and
+we gave to the join method were lists. We'll talk more about
+them <a href="lists-and-tuples.html">later</a>.</p>
+<a name="string-formatting" href="#string-formatting"><h2>String formatting</h2>
+</a><p>To add a string in the middle of another string, we can do something
+like this:</p>
+<div class="highlight" style="background: #111111"><pre style="line-height: 125%; margin: 0;"><span></span>&gt;&gt;&gt; name = <span style="color: #ffff33">&#39;Akuli&#39;</span>
+&gt;&gt;&gt; <span style="color: #ffff33">&#39;My name is &#39;</span> + name + <span style="color: #ffff33">&#39;.&#39;</span>
+&#39;My name is Akuli.&#39;
+&gt;&gt;&gt;
+</pre></div>
+<p>But that gets complicated if we have many things to add.</p>
+<div class="highlight" style="background: #111111"><pre style="line-height: 125%; margin: 0;"><span></span>&gt;&gt;&gt; channel = <span style="color: #ffff33">&#39;##learnpython&#39;</span>
+&gt;&gt;&gt; network = <span style="color: #ffff33">&#39;freenode&#39;</span>
+&gt;&gt;&gt; <span style="color: #ffff33">&quot;My name is &quot;</span> + name + <span style="color: #ffff33">&quot; and I&#39;m on the &quot;</span> + channel + <span style="color: #ffff33">&quot; channel on &quot;</span> + network + <span style="color: #ffff33">&quot;.&quot;</span>
+&quot;My name is Akuli and I&#39;m on the ##learnpython channel on freenode.&quot;
+&gt;&gt;&gt;
+</pre></div>
+<p>Instead it's recommended to use string formatting. It means putting
+other things in the middle of a string.</p>
+<p>Python has multiple ways to format strings. One is not necessarily
+better than others, they are just different. Here's a few ways to solve
+our problem:</p>
+<ul>
+<li><p><code>.format()</code>-formatting, also known as new-style formatting. This
+  formatting style has a lot of features, but it's a little bit more
+  typing than <code>%s</code>-formatting.</p>
+<div class="highlight" style="background: #111111"><pre style="line-height: 125%; margin: 0;"><span></span>  &gt;&gt;&gt; <span style="color: #ffff33">&quot;Hello {}.&quot;</span>.format(name)
+  <span style="color: #ffff33">&#39;Hello Akuli.&#39;</span>
+  &gt;&gt;&gt; <span style="color: #ffff33">&quot;My name is {} and I&#39;m on the {} channel on {}.&quot;</span>.format(name, channel, network)
+  <span style="color: #ffff33">&quot;My name is Akuli and I&#39;m on the ##learnpython channel on freenode.&quot;</span>
+  &gt;&gt;&gt;
+</pre></div>
+</li>
+<li><p><code>%s</code>-formatting, also known as old-style formatting. This has less
+  features than <code>.format()</code>-formatting, but <code>'Hello %s.' % name</code> is
+  shorter and faster to type than <code>'Hello {}.'.format(name)</code>. I like
+  to use <code>%s</code> formatting for simple things and <code>.format</code> when I need
+  more powerful features.</p>
+<div class="highlight" style="background: #111111"><pre style="line-height: 125%; margin: 0;"><span></span>  &gt;&gt;&gt; <span style="color: #ffff33">&quot;Hello %s.&quot;</span> % name
+  <span style="color: #ffff33">&#39;Hello Akuli.&#39;</span>
+  &gt;&gt;&gt; <span style="color: #ffff33">&quot;My name is %s and I&#39;m on the %s channel on %s.&quot;</span> % (name, channel, network)
+  <span style="color: #ffff33">&quot;My name is Akuli and I&#39;m on the ##learnpython channel on freenode.&quot;</span>
+  &gt;&gt;&gt;
+</pre></div>
+<p>In the second example we had <code>(name, channel, network)</code> on the right
+  side of the <code>%</code> sign. It was a tuple, and we'll talk more about them
+  <a href="lists-and-tuples.html#tuples">later</a>.</p>
+<p>If we have a variable that may be a tuple we need to wrap it in another
+  tuple when formatting:</p>
+<div class="highlight" style="background: #111111"><pre style="line-height: 125%; margin: 0;"><span></span>  &gt;&gt;&gt; thestuff = (1, 2, 3)
+  &gt;&gt;&gt; <span style="color: #ffff33">&quot;we have %s&quot;</span> % thestuff
+  Traceback (most recent call last):
+    File <span style="color: #ffff33">&quot;&lt;stdin&gt;&quot;</span>, line 1, in &lt;module&gt;
+  <span style="color: #ff0000; font-weight: bold">TypeError</span>: not <span style="color: #9966ff">all</span> arguments converted during string formatting
+  &gt;&gt;&gt; <span style="color: #ffff33">&quot;we have %s and %s&quot;</span> % (<span style="color: #ffff33">&quot;hello&quot;</span>, thestuff)
+  <span style="color: #ffff33">&#39;we have hello and (1, 2, 3)&#39;</span>
+  &gt;&gt;&gt; <span style="color: #ffff33">&quot;we have %s&quot;</span> % (thestuff,)
+  <span style="color: #ffff33">&#39;we have (1, 2, 3)&#39;</span>
+  &gt;&gt;&gt;
+</pre></div>
+<p>Here <code>(thestuff,)</code> was a tuple that contained nothing but <code>thestuff</code>.</p>
+</li>
+<li><p>f-strings are even less typing, but new in Python 3.6. <strong>Use this only if
+  you know that nobody will need to run your code on Python versions older
+  than 3.6.</strong> Here the f is short for "format", and the content of the
+  string is same as it would be with <code>.format()</code> but we can use variables
+  directly.</p>
+<div class="highlight" style="background: #111111"><pre style="line-height: 125%; margin: 0;"><span></span>  &gt;&gt;&gt; <span style="color: #ffff33">f&quot;My name is {</span>name<span style="color: #ffff33">} and I&#39;m on the {</span>channel<span style="color: #ffff33">} channel on {</span>network<span style="color: #ffff33">}.&quot;</span>
+  <span style="color: #ffff33">&quot;My name is Akuli and I&#39;m on the ##learnpython channel on freenode.&quot;</span>
+  &gt;&gt;&gt;
+</pre></div>
+</li>
+</ul>
+<p>All of these formatting styles have many other features also:</p>
+<div class="highlight" style="background: #111111"><pre style="line-height: 125%; margin: 0;"><span></span>&gt;&gt;&gt; <span style="color: #ffff33">&#39;Three zeros and number one: {:04d}&#39;</span>.format(1)
+&#39;Three zeros and number one: 0001&#39;
+&gt;&gt;&gt; <span style="color: #ffff33">&#39;Three zeros and number one: %04d&#39;</span> % 1
+&#39;Three zeros and number one: 0001&#39;
+&gt;&gt;&gt;
+</pre></div>
+<p>If you need to know more about formatting I recommend reading
+<a href="https://pyformat.info/">this</a>.</p>
+<a name="other-things" href="#other-things"><h2>Other things</h2>
+</a><p>We can use <code>in</code> and <code>not in</code> to check if a string contains another
+string.</p>
+<div class="highlight" style="background: #111111"><pre style="line-height: 125%; margin: 0;"><span></span>&gt;&gt;&gt; our_string = <span style="color: #ffff33">&quot;Hello World!&quot;</span>
+&gt;&gt;&gt; <span style="color: #ffff33">&quot;Hello&quot;</span> in our_string
+True
+&gt;&gt;&gt; <span style="color: #ffff33">&quot;Python&quot;</span> in our_string
+False
+&gt;&gt;&gt; <span style="color: #ffff33">&quot;Python&quot;</span> not in our_string
+True
+&gt;&gt;&gt;
+</pre></div>
+<p>We can get the length of a string with the <code>len</code> function. The name
+<code>len</code> is short for "length".</p>
+<div class="highlight" style="background: #111111"><pre style="line-height: 125%; margin: 0;"><span></span>&gt;&gt;&gt; <span style="color: #9966ff">len</span>(our_string)   <span style="color: #336666; font-style: italic"># 12 characters</span>
+12
+&gt;&gt;&gt; <span style="color: #9966ff">len</span>(<span style="color: #ffff33">&#39;&#39;</span>)     <span style="color: #336666; font-style: italic"># no characters</span>
+0
+&gt;&gt;&gt; <span style="color: #9966ff">len</span>(<span style="color: #ffff33">&#39;\n&#39;</span>)    <span style="color: #336666; font-style: italic"># python thinks of \n as one character</span>
+1
+&gt;&gt;&gt;
+</pre></div>
+<p>We can convert strings, integers and floats with each other with
+<code>str</code>, <code>int</code> and <code>float</code>. They aren't actually functions, but they
+behave a lot like functions. We'll learn more about what they really
+are <a href="classes.html">later</a>.</p>
+<div class="highlight" style="background: #111111"><pre style="line-height: 125%; margin: 0;"><span></span>&gt;&gt;&gt; <span style="color: #9966ff">str</span>(3.14)
+&#39;3.14&#39;
+&gt;&gt;&gt; <span style="color: #9966ff">float</span>(<span style="color: #ffff33">&#39;3.14&#39;</span>)
+3.14
+&gt;&gt;&gt; <span style="color: #9966ff">str</span>(123)
+&#39;123&#39;
+&gt;&gt;&gt; <span style="color: #9966ff">int</span>(<span style="color: #ffff33">&#39;123&#39;</span>)
+123
+&gt;&gt;&gt;
+</pre></div>
+<p>Giving an invalid string to <code>int</code> or <code>float</code> produces an error
+message.</p>
+<div class="highlight" style="background: #111111"><pre style="line-height: 125%; margin: 0;"><span></span>&gt;&gt;&gt; <span style="color: #9966ff">int</span>(<span style="color: #ffff33">&#39;lol&#39;</span>)
+Traceback (most recent call last):
+  File <span style="color: #9966ff">&quot;&lt;stdin&gt;&quot;</span>, line 1, in &lt;module&gt;
+ValueError: invalid literal for int() with base 10: &#39;lol&#39;
+&gt;&gt;&gt; <span style="color: #9966ff">float</span>(<span style="color: #ffff33">&#39;hello&#39;</span>)
+Traceback (most recent call last):
+  File <span style="color: #9966ff">&quot;&lt;stdin&gt;&quot;</span>, line 1, in &lt;module&gt;
+ValueError: could not convert string to float: &#39;hello&#39;
+&gt;&gt;&gt;
+</pre></div>
+<a name="summary" href="#summary"><h2>Summary</h2>
+</a><ul>
+<li><p>Slicing returns a copy of a string with indexes from one index to
+  another index. The indexes work like this:</p>
+<p><a href="../images/slicing3.png"><img src="../images/slicing3.png" alt="Slicing"></a></p>
+</li>
+<li><p>Indexing returns one character of a string. Remember that we don't
+  need a <code>:</code> with indexing. The indexes work like this:</p>
+<p><a href="../images/indexing3.png"><img src="../images/indexing3.png" alt="Indexing"></a></p>
+</li>
+<li><p>Python has many string methods. Use
+  <a href="https://docs.python.org/3/library/stdtypes.html#string-methods">the documentation</a>
+  or <code>help(str)</code> when you don't rememeber something about them.</p>
+</li>
+<li>String formatting means adding other things to the middle of a string.
+  There are multiple ways to do this in Python. You should know how to
+  use at least one of these ways.</li>
+<li>The <code>in</code> keyword can be used for checking if a string contains another
+  string.</li>
+<li><code>len(string)</code> returns string's length.</li>
+<li>We can use <code>str</code>, <code>int</code> and <code>float</code> to convert values to different
+  types.</li>
+</ul>
+<a name="exercises" href="#exercises"><h2>Exercises</h2>
+</a><ol>
+<li><p>Fix this program.</p>
+<div class="highlight" style="background: #111111"><pre style="line-height: 125%; margin: 0;"><span></span> <span style="color: #9966ff">print</span>(<span style="color: #ffff33">&quot;Hello!&quot;</span>)
+ word1 = <span style="color: #9966ff">input</span>(<span style="color: #ffff33">&quot;Enter something: &quot;</span>)
+ word2 = <span style="color: #9966ff">input</span>(<span style="color: #ffff33">&quot;Enter another thing: &quot;</span>)
+ word3 = <span style="color: #9966ff">input</span>(<span style="color: #ffff33">&quot;Enter a third thing: &quot;</span>)
+ word4 = <span style="color: #9966ff">input</span>(<span style="color: #ffff33">&quot;And yet another thing: &quot;</span>)
+ <span style="color: #9966ff">print</span>(<span style="color: #ffff33">&quot;You entered &quot;</span> + word1 + <span style="color: #ffff33">&quot;, &quot;</span> + word2 + <span style="color: #ffff33">&quot;, &quot;</span> + word3 + <span style="color: #ffff33">&quot; and &quot;</span> + word4 + <span style="color: #ffff33">&quot;.&quot;</span>)
+</pre></div>
+</li>
+<li><p>This program is supposed to say something loudly. Fix it.</p>
+<div class="highlight" style="background: #111111"><pre style="line-height: 125%; margin: 0;"><span></span> message = <span style="color: #9966ff">input</span>(<span style="color: #ffff33">&quot;What do you want me to say? &quot;</span>)
+ message.upper
+ <span style="color: #9966ff">print</span>(message, <span style="color: #ffff33">&quot;!!!&quot;</span>)
+ <span style="color: #9966ff">print</span>(message, <span style="color: #ffff33">&quot;!!!&quot;</span>)
+ <span style="color: #9966ff">print</span>(message, <span style="color: #ffff33">&quot;!!!&quot;</span>)
+</pre></div>
+</li>
+</ol>
+<p>The answers are <a href="answers.html#handy-stuff-strings">here</a>.</p>
+<hr>
+<p>If you have trouble with this tutorial please <a href="../contact-me.html">tell me about
+it</a> and I'll make this tutorial better. If you
+like this tutorial, please <a href="../index.html#how-can-i-thank-you-for-writing-and-sharing-this-tutorial">give it a
+star</a>.</p>
+<p>You may use this tutorial freely at your own risk. See
+<a href="../LICENSE.txt">LICENSE</a>.</p>
+<p><a href="if.html">Previous</a> | <a href="lists-and-tuples.html">Next</a> |
+<a href="../index.html#basics">List of contents</a></p>
+
+  </body>
+</html>
+

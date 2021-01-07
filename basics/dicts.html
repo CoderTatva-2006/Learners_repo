@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title>Dictionaries</title>
+    <link rel="stylesheet" type="text/css" href="../style.css">
+  </head>
+  <body>
+    <a name="dictionaries" href="#dictionaries"><h1>Dictionaries</h1>
+</a><p>Now we know how <a href="lists-and-tuples.html">lists and tuples</a> work and how
+to <a href="loops.html#for-loops">for loop</a> over them. If we make some kind of
+program that needs to keep track of people's names and favorite pets,
+we can use a list for that:</p>
+<div class="highlight" style="background: #111111"><pre style="line-height: 125%; margin: 0;"><span></span>names_and_pets = [
+    (<span style="color: #ffff33">&#39;horusr&#39;</span>, <span style="color: #ffff33">&#39;cats&#39;</span>),
+    (<span style="color: #ffff33">&#39;caisa64&#39;</span>, <span style="color: #ffff33">&#39;cats and dogs&#39;</span>),
+    (<span style="color: #ffff33">&#39;__Myst__&#39;</span>, <span style="color: #ffff33">&#39;cats&#39;</span>),
+]
+</pre></div>
+<p>Then to check if cats are horusr's favorite pets we can do
+<code>('horusr', 'cats') in names_and_pets</code>. Or we can add new people's
+favorite pets easily by appending new <code>(name, pets)</code> tuples to the list.</p>
+<p>But what if we need to check if we know anything about someone's
+favorite pets? <code>'caisa64' in names_and_pets</code> is always False because the
+pet list consists of <code>(name, pets)</code> pairs instead of just names, so we
+need to for loop over the whole pet list:</p>
+<div class="highlight" style="background: #111111"><pre style="line-height: 125%; margin: 0;"><span></span>found_caisa64 = <span style="color: #6699cc; font-weight: bold">False</span>
+<span style="color: #6699cc; font-weight: bold">for</span> pair in names_and_pets:
+    <span style="color: #6699cc; font-weight: bold">if</span> pair[0] == <span style="color: #ffff33">&#39;caisa64&#39;</span>:
+        found_caisa64 = <span style="color: #6699cc; font-weight: bold">True</span>
+        <span style="color: #6699cc; font-weight: bold">break</span>
+<span style="color: #6699cc; font-weight: bold">if</span> found_caisa64:
+    <span style="color: #336666; font-style: italic"># do something</span>
+</pre></div>
+<p>Or what if we need to find out what caisa64's favorite pets are? That
+also requires going through the whole list.</p>
+<div class="highlight" style="background: #111111"><pre style="line-height: 125%; margin: 0;"><span></span>pets = <span style="color: #6699cc; font-weight: bold">None</span>
+<span style="color: #6699cc; font-weight: bold">for</span> pair in names_and_pets:
+    <span style="color: #6699cc; font-weight: bold">if</span> pair[0] == <span style="color: #ffff33">&#39;caisa64&#39;</span>:
+        pets = pair[1]
+        <span style="color: #6699cc; font-weight: bold">break</span>
+<span style="color: #336666; font-style: italic"># make sure pets is not None and do something with it</span>
+</pre></div>
+<p>As you can see, a list of <code>(name, pets)</code> pairs is not an ideal
+way to store names and favorite pets.</p>
+<a name="what-are-dictionaries" href="#what-are-dictionaries"><h2>What are dictionaries?</h2>
+</a><p>A better way to store information about favorite pets might be a
+dictionary:</p>
+<div class="highlight" style="background: #111111"><pre style="line-height: 125%; margin: 0;"><span></span>favorite_pets = {
+    <span style="color: #ffff33">&#39;horusr&#39;</span>: <span style="color: #ffff33">&#39;cats&#39;</span>,
+    <span style="color: #ffff33">&#39;caisa64&#39;</span>: <span style="color: #ffff33">&#39;cats and dogs&#39;</span>,
+    <span style="color: #ffff33">&#39;__Myst__&#39;</span>: <span style="color: #ffff33">&#39;cats&#39;</span>,
+}
+</pre></div>
+<p>Here <code>'horusr'</code> and <code>'caisa64'</code> are <strong>keys</strong> in the dictionary, and
+<code>'cats'</code> and <code>'cats and dogs'</code> are their <strong>values</strong>. Dictionaries are
+often named by their values. This dictionary has favorite pets as its
+values so I named the variable <code>favorite_pets</code>.</p>
+<p>There are a few big differences between dictionaries and lists of pairs:</p>
+<ul>
+<li>Dictionaries are not ordered. There are <strong>no guarantees</strong> about which
+  order the <code>name: pets</code> pairs appear in when we do something
+  with the dictionary.</li>
+<li>Checking if a key is in the dictionary is simple and fast. We don't
+  need to for loop through the whole dictionary.</li>
+<li>Getting the value of a key is also simple and fast.</li>
+<li>We can't have the same key in the dictionary multiple times, but
+  multiple different keys can have the same value. This means that
+  <strong>multiple people can't have the same name, but they can have the
+  same favorite pets</strong>.</li>
+</ul>
+<p>But wait... this is a lot like variables are! Our variables are not
+ordered, getting a value of a variable is fast and easy and we can't
+have multiple variables with the same name.</p>
+<p>Variables are actually stored in a dictionary. We can get that
+dictionary with the globals function. In this dictionary, keys are
+variable names and values are what our variables point to.</p>
+<div class="highlight" style="background: #111111"><pre style="line-height: 125%; margin: 0;"><span></span>&gt;&gt;&gt; <span style="color: #9966ff">globals</span>()
+{&#39;names_and_pets&#39;: [(&#39;horusr&#39;, &#39;cats&#39;),
+                    (&#39;caisa64&#39;, &#39;cats and dogs&#39;),
+                    (&#39;__Myst__&#39;, &#39;cats&#39;)],
+ &#39;favorite_pets&#39;: {&#39;__Myst__&#39;: &#39;cats&#39;,
+                   &#39;caisa64&#39;: &#39;cats and dogs&#39;,
+                   &#39;horusr&#39;: &#39;cats&#39;},
+ ...many other things we don&#39;t need to care about...
+}
+&gt;&gt;&gt;
+</pre></div>
+<p>So if you have trouble remembering how dictionaries work just compare
+them to variables. A dictionary is a perfect way to store these names
+and favorite pets. We don't care about which order the names and pets
+were added in, it's impossible to add the same name multiple times and
+getting someone's favorite pets is easy.</p>
+<a name="what-can-we-do-with-dictionaries" href="#what-can-we-do-with-dictionaries"><h2>What can we do with dictionaries?</h2>
+</a><p>Dictionaries have some similarities with lists. For example, both
+lists and dictionaries have a length.</p>
+<div class="highlight" style="background: #111111"><pre style="line-height: 125%; margin: 0;"><span></span>&gt;&gt;&gt; <span style="color: #9966ff">len</span>(names_and_pets)     <span style="color: #336666; font-style: italic"># contains three elements</span>
+3
+&gt;&gt;&gt; <span style="color: #9966ff">len</span>(favorite_pets)    <span style="color: #336666; font-style: italic"># contains three key:value pairs</span>
+3
+&gt;&gt;&gt;
+</pre></div>
+<p>We can get a value of a key with <code>the_dict[key]</code>. This is a lot easier
+and faster than for-looping over a list of pairs.</p>
+<div class="highlight" style="background: #111111"><pre style="line-height: 125%; margin: 0;"><span></span>&gt;&gt;&gt; favorite_pets[<span style="color: #ffff33">&#39;caisa64&#39;</span>]
+&#39;cats and dogs&#39;
+&gt;&gt;&gt; favorite_pets[<span style="color: #ffff33">&#39;__Myst__&#39;</span>]
+&#39;cats&#39;
+&gt;&gt;&gt;
+</pre></div>
+<p>Trying to get the value of a non-existing key gives us an error.</p>
+<div class="highlight" style="background: #111111"><pre style="line-height: 125%; margin: 0;"><span></span>&gt;&gt;&gt; favorite_pets[<span style="color: #ffff33">&#39;Akuli&#39;</span>]
+Traceback (most recent call last):
+  File <span style="color: #9966ff">&quot;&lt;stdin&gt;&quot;</span>, line 1, in &lt;module&gt;
+KeyError: &#39;Akuli&#39;
+&gt;&gt;&gt;
+</pre></div>
+<p>But we can add new <code>key: value</code> pairs or change the values of existing
+keys by doing <code>the_dict[key] = value</code>.</p>
+<div class="highlight" style="background: #111111"><pre style="line-height: 125%; margin: 0;"><span></span>&gt;&gt;&gt; favorite_pets[<span style="color: #ffff33">&#39;Akuli&#39;</span>] = <span style="color: #ffff33">&#39;penguins&#39;</span>
+&gt;&gt;&gt; favorite_pets[<span style="color: #ffff33">&#39;Akuli&#39;</span>]
+&#39;penguins&#39;
+&gt;&gt;&gt; favorite_pets[<span style="color: #ffff33">&#39;Akuli&#39;</span>] = <span style="color: #ffff33">&#39;dogs&#39;</span>
+&gt;&gt;&gt; favorite_pets[<span style="color: #ffff33">&#39;Akuli&#39;</span>]
+&#39;dogs&#39;
+&gt;&gt;&gt; favorite_pets
+{&#39;__Myst__&#39;: &#39;cats&#39;,
+ &#39;Akuli&#39;: &#39;dogs&#39;,
+ &#39;horusr&#39;: &#39;cats&#39;,
+ &#39;caisa64&#39;: &#39;cats and dogs&#39;}
+&gt;&gt;&gt;
+</pre></div>
+<p>For looping over a dictionary gets its keys, and checking if something
+is in the dictionary checks if the dictionary has a key like that. This
+can be confusing at first but you'll get used to this.</p>
+<div class="highlight" style="background: #111111"><pre style="line-height: 125%; margin: 0;"><span></span>&gt;&gt;&gt; <span style="color: #ffff33">&#39;Akuli&#39;</span> in favorite_pets
+True
+&gt;&gt;&gt; <span style="color: #ffff33">&#39;dogs&#39;</span> in favorite_pets
+False
+&gt;&gt;&gt; <span style="color: #6699cc; font-weight: bold">for</span> name in favorite_pets:
+...     <span style="color: #9966ff">print</span>(name)
+...
+caisa64
+Akuli
+__Myst__
+horusr
+&gt;&gt;&gt;
+</pre></div>
+<p>Dictionaries have a values method that we can use if we want to do
+something with the values:</p>
+<div class="highlight" style="background: #111111"><pre style="line-height: 125%; margin: 0;"><span></span>&gt;&gt;&gt; favorite_pets.values()
+dict_values([&#39;dogs&#39;, &#39;cats&#39;, &#39;cats and dogs&#39;, &#39;cats&#39;])
+&gt;&gt;&gt;
+</pre></div>
+<p>The values method returned a <code>dict_values</code> object. Things like this
+behave a lot like lists and usually we don't need to convert them to
+lists.</p>
+<div class="highlight" style="background: #111111"><pre style="line-height: 125%; margin: 0;"><span></span>&gt;&gt;&gt; <span style="color: #6699cc; font-weight: bold">for</span> pets in favorite_pets.values():
+...     <span style="color: #9966ff">print</span>(pets)
+...
+dogs
+cats
+cats and dogs
+cats
+&gt;&gt;&gt;
+</pre></div>
+<p>We can do things like <code>list(favorite_pets.values())</code> if we need a real
+list for some reason, but doing that can slow down our program if the
+dictionary is big. There's also a keys method, but usually we don't need
+it because the dictionary itself behaves a lot like a list of keys.</p>
+<p>If we need both keys and values we can use the items method with the
+<code>for first, second in thing</code> trick.</p>
+<div class="highlight" style="background: #111111"><pre style="line-height: 125%; margin: 0;"><span></span>&gt;&gt;&gt; favorite_pets.items()
+dict_items([(&#39;Akuli&#39;, &#39;dogs&#39;),
+            (&#39;__Myst__&#39;, &#39;cats&#39;),
+            (&#39;caisa64&#39;, &#39;cats and dogs&#39;),
+            (&#39;horusr&#39;, &#39;cats&#39;)])
+&gt;&gt;&gt; <span style="color: #6699cc; font-weight: bold">for</span> name, pets in favorite_pets.items():
+...     <span style="color: #9966ff">print</span>(<span style="color: #ffff33">&quot;{} are {}&#39;s favorite pets&quot;</span>.format(pets, name))
+...
+dogs are Akuli&#39;s favorite pets
+cats are __Myst__&#39;s favorite pets
+cats and dogs are caisa64&#39;s favorite pets
+cats are horusr&#39;s favorite pets
+&gt;&gt;&gt;
+</pre></div>
+<p>This is also useful for checking if the dictionary has a <code>key: value</code>
+pair.</p>
+<div class="highlight" style="background: #111111"><pre style="line-height: 125%; margin: 0;"><span></span>&gt;&gt;&gt; (<span style="color: #ffff33">&#39;horusr&#39;</span>, <span style="color: #ffff33">&#39;cats&#39;</span>) in favorite_pets.items()
+True
+&gt;&gt;&gt; (<span style="color: #ffff33">&#39;horusr&#39;</span>, <span style="color: #ffff33">&#39;dogs&#39;</span>) in favorite_pets.items()
+False
+&gt;&gt;&gt;
+</pre></div>
+<a name="limitations" href="#limitations"><h2>Limitations</h2>
+</a><p>Sometimes it might be handy to use lists as dictionary keys, but it
+just doesn't work. I'm not going to explain why Python doesn't allow
+this because usually we don't need to worry about that.</p>
+<div class="highlight" style="background: #111111"><pre style="line-height: 125%; margin: 0;"><span></span>&gt;&gt;&gt; stuff = {[<span style="color: #ffff33">&#39;a&#39;</span>, <span style="color: #ffff33">&#39;b&#39;</span>]: <span style="color: #ffff33">&#39;c&#39;</span>, [<span style="color: #ffff33">&#39;d&#39;</span>, <span style="color: #ffff33">&#39;e&#39;</span>]: <span style="color: #ffff33">&#39;f&#39;</span>}
+Traceback (most recent call last):
+  File <span style="color: #9966ff">&quot;&lt;stdin&gt;&quot;</span>, line 1, in &lt;module&gt;
+TypeError: unhashable type: &#39;list&#39;
+&gt;&gt;&gt;
+</pre></div>
+<p>On the other hand, tuples work just fine:</p>
+<div class="highlight" style="background: #111111"><pre style="line-height: 125%; margin: 0;"><span></span>&gt;&gt;&gt; stuff = {(<span style="color: #ffff33">&#39;a&#39;</span>, <span style="color: #ffff33">&#39;b&#39;</span>): <span style="color: #ffff33">&#39;c&#39;</span>, (<span style="color: #ffff33">&#39;d&#39;</span>, <span style="color: #ffff33">&#39;e&#39;</span>): <span style="color: #ffff33">&#39;f&#39;</span>}
+&gt;&gt;&gt; stuff
+{(&#39;a&#39;, &#39;b&#39;): &#39;c&#39;, (&#39;d&#39;, &#39;e&#39;): &#39;f&#39;}
+&gt;&gt;&gt;
+</pre></div>
+<p>The values of a dictionary can be anything.</p>
+<div class="highlight" style="background: #111111"><pre style="line-height: 125%; margin: 0;"><span></span>&gt;&gt;&gt; stuff = {<span style="color: #ffff33">&#39;a&#39;</span>: [1, 2, 3], <span style="color: #ffff33">&#39;b&#39;</span>: [4, 5, 6]}
+&gt;&gt;&gt; stuff
+{&#39;a&#39;: [1, 2, 3], &#39;b&#39;: [4, 5, 6]}
+&gt;&gt;&gt;
+</pre></div>
+<a name="summary" href="#summary"><h2>Summary</h2>
+</a><ul>
+<li>Dictionaries consist of <code>key: value</code> pairs.</li>
+<li>Variables are stored in a dictionary with their names as keys, so
+  dictionaries behave a lot like variables:<ul>
+<li>Dictionaries are not ordered.</li>
+<li>Setting or getting the value of a key is simple and fast.</li>
+<li>Dictionaries can't contain the same key more than once.</li>
+</ul>
+</li>
+<li>For-looping over a dictionary loops over its keys, and checking if
+  something is in the dictionary checks if the dictionary has a key
+  like that. The <code>values()</code> and <code>items()</code> methods return things that
+  behave like lists of values or <code>(key, value)</code> pairs instead.</li>
+</ul>
+<a name="examples" href="#examples"><h2>Examples</h2>
+</a><p>This program counts how many times words appear in a sentence.
+<code>sentence.split()</code> creates a list of words in the sentence, see
+<code>help(str.split)</code> for more info.</p>
+<div class="highlight" style="background: #111111"><pre style="line-height: 125%; margin: 0;"><span></span>sentence = <span style="color: #9966ff">input</span>(<span style="color: #ffff33">&quot;Enter a sentence: &quot;</span>)
+
+counts = {}     <span style="color: #336666; font-style: italic"># {word: count, ...}</span>
+<span style="color: #6699cc; font-weight: bold">for</span> word in sentence.split():
+    <span style="color: #6699cc; font-weight: bold">if</span> word in counts:
+        <span style="color: #336666; font-style: italic"># we have seen this word before</span>
+        counts[word] += 1
+    <span style="color: #6699cc; font-weight: bold">else</span>:
+        <span style="color: #336666; font-style: italic"># this is the first time this word occurs</span>
+        counts[word] = 1
+
+<span style="color: #9966ff">print</span>()     <span style="color: #336666; font-style: italic"># display an empty line</span>
+<span style="color: #6699cc; font-weight: bold">for</span> word, count in counts.items():
+    <span style="color: #6699cc; font-weight: bold">if</span> count == 1:
+        <span style="color: #336666; font-style: italic"># &quot;1 times&quot; looks weird</span>
+        <span style="color: #9966ff">print</span>(word, <span style="color: #ffff33">&quot;appears once in the sentence&quot;</span>)
+    <span style="color: #6699cc; font-weight: bold">else</span>:
+        <span style="color: #9966ff">print</span>(word, <span style="color: #ffff33">&quot;appears&quot;</span>, count, <span style="color: #ffff33">&quot;times in the sentence&quot;</span>)
+</pre></div>
+<p>Running the program might look like this:</p>
+<pre><code>Enter a sentence: this is a test and this is quite long because this is a test
+
+is appears 3 times in the sentence
+long appears once in the sentence
+a appears 2 times in the sentence
+because appears once in the sentence
+this appears 3 times in the sentence
+quite appears once in the sentence
+and appears once in the sentence
+test appears 2 times in the sentence
+</code></pre>
+<p><strong>TODO:</strong> Exercises.</p>
+<hr>
+<p>If you have trouble with this tutorial please <a href="../contact-me.html">tell me about
+it</a> and I'll make this tutorial better. If you
+like this tutorial, please <a href="../index.html#how-can-i-thank-you-for-writing-and-sharing-this-tutorial">give it a
+star</a>.</p>
+<p>You may use this tutorial freely at your own risk. See
+<a href="../LICENSE.txt">LICENSE</a>.</p>
+<p><a href="trey-hunner-zip-and-enumerate.html">Previous</a> | <a href="defining-functions.html">Next</a> |
+<a href="../index.html#basics">List of contents</a></p>
+
+  </body>
+</html>
+

@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title>Defining and using custom classes</title>
+    <link rel="stylesheet" type="text/css" href="../style.css">
+  </head>
+  <body>
+    <a name="defining-and-using-custom-classes" href="#defining-and-using-custom-classes"><h1>Defining and using custom classes</h1>
+</a><p>When I was getting started in Python I learned to make classes for
+tkinter GUI's before I understood how they work. Everything I did with
+classes worked, but I didn't understand how. Hopefully you'll first
+learn to understand classes, and then learn to use them.</p>
+<a name="what-are-classes" href="#what-are-classes"><h2>What are classes?</h2>
+</a><p>Python comes with many classes that we know already.</p>
+<div class="highlight" style="background: #111111"><pre style="line-height: 125%; margin: 0;"><span></span>&gt;&gt;&gt; <span style="color: #9966ff">str</span>
+&lt;class &#39;str&#39;&gt;
+&gt;&gt;&gt; <span style="color: #9966ff">int</span>
+&lt;class &#39;int&#39;&gt;
+&gt;&gt;&gt; <span style="color: #9966ff">list</span>
+&lt;class &#39;list&#39;&gt;
+&gt;&gt;&gt; <span style="color: #9966ff">dict</span>
+&lt;class &#39;dict&#39;&gt;
+&gt;&gt;&gt;
+</pre></div>
+<p>Calling these classes as if they were functions makes a new <strong>instance</strong>
+of them. For example, <code>str()</code> makes a <code>str</code> instance, also known as a
+string.</p>
+<div class="highlight" style="background: #111111"><pre style="line-height: 125%; margin: 0;"><span></span>&gt;&gt;&gt; <span style="color: #9966ff">str</span>()
+&#39;&#39;
+&gt;&gt;&gt; <span style="color: #9966ff">int</span>()
+0
+&gt;&gt;&gt; <span style="color: #9966ff">list</span>()
+[]
+&gt;&gt;&gt; <span style="color: #9966ff">dict</span>()
+{}
+&gt;&gt;&gt;
+</pre></div>
+<p>We can also get an instance's class with <code>type()</code>:</p>
+<div class="highlight" style="background: #111111"><pre style="line-height: 125%; margin: 0;"><span></span>&gt;&gt;&gt; <span style="color: #9966ff">type</span>(<span style="color: #ffff33">&#39;&#39;</span>)
+&lt;class &#39;str&#39;&gt;
+&gt;&gt;&gt; <span style="color: #9966ff">type</span>(0)
+&lt;class &#39;int&#39;&gt;
+&gt;&gt;&gt; <span style="color: #9966ff">type</span>([])
+&lt;class &#39;list&#39;&gt;
+&gt;&gt;&gt; <span style="color: #9966ff">type</span>({})
+&lt;class &#39;dict&#39;&gt;
+&gt;&gt;&gt;
+</pre></div>
+<p>Let's say that we make a program that processes data about websites.
+With a custom class, we're not limited to <code>str</code>, <code>int</code> and other classes
+Python comes with. Instead we can define a Website class, and make
+Websites and process information about websites directly. Defining our
+own types like this is called <strong>object-orientated programming</strong>.</p>
+<a name="first-class" href="#first-class"><h2>First class</h2>
+</a><p>In Python, <code>pass</code> does nothing.</p>
+<div class="highlight" style="background: #111111"><pre style="line-height: 125%; margin: 0;"><span></span>&gt;&gt;&gt; <span style="color: #6699cc; font-weight: bold">pass</span>
+&gt;&gt;&gt;
+</pre></div>
+<p>Let's use it to define an empty class.</p>
+<div class="highlight" style="background: #111111"><pre style="line-height: 125%; margin: 0;"><span></span>&gt;&gt;&gt; <span style="color: #6699cc; font-weight: bold">class</span> Website:
+...     <span style="color: #6699cc; font-weight: bold">pass</span>
+...
+&gt;&gt;&gt; Website
+&lt;class &#39;__main__.Website&#39;&gt;
+&gt;&gt;&gt;
+</pre></div>
+<p>The <code>pass</code> is needed here, just like <a href="defining-functions.html#first-functions">when defining functions that do
+nothing</a>.</p>
+<p>Note that I named the class <code>Website</code>, not <code>website</code>. This way we know
+that it's a class. Built-in classes use lowercase names (like <code>str</code>
+instead of <code>Str</code>) because they are faster to type, but use CapsWord
+names for your classes.</p>
+<p>Now we can make a Website instance by calling the class.</p>
+<div class="highlight" style="background: #111111"><pre style="line-height: 125%; margin: 0;"><span></span>&gt;&gt;&gt; github = Website()
+&gt;&gt;&gt; github
+&lt;__main__.Website object at 0x7f36e4c456d8&gt;
+&gt;&gt;&gt; <span style="color: #9966ff">type</span>(github)
+&lt;class &#39;__main__.Website&#39;&gt;
+&gt;&gt;&gt;
+</pre></div>
+<p>We can say that <code>github</code> is "a Website instance", "a Website
+object" or "a Website". All of these mean the same thing.</p>
+<p>Now we can attach more information about github to our Website.</p>
+<div class="highlight" style="background: #111111"><pre style="line-height: 125%; margin: 0;"><span></span>&gt;&gt;&gt; github.url = <span style="color: #ffff33">&#39;https://github.com/&#39;</span>
+&gt;&gt;&gt; github.founding_year = 2008
+&gt;&gt;&gt; github.free_to_use = <span style="color: #6699cc; font-weight: bold">True</span>
+&gt;&gt;&gt;
+</pre></div>
+<p>We can also access the information easily.</p>
+<div class="highlight" style="background: #111111"><pre style="line-height: 125%; margin: 0;"><span></span>&gt;&gt;&gt; github.url
+&#39;https://github.com/&#39;
+&gt;&gt;&gt; github.founding_year
+2008
+&gt;&gt;&gt; github.free_to_use
+True
+&gt;&gt;&gt;
+</pre></div>
+<p>As you can see, our Website is mutable, like lists are, not immutable
+like strings are. We can change the website in-place without creating a
+new Website.</p>
+<p><code>url</code>, <code>founding_year</code> and <code>free_to_use</code> are not variables, they are
+<strong>attributes</strong>. More specifically, they are <strong>instance attributes</strong>.
+The biggest difference is that we need to use a dot for setting and
+getting values of attributes, but we don't need that with variables.</p>
+<p>Modules also use instance attributes for accessing their content. For
+example, when we do <code>random.randint</code>, <code>random</code> is a module instance and
+<code>randint</code> is one of its attributes.</p>
+<p>If we make another Website, does it have the same <code>url</code>, <code>founding_year</code>
+and <code>free_to_use</code>?</p>
+<div class="highlight" style="background: #111111"><pre style="line-height: 125%; margin: 0;"><span></span>&gt;&gt;&gt; effbot = Website()
+&gt;&gt;&gt; effbot.url
+Traceback (most recent call last):
+  File <span style="color: #9966ff">&quot;&lt;stdin&gt;&quot;</span>, line 1, in &lt;module&gt;
+AttributeError: &#39;Website&#39; object has no attribute &#39;url&#39;
+&gt;&gt;&gt;
+</pre></div>
+<p>It doesn't. We'd need to define the attributes for effbot also.</p>
+<p>The attributes are stored in a dictionary called <code>__dict__</code>. It's not
+recommended to use it for code that needs to be reliable, but it's a
+handy way to see which attributes the instance contains.</p>
+<div class="highlight" style="background: #111111"><pre style="line-height: 125%; margin: 0;"><span></span>&gt;&gt;&gt; github.__dict__
+{&#39;free_to_use&#39;: True,
+ &#39;founding_year&#39;: 2008,
+ &#39;url&#39;: &#39;https://github.com/&#39;}
+&gt;&gt;&gt; effbot.__dict__
+{}
+&gt;&gt;&gt;
+</pre></div>
+<a name="class-attributes" href="#class-attributes"><h2>Class attributes</h2>
+</a><p>What happens if we set an attribute of the <code>Website</code> class to some value
+instead of doing that to an instance?</p>
+<div class="highlight" style="background: #111111"><pre style="line-height: 125%; margin: 0;"><span></span>&gt;&gt;&gt; Website.is_online = <span style="color: #6699cc; font-weight: bold">True</span>
+&gt;&gt;&gt; Website.is_online
+True
+&gt;&gt;&gt;
+</pre></div>
+<p>Seems to be working, but what happened to the instances?</p>
+<div class="highlight" style="background: #111111"><pre style="line-height: 125%; margin: 0;"><span></span>&gt;&gt;&gt; github.is_online
+True
+&gt;&gt;&gt; effbot.is_online
+True
+&gt;&gt;&gt;
+</pre></div>
+<p>What was that? Setting <code>Website.is_online</code> to a value also set
+<code>github.is_online</code> and <code>effbot.is_online</code> to that value!</p>
+<p>Actually, <code>is_online</code> is still not in github's or effbot's
+<code>__dict__</code>. github and effbot get that attribute directly from
+the <code>Website</code> class.</p>
+<div class="highlight" style="background: #111111"><pre style="line-height: 125%; margin: 0;"><span></span>&gt;&gt;&gt; github.__dict__
+{&#39;free_to_use&#39;: True,
+ &#39;founding_year&#39;: 2008,
+ &#39;url&#39;: &#39;https://github.com/&#39;}
+&gt;&gt;&gt; effbot.__dict__
+{}
+&gt;&gt;&gt;
+</pre></div>
+<p><code>Website.is_online</code> is <code>Website</code>'s class attribute, and in Python you can
+access class attributes through instances also, so in this case
+<code>github.is_online</code> points to <code>Website.is_online</code>. That can be
+confusing, which is why it's not recommended to use class attributes like
+this. Use instance attributes instead, e.g. <code>github.is_online = True</code>.</p>
+<a name="functions-and-methods" href="#functions-and-methods"><h2>Functions and methods</h2>
+</a><p>Let's <a href="defining-functions.html">define a function</a> that prints information
+about a website.</p>
+<div class="highlight" style="background: #111111"><pre style="line-height: 125%; margin: 0;"><span></span>&gt;&gt;&gt; <span style="color: #6699cc; font-weight: bold">def</span> website_info(website):
+...     <span style="color: #9966ff">print</span>(<span style="color: #ffff33">&quot;URL:&quot;</span>, website.url)
+...     <span style="color: #9966ff">print</span>(<span style="color: #ffff33">&quot;Founding year:&quot;</span>, website.founding_year)
+...     <span style="color: #9966ff">print</span>(<span style="color: #ffff33">&quot;Free to use:&quot;</span>, website.free_to_use)
+...
+&gt;&gt;&gt; website_info(github)
+URL: https://github.com/
+Founding year: 2008
+Free to use: True
+&gt;&gt;&gt;
+</pre></div>
+<p>Seems to be working. We should be able to get information about all
+websites, so maybe we should attach the <code>website_info</code> function to the
+Website class?</p>
+<div class="highlight" style="background: #111111"><pre style="line-height: 125%; margin: 0;"><span></span>&gt;&gt;&gt; Website.info = website_info
+&gt;&gt;&gt; Website.info(github)
+URL: https://github.com/
+Founding year: 2008
+Free to use: True
+&gt;&gt;&gt;
+</pre></div>
+<p>It's working, but <code>Website.info(github)</code> is a lot of typing, so
+wouldn't <code>github.info()</code> be much better?</p>
+<div class="highlight" style="background: #111111"><pre style="line-height: 125%; margin: 0;"><span></span>&gt;&gt;&gt; github.info()
+URL: https://github.com/
+Founding year: 2008
+Free to use: True
+&gt;&gt;&gt;
+</pre></div>
+<p>What the heck happened? We didn't define a <code>github.info</code>, it just
+magically worked!</p>
+<p><code>Website.info</code> is our <code>website_info</code> function, so <code>github.info</code>
+should also be the same function. But <code>Website.info</code> takes a <code>website</code>
+argument, which we didn't give it when we called <code>github.info()</code>!</p>
+<p>But is <code>github.info</code> the same thing as <code>Website.info</code>?</p>
+<div class="highlight" style="background: #111111"><pre style="line-height: 125%; margin: 0;"><span></span>&gt;&gt;&gt; Website.info
+&lt;function website_info at 0x7f36e4c39598&gt;
+&gt;&gt;&gt; github.info
+&lt;bound method website_info of &lt;__main__.Website object at 0x7f36e4c456d8&gt;&gt;
+&gt;&gt;&gt;
+</pre></div>
+<p>It's not.</p>
+<p>Instead, <code>github.info</code> is a <strong>method</strong>. If we set a function as a
+class attribute, the instances will have a method with the same name.
+Methods are "links" to the class attribute functions. So
+<code>Website.info(github)</code> does the same thing as <code>github.info()</code>,
+and when <code>github.info()</code> is called it automatically gets
+<code>github</code> as an argument.</p>
+<p>In other words, <strong><code>Class.method(instance)</code> does the same thing as
+<code>instance.method()</code></strong>. This also works with built-in classes, for
+example <code>'hello'.lower()</code> is same as <code>str.lower('hello')</code>.</p>
+<a name="defining-methods-when-defining-the-class" href="#defining-methods-when-defining-the-class"><h2>Defining methods when defining the class</h2>
+</a><p>Maybe we could define a method when we make the class instead of adding
+it later?</p>
+<div class="highlight" style="background: #111111"><pre style="line-height: 125%; margin: 0;"><span></span>&gt;&gt;&gt; <span style="color: #6699cc; font-weight: bold">class</span> Website:
+...     <span style="color: #6699cc; font-weight: bold">def</span> info(<span style="color: #9966ff">self</span>):     <span style="color: #336666; font-style: italic"># self will be github</span>
+...         <span style="color: #9966ff">print</span>(<span style="color: #ffff33">&quot;URL:&quot;</span>, <span style="color: #9966ff">self</span>.url)
+...         <span style="color: #9966ff">print</span>(<span style="color: #ffff33">&quot;Founding year:&quot;</span>, <span style="color: #9966ff">self</span>.founding_year)
+...         <span style="color: #9966ff">print</span>(<span style="color: #ffff33">&quot;Free to use:&quot;</span>, <span style="color: #9966ff">self</span>.free_to_use)
+...
+&gt;&gt;&gt; github = Website()
+&gt;&gt;&gt; github.url = <span style="color: #ffff33">&#39;https://github.com/&#39;</span>
+&gt;&gt;&gt; github.founding_year = 2008
+&gt;&gt;&gt; github.free_to_use = <span style="color: #6699cc; font-weight: bold">True</span>
+&gt;&gt;&gt; github.info()
+URL: https://github.com/
+Founding year: 2008
+Free to use: True
+&gt;&gt;&gt;
+</pre></div>
+<p>It's working. The <code>self</code> argument in <code>Website.info</code> was <code>github</code>.
+You could call it something else too such as <code>me</code>, <code>this</code> or <code>instance</code>,
+but use <code>self</code> instead. Other Python users have gotten used to it, and
+the official style guide recommends it also.</p>
+<p>We still need to set <code>url</code>, <code>founding_year</code> and <code>free_to_use</code> manually.
+Maybe we could add a method to do that?</p>
+<div class="highlight" style="background: #111111"><pre style="line-height: 125%; margin: 0;"><span></span>&gt;&gt;&gt; <span style="color: #6699cc; font-weight: bold">class</span> Website:
+...     <span style="color: #6699cc; font-weight: bold">def</span> initialize(<span style="color: #9966ff">self</span>, url, founding_year, free_to_use):
+...         <span style="color: #9966ff">self</span>.url = url
+...         <span style="color: #9966ff">self</span>.founding_year = founding_year
+...         <span style="color: #9966ff">self</span>.free_to_use = free_to_use
+...     <span style="color: #6699cc; font-weight: bold">def</span> info(<span style="color: #9966ff">self</span>):
+...         <span style="color: #9966ff">print</span>(<span style="color: #ffff33">&quot;URL:&quot;</span>, <span style="color: #9966ff">self</span>.url)
+...         <span style="color: #9966ff">print</span>(<span style="color: #ffff33">&quot;Founding year:&quot;</span>, <span style="color: #9966ff">self</span>.founding_year)
+...         <span style="color: #9966ff">print</span>(<span style="color: #ffff33">&quot;Free to use:&quot;</span>, <span style="color: #9966ff">self</span>.free_to_use)
+...
+&gt;&gt;&gt; github = Website()
+&gt;&gt;&gt; github.initialize(<span style="color: #ffff33">&#39;https://github.com/&#39;</span>, 2008, <span style="color: #6699cc; font-weight: bold">True</span>)
+&gt;&gt;&gt; github.info()
+URL: https://github.com/
+Founding year: 2008
+Free to use: True
+&gt;&gt;&gt;
+</pre></div>
+<p>That works. The attributes we defined in the initialize method are also
+available in the info method. We could also access them directly from
+<code>github</code>, for example with <code>github.url</code>.</p>
+<p>But we still need to call <code>github.initialize</code>. In Python, there's
+a "magic" method that runs when we create a new Website by calling the
+Website class. It's called <code>__init__</code> and it does nothing by default. If
+our <code>__init__</code> method takes other arguments than self we can call the
+class with arguments and they will be given to <code>__init__</code>. Like this:</p>
+<div class="highlight" style="background: #111111"><pre style="line-height: 125%; margin: 0;"><span></span>&gt;&gt;&gt; <span style="color: #6699cc; font-weight: bold">class</span> Website:
+...     <span style="color: #6699cc; font-weight: bold">def</span> __init__(<span style="color: #9966ff">self</span>, url, founding_year, free_to_use):
+...         <span style="color: #9966ff">self</span>.url = url
+...         <span style="color: #9966ff">self</span>.founding_year = founding_year
+...         <span style="color: #9966ff">self</span>.free_to_use = free_to_use
+...     <span style="color: #6699cc; font-weight: bold">def</span> info(<span style="color: #9966ff">self</span>):
+...         <span style="color: #9966ff">print</span>(<span style="color: #ffff33">&quot;URL:&quot;</span>, <span style="color: #9966ff">self</span>.url)
+...         <span style="color: #9966ff">print</span>(<span style="color: #ffff33">&quot;Founding year:&quot;</span>, <span style="color: #9966ff">self</span>.founding_year)
+...         <span style="color: #9966ff">print</span>(<span style="color: #ffff33">&quot;Free to use:&quot;</span>, <span style="color: #9966ff">self</span>.free_to_use)
+...
+&gt;&gt;&gt; github = Website(<span style="color: #ffff33">&#39;https://github.com/&#39;</span>, 2008, <span style="color: #6699cc; font-weight: bold">True</span>)
+&gt;&gt;&gt; github.info()
+URL: https://github.com/
+Founding year: 2008
+Free to use: True
+&gt;&gt;&gt;
+</pre></div>
+<p>Classes have many other magic methods too, but I'm not going to cover
+them in this tutorial.</p>
+<a name="when-should-i-use-classes" href="#when-should-i-use-classes"><h2>When should I use classes?</h2>
+</a><p>Don't do this:</p>
+<div class="highlight" style="background: #111111"><pre style="line-height: 125%; margin: 0;"><span></span><span style="color: #6699cc; font-weight: bold">class</span> MyProgram:
+
+    <span style="color: #6699cc; font-weight: bold">def</span> __init__(<span style="color: #9966ff">self</span>):
+        <span style="color: #9966ff">print</span>(<span style="color: #ffff33">&quot;Hello!&quot;</span>)
+        word = <span style="color: #9966ff">input</span>(<span style="color: #ffff33">&quot;Enter something: &quot;</span>)
+        <span style="color: #9966ff">print</span>(<span style="color: #ffff33">&quot;You entered &quot;</span> + word + <span style="color: #ffff33">&quot;.&quot;</span>)
+
+
+program = MyProgram()
+</pre></div>
+<p>You should avoid using things like <code>print</code> and <code>input</code> in the <code>__init__</code>
+method. The <code>__init__</code> method should be simple and it should just set
+things up.</p>
+<p>Usually you shouldn't use a class if you're only going to make one
+instance of it, and you don't need a class either if you're only going
+to have one method. In this example <code>MyProgram</code> has only one method and
+only one instance.</p>
+<p>Make functions instead, or just write your code without any functions if
+it's short enough for that. This program does the same thing and it's
+much more readable:</p>
+<div class="highlight" style="background: #111111"><pre style="line-height: 125%; margin: 0;"><span></span><span style="color: #9966ff">print</span>(<span style="color: #ffff33">&quot;Hello!&quot;</span>)
+word = <span style="color: #9966ff">input</span>(<span style="color: #ffff33">&quot;Enter something: &quot;</span>)
+<span style="color: #9966ff">print</span>(<span style="color: #ffff33">&quot;You entered &quot;</span> + word + <span style="color: #ffff33">&quot;.&quot;</span>)
+</pre></div>
+<a name="summary" href="#summary"><h2>Summary</h2>
+</a><ul>
+<li>Object-orientated programming is programming with custom data types.
+In Python that means using classes and instances.</li>
+<li>Use CapsWords for class names and lowercase_words_with_underscores for
+other names. This makes it easy to see which objects are classes and
+which objects are instances.</li>
+<li>Calling a class as if it was a function makes a new instance of it.</li>
+<li><code>foo.bar = baz</code> sets <code>foo</code>'s attribute <code>bar</code> to <code>baz</code>.</li>
+<li>Use class attributes for functions and instance attributes for other
+things.</li>
+<li>Functions as class attributes can be accessed as instance methods.
+They get their instance as the first argument. Call that <code>self</code> when
+you define the method.</li>
+<li><code>__init__</code> is a special method, and it's ran when a new instance of a
+class is created. It does nothing by default.</li>
+<li>Don't use classes if your code is easier to read without them.</li>
+</ul>
+<hr>
+<p>If you have trouble with this tutorial please <a href="../contact-me.html">tell me about
+it</a> and I'll make this tutorial better. If you
+like this tutorial, please <a href="../index.html#how-can-i-thank-you-for-writing-and-sharing-this-tutorial">give it a
+star</a>.</p>
+<p>You may use this tutorial freely at your own risk. See
+<a href="../LICENSE.txt">LICENSE</a>.</p>
+<p><a href="exceptions.html">Previous</a> | <a href="docstrings.html">Next</a> |
+<a href="../index.html#basics">List of contents</a></p>
+
+  </body>
+</html>
+

@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title>Trey Hunner: zip and enumerate</title>
+    <link rel="stylesheet" type="text/css" href="../style.css">
+  </head>
+  <body>
+    <a name="trey-hunner-zip-and-enumerate" href="#trey-hunner-zip-and-enumerate"><h1>Trey Hunner: zip and enumerate</h1>
+</a><p>Now we know how <a href="loops.html#for-loops">for loops</a> work in Python. But
+for loops aren't limited to printing each item in a list, they can
+do a lot more.</p>
+<p>To be able to understand for loop tricks we need to first know
+assigning values to multiple variables at once. It works like this:</p>
+<div class="highlight" style="background: #111111"><pre style="line-height: 125%; margin: 0;"><span></span>&gt;&gt;&gt; a, b = 1, 2
+&gt;&gt;&gt; a
+1
+&gt;&gt;&gt; b
+2
+&gt;&gt;&gt;
+</pre></div>
+<p>We can use <code>()</code> and <code>[]</code> around these values however we want and
+everything will still work the same way. <code>[]</code> creates a list, and
+<code>()</code> creates a tuple.</p>
+<div class="highlight" style="background: #111111"><pre style="line-height: 125%; margin: 0;"><span></span>&gt;&gt;&gt; [a, b] = (1, 2)
+&gt;&gt;&gt; a
+1
+&gt;&gt;&gt; b
+2
+&gt;&gt;&gt;
+</pre></div>
+<p>We can also have <code>[]</code> or <code>()</code> on one side but not on the other
+side.</p>
+<div class="highlight" style="background: #111111"><pre style="line-height: 125%; margin: 0;"><span></span>&gt;&gt;&gt; (a, b) = 1, 2
+&gt;&gt;&gt; a
+1
+&gt;&gt;&gt; b
+2
+&gt;&gt;&gt;
+</pre></div>
+<p>Python created a tuple automatically.</p>
+<div class="highlight" style="background: #111111"><pre style="line-height: 125%; margin: 0;"><span></span>&gt;&gt;&gt; 1, 2
+(1, 2)
+&gt;&gt;&gt;
+</pre></div>
+<p>If we're for looping over a list with pairs of values in it we
+could do this:</p>
+<div class="highlight" style="background: #111111"><pre style="line-height: 125%; margin: 0;"><span></span>&gt;&gt;&gt; items = [(<span style="color: #ffff33">&#39;a&#39;</span>, 1), (<span style="color: #ffff33">&#39;b&#39;</span>, 2), (<span style="color: #ffff33">&#39;c&#39;</span>, 3)]
+&gt;&gt;&gt; <span style="color: #6699cc; font-weight: bold">for</span> pair in items:
+...     a, b = pair
+...     <span style="color: #9966ff">print</span>(a, b)
+...
+a 1
+b 2
+c 3
+&gt;&gt;&gt;
+</pre></div>
+<p>Or we can tell the for loop to unpack it for us.</p>
+<div class="highlight" style="background: #111111"><pre style="line-height: 125%; margin: 0;"><span></span>&gt;&gt;&gt; <span style="color: #6699cc; font-weight: bold">for</span> a, b in items:
+...     <span style="color: #9966ff">print</span>(a, b)
+...
+a 1
+b 2
+c 3
+&gt;&gt;&gt;
+</pre></div>
+<p>Now you're ready to read <a href="http://treyhunner.com/2016/04/how-to-loop-with-indexes-in-python/">this awesome looping
+tutorial</a>.
+Read it now, then come back here and do the exercises.</p>
+<a name="exercises" href="#exercises"><h2>Exercises</h2>
+</a><ol>
+<li><p>Create a program that works like this. Here I entered everything
+ after the <code>&gt;</code> prompt that the program displayed.</p>
+<pre><code> Enter something, and press Enter without typing anything when you're done.
+ &gt;hello there
+ &gt;this is a test
+ &gt;it seems to work
+ &gt;
+ Line 1 is: hello there
+ Line 2 is: this is a test
+ Line 3 is: it seems to work
+</code></pre>
+</li>
+<li><p>Create a program that prints all letters from A to Z and a to z
+ next to each other:</p>
+<pre><code> A a
+ B b
+ C c
+ ...
+ X x
+ Y y
+ Z z
+</code></pre>
+<p>Start your program like this:</p>
+<div class="highlight" style="background: #111111"><pre style="line-height: 125%; margin: 0;"><span></span> uppercase = <span style="color: #ffff33">&#39;ABCDEFGHIJKLMNOPQRSTUVWXYZ&#39;</span>
+ lowercase = <span style="color: #ffff33">&#39;abcdefghijklmnopqrstuvwxyz&#39;</span>
+</pre></div>
+<p><strong>Hint:</strong> how do strings behave with <code>zip</code>? Try it out on the
+ <code>&gt;&gt;&gt;</code> prompt and see.</p>
+</li>
+<li><p>Can you make it print the indexes also?</p>
+<pre><code> 1 A a
+ 2 B b
+ 3 C c
+ ...
+ 24 X x
+ 25 Y y
+ 26 Z z
+</code></pre>
+</li>
+</ol>
+<p>The answers are <a href="answers.html">here</a>.</p>
+<hr>
+<p>If you have trouble with this tutorial please <a href="../contact-me.html">tell me about
+it</a> and I'll make this tutorial better. If you
+like this tutorial, please <a href="../index.html#how-can-i-thank-you-for-writing-and-sharing-this-tutorial">give it a
+star</a>.</p>
+<p>You may use this tutorial freely at your own risk. See
+<a href="../LICENSE.txt">LICENSE</a>.</p>
+<p><a href="loops.html">Previous</a> | <a href="dicts.html">Next</a> |
+<a href="../index.html#basics">List of contents</a></p>
+
+  </body>
+</html>
+

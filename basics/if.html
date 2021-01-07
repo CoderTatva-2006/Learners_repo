@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title>If, else and elif</title>
+    <link rel="stylesheet" type="text/css" href="../style.css">
+  </head>
+  <body>
+    <a name="if-else-and-elif" href="#if-else-and-elif"><h1>If, else and elif</h1>
+</a><a name="using-if-statements" href="#using-if-statements"><h2>Using if statements</h2>
+</a><p>Now we know what True and False are.</p>
+<div class="highlight" style="background: #111111"><pre style="line-height: 125%; margin: 0;"><span></span>&gt;&gt;&gt; 1 == 1
+True
+&gt;&gt;&gt; 1 == 2
+False
+&gt;&gt;&gt;
+&gt;&gt;&gt; its_raining = <span style="color: #6699cc; font-weight: bold">True</span>
+&gt;&gt;&gt; its_raining
+True
+&gt;&gt;&gt;
+</pre></div>
+<p>But what if we want to execute different code depending on something?
+That's when <code>if</code> comes in.</p>
+<div class="highlight" style="background: #111111"><pre style="line-height: 125%; margin: 0;"><span></span>&gt;&gt;&gt; its_raining = <span style="color: #6699cc; font-weight: bold">True</span>
+&gt;&gt;&gt; <span style="color: #6699cc; font-weight: bold">if</span> its_raining:
+...     <span style="color: #9966ff">print</span>(<span style="color: #ffff33">&quot;It&#39;s raining!&quot;</span>)
+...
+It&#39;s raining!
+&gt;&gt;&gt; its_raining = <span style="color: #6699cc; font-weight: bold">False</span>
+&gt;&gt;&gt; <span style="color: #6699cc; font-weight: bold">if</span> its_raining:
+...     <span style="color: #9966ff">print</span>(<span style="color: #ffff33">&quot;It&#39;s raining!&quot;</span>)        <span style="color: #336666; font-style: italic"># nothing happens</span>
+...
+&gt;&gt;&gt;
+</pre></div>
+<p>The prompt changed from <code>&gt;&gt;&gt;</code> to <code>...</code>. It meant that Python was
+expecting me to keep typing. When I was done, I just pressed Enter
+twice. My code was executed and the prompt went back to <code>&gt;&gt;&gt;</code>.</p>
+<p>An important thing to notice is that the line with a print is
+<strong>indented</strong>. You can press the tab key, or if it doesn't work
+just press space a few times.</p>
+<p>But why is that <code>if its_raining</code> instead of <code>if(its_raining)</code>?</p>
+<p>Earlier we learned that <code>if</code> is a <strong>keyword</strong>.</p>
+<div class="highlight" style="background: #111111"><pre style="line-height: 125%; margin: 0;"><span></span>&gt;&gt;&gt; <span style="color: #6699cc; font-weight: bold">if</span> = 123
+  File <span style="color: #9966ff">&quot;&lt;stdin&gt;&quot;</span>, line 1
+    <span style="color: #6699cc; font-weight: bold">if</span> = 123
+       ^
+SyntaxError: invalid syntax
+&gt;&gt;&gt;
+</pre></div>
+<p><strong>Functions</strong> like <code>print</code> need <code>()</code> after their name to work. But <code>if</code>
+is <strong>a keyword</strong>, not a function, so it doesn't need <code>()</code>. Python has
+separate functions and keywords because it's possible to create custom
+functions, but it's not possible to create custom keywords. That's why
+keywords are usually used for "magic" things that would be difficult to
+do with just functions.</p>
+<p>Also note that if statements check the condition once only, so if we
+set it to false later the if statement won't notice it.</p>
+<div class="highlight" style="background: #111111"><pre style="line-height: 125%; margin: 0;"><span></span>&gt;&gt;&gt; its_raining = <span style="color: #6699cc; font-weight: bold">True</span>
+&gt;&gt;&gt; <span style="color: #6699cc; font-weight: bold">if</span> its_raining:
+...     its_raining = <span style="color: #6699cc; font-weight: bold">False</span>
+...     <span style="color: #9966ff">print</span>(<span style="color: #ffff33">&quot;It&#39;s not raining, but this runs anyway.&quot;</span>)
+...
+It&#39;s not raining, but this runs anyway.
+&gt;&gt;&gt;
+</pre></div>
+<a name="using-else" href="#using-else"><h2>Using else</h2>
+</a><p>What if we want to print a different message if it's not raining? We
+could do something like this:</p>
+<div class="highlight" style="background: #111111"><pre style="line-height: 125%; margin: 0;"><span></span>its_raining = <span style="color: #6699cc; font-weight: bold">True</span>                  <span style="color: #336666; font-style: italic"># you can change this to False</span>
+its_not_raining = not its_raining   <span style="color: #336666; font-style: italic"># False if its_raining, True otherwise</span>
+
+<span style="color: #6699cc; font-weight: bold">if</span> its_raining:
+    <span style="color: #9966ff">print</span>(<span style="color: #ffff33">&quot;It&#39;s raining!&quot;</span>)
+<span style="color: #6699cc; font-weight: bold">if</span> its_not_raining:
+    <span style="color: #9966ff">print</span>(<span style="color: #ffff33">&quot;It&#39;s not raining.&quot;</span>)
+</pre></div>
+<p>Note that this code example doesn't start with <code>&gt;&gt;&gt;</code>, so you should
+<a href="editor-setup.html">save it to a file and run the file</a>.</p>
+<p>Now our program will print a different value depending on what the
+value of <code>its_raining</code> is.</p>
+<p>We can also add <code>not its_raining</code> directly to the second if statement:</p>
+<div class="highlight" style="background: #111111"><pre style="line-height: 125%; margin: 0;"><span></span>its_raining = <span style="color: #6699cc; font-weight: bold">True</span>
+
+<span style="color: #6699cc; font-weight: bold">if</span> its_raining:
+    <span style="color: #9966ff">print</span>(<span style="color: #ffff33">&quot;It&#39;s raining!&quot;</span>)
+<span style="color: #6699cc; font-weight: bold">if</span> not its_raining:
+    <span style="color: #9966ff">print</span>(<span style="color: #ffff33">&quot;It&#39;s not raining.&quot;</span>)
+</pre></div>
+<p>But we can make it even better by using <code>else</code>.</p>
+<div class="highlight" style="background: #111111"><pre style="line-height: 125%; margin: 0;"><span></span>its_raining = <span style="color: #6699cc; font-weight: bold">True</span>
+
+<span style="color: #6699cc; font-weight: bold">if</span> its_raining:
+    <span style="color: #9966ff">print</span>(<span style="color: #ffff33">&quot;It&#39;s raining!&quot;</span>)
+<span style="color: #6699cc; font-weight: bold">else</span>:
+    <span style="color: #9966ff">print</span>(<span style="color: #ffff33">&quot;It&#39;s not raining.&quot;</span>)
+</pre></div>
+<p>The else part simply runs when the if statement doesn't run. It doesn't
+check the condition again.</p>
+<div class="highlight" style="background: #111111"><pre style="line-height: 125%; margin: 0;"><span></span>&gt;&gt;&gt; its_raining = <span style="color: #6699cc; font-weight: bold">True</span>
+&gt;&gt;&gt; <span style="color: #6699cc; font-weight: bold">if</span> its_raining:
+...     its_raining = <span style="color: #6699cc; font-weight: bold">False</span>
+... <span style="color: #6699cc; font-weight: bold">else</span>:
+...     <span style="color: #9966ff">print</span>(<span style="color: #ffff33">&quot;It&#39;s not raining, but this still doesn&#39;t run.&quot;</span>)
+...
+&gt;&gt;&gt;
+</pre></div>
+<p>By combining <code>else</code> with the input function we can make a program that
+asks for a password and checks if it's correct.</p>
+<div class="highlight" style="background: #111111"><pre style="line-height: 125%; margin: 0;"><span></span><span style="color: #9966ff">print</span>(<span style="color: #ffff33">&quot;Hello!&quot;</span>)
+password = <span style="color: #9966ff">input</span>(<span style="color: #ffff33">&quot;Enter your password: &quot;</span>)
+
+<span style="color: #6699cc; font-weight: bold">if</span> password == <span style="color: #ffff33">&quot;secret&quot;</span>:
+    <span style="color: #9966ff">print</span>(<span style="color: #ffff33">&quot;That&#39;s correct, welcome!&quot;</span>)
+<span style="color: #6699cc; font-weight: bold">else</span>:
+    <span style="color: #9966ff">print</span>(<span style="color: #ffff33">&quot;Access denied.&quot;</span>)
+</pre></div>
+<p>The program prints different things depending on what we enter:</p>
+<pre><code>Hello!
+Enter your password: secret
+Welcome!
+</code></pre>
+<pre><code>Hello!
+Enter your password: lol
+Access denied.
+</code></pre>
+<p>Using the input function for passwords doesn't work very well because
+we can't hide the password with asterisks. There are better ways to get
+a password from the user, but you shouldn't worry about that just yet.</p>
+<a name="avoiding-many-levels-of-indentation-with-elif" href="#avoiding-many-levels-of-indentation-with-elif"><h2>Avoiding many levels of indentation with elif</h2>
+</a><p>If we have more than one condition to check, we could do this:</p>
+<div class="highlight" style="background: #111111"><pre style="line-height: 125%; margin: 0;"><span></span><span style="color: #9966ff">print</span>(<span style="color: #ffff33">&quot;Hello!&quot;</span>)
+word = <span style="color: #9966ff">input</span>(<span style="color: #ffff33">&quot;Enter something: &quot;</span>)
+
+<span style="color: #6699cc; font-weight: bold">if</span> word == <span style="color: #ffff33">&quot;hi&quot;</span>:
+    <span style="color: #9966ff">print</span>(<span style="color: #ffff33">&quot;Hi to you too!&quot;</span>)
+<span style="color: #6699cc; font-weight: bold">else</span>:
+    <span style="color: #6699cc; font-weight: bold">if</span> word == <span style="color: #ffff33">&quot;hello&quot;</span>:
+        <span style="color: #9966ff">print</span>(<span style="color: #ffff33">&quot;Hello hello!&quot;</span>)
+    <span style="color: #6699cc; font-weight: bold">else</span>:
+        <span style="color: #6699cc; font-weight: bold">if</span> word == <span style="color: #ffff33">&quot;howdy&quot;</span>:
+            <span style="color: #9966ff">print</span>(<span style="color: #ffff33">&quot;Howdyyyy!&quot;</span>)
+        <span style="color: #6699cc; font-weight: bold">else</span>:
+            <span style="color: #6699cc; font-weight: bold">if</span> word == <span style="color: #ffff33">&quot;hey&quot;</span>:
+                <span style="color: #9966ff">print</span>(<span style="color: #ffff33">&quot;Hey hey hey!&quot;</span>)
+            <span style="color: #6699cc; font-weight: bold">else</span>:
+                <span style="color: #6699cc; font-weight: bold">if</span> word == <span style="color: #ffff33">&quot;gday m8&quot;</span>:
+                    <span style="color: #9966ff">print</span>(<span style="color: #ffff33">&quot;Gday 4 u 2!&quot;</span>)
+                <span style="color: #6699cc; font-weight: bold">else</span>:
+                    <span style="color: #9966ff">print</span>(<span style="color: #ffff33">&quot;I don&#39;t know what&quot;</span>, word, <span style="color: #ffff33">&quot;means.&quot;</span>)
+</pre></div>
+<p>This code is a mess. We need to indent more every time we want to check
+for more words. Here we check for 5 different words, so we have 5 levels
+of indentation. If we would need to check 30 words, the code would
+become really wide and it would be hard to work with.</p>
+<p>Instead of typing <code>else</code>, indenting more and typing an <code>if</code> we can
+simply type <code>elif</code>, which is short for <code>else if</code>. Like this:</p>
+<div class="highlight" style="background: #111111"><pre style="line-height: 125%; margin: 0;"><span></span><span style="color: #9966ff">print</span>(<span style="color: #ffff33">&quot;Hello!&quot;</span>)
+word = <span style="color: #9966ff">input</span>(<span style="color: #ffff33">&quot;Enter something: &quot;</span>)
+
+<span style="color: #6699cc; font-weight: bold">if</span> word == <span style="color: #ffff33">&quot;hi&quot;</span>:
+    <span style="color: #9966ff">print</span>(<span style="color: #ffff33">&quot;Hi to you too!&quot;</span>)
+<span style="color: #6699cc; font-weight: bold">elif</span> word == <span style="color: #ffff33">&quot;hello&quot;</span>:
+    <span style="color: #9966ff">print</span>(<span style="color: #ffff33">&quot;Hello hello!&quot;</span>)
+<span style="color: #6699cc; font-weight: bold">elif</span> word == <span style="color: #ffff33">&quot;howdy&quot;</span>:
+    <span style="color: #9966ff">print</span>(<span style="color: #ffff33">&quot;Howdyyyy!&quot;</span>)
+<span style="color: #6699cc; font-weight: bold">elif</span> word == <span style="color: #ffff33">&quot;hey&quot;</span>:
+    <span style="color: #9966ff">print</span>(<span style="color: #ffff33">&quot;Hey hey hey!&quot;</span>)
+<span style="color: #6699cc; font-weight: bold">elif</span> word == <span style="color: #ffff33">&quot;gday m8&quot;</span>:
+    <span style="color: #9966ff">print</span>(<span style="color: #ffff33">&quot;Gday 4 u 2!&quot;</span>)
+<span style="color: #6699cc; font-weight: bold">else</span>:
+    <span style="color: #9966ff">print</span>(<span style="color: #ffff33">&quot;I don&#39;t know what&quot;</span>, word, <span style="color: #ffff33">&quot;means.&quot;</span>)
+</pre></div>
+<p>Now the program is shorter and much easier to read.</p>
+<p>Note that the <code>elif</code> parts only run if nothing before them matches, and
+the <code>else</code> runs only when none of the <code>elifs</code> match. If we would have
+used <code>if</code> instead, all possible values would be always checked and the
+<code>else</code> part would run always except when word is <code>"gday m8"</code>. This is
+why we use <code>elif</code> instead of <code>if</code>.</p>
+<p>For example, this program prints only <code>hello</code>...</p>
+<div class="highlight" style="background: #111111"><pre style="line-height: 125%; margin: 0;"><span></span><span style="color: #6699cc; font-weight: bold">if</span> 1 == 1:
+    <span style="color: #9966ff">print</span>(<span style="color: #ffff33">&quot;hello&quot;</span>)
+<span style="color: #6699cc; font-weight: bold">elif</span> 1 == 2:
+    <span style="color: #9966ff">print</span>(<span style="color: #ffff33">&quot;this is weird&quot;</span>)
+<span style="color: #6699cc; font-weight: bold">else</span>:
+    <span style="color: #9966ff">print</span>(<span style="color: #ffff33">&quot;world&quot;</span>)
+</pre></div>
+<p>...but this prints <code>hello</code> <em>and</em> <code>world</code>:</p>
+<div class="highlight" style="background: #111111"><pre style="line-height: 125%; margin: 0;"><span></span><span style="color: #6699cc; font-weight: bold">if</span> 1 == 1:
+    <span style="color: #9966ff">print</span>(<span style="color: #ffff33">&quot;hello&quot;</span>)
+<span style="color: #6699cc; font-weight: bold">if</span> 1 == 2:
+    <span style="color: #9966ff">print</span>(<span style="color: #ffff33">&quot;this is weird&quot;</span>)
+<span style="color: #6699cc; font-weight: bold">else</span>:
+    <span style="color: #9966ff">print</span>(<span style="color: #ffff33">&quot;world&quot;</span>)
+</pre></div>
+<p>Now the <code>else</code> belongs to the <code>if 1 == 2</code> part and <strong>it has nothing to
+do with the <code>if 1 == 1</code> part</strong>. On the other hand, the elif version
+<strong>grouped the multiple ifs together</strong> and the <code>else</code> belonged to all of
+them. Adding a blank line makes this obvious:</p>
+<div class="highlight" style="background: #111111"><pre style="line-height: 125%; margin: 0;"><span></span><span style="color: #6699cc; font-weight: bold">if</span> 1 == 1:
+    <span style="color: #9966ff">print</span>(<span style="color: #ffff33">&quot;hello&quot;</span>)
+
+<span style="color: #6699cc; font-weight: bold">if</span> 1 == 2:
+    <span style="color: #9966ff">print</span>(<span style="color: #ffff33">&quot;this is weird&quot;</span>)
+<span style="color: #6699cc; font-weight: bold">else</span>:
+    <span style="color: #9966ff">print</span>(<span style="color: #ffff33">&quot;world&quot;</span>)
+</pre></div>
+<p>In general, adding blank lines to appropriate places is a good idea. If
+you are asked to "fix code", feel free to add missing blank lines.</p>
+<a name="summary" href="#summary"><h2>Summary</h2>
+</a><ul>
+<li>If a code example starts with <code>&gt;&gt;&gt;</code> run it on the interactive prompt.
+  If it doesn't, write it to a file and run that file.</li>
+<li>Indentation is important in Python.</li>
+<li>Indented code under an if statement runs if the condition is true.</li>
+<li>We can also add an else statement. Indented code under it will run
+  if the code under the if statement does not run.</li>
+<li>elif is short for else if.</li>
+</ul>
+<a name="exercises" href="#exercises"><h2>Exercises</h2>
+</a><ol>
+<li><p>This program contains several problems. Copy-paste it to a file,
+ then try to run it, fix the errors you got, try to run it again and
+ keep going until it works.</p>
+<div class="highlight" style="background: #111111"><pre style="line-height: 125%; margin: 0;"><span></span> <span style="color: #9966ff">print</span>(Hello!)
+ something == <span style="color: #9966ff">input</span>(<span style="color: #ffff33">&#39;Enter something: )</span>
+ <span style="color: #9966ff">print</span>(<span style="color: #ffff33">&#39;You entered:&#39;</span> something)
+</pre></div>
+</li>
+<li><p>Fix this program the same way:</p>
+<div class="highlight" style="background: #111111"><pre style="line-height: 125%; margin: 0;"><span></span> <span style="color: #9966ff">print</span>(<span style="color: #ffff33">&#39;Hello!&#39;</span>)
+ something = <span style="color: #9966ff">input</span>(<span style="color: #ffff33">&quot;Enter something: &quot;</span>)
+ <span style="color: #6699cc; font-weight: bold">if</span> something = <span style="color: #ffff33">&#39;hello&#39;</span>:
+     <span style="color: #9966ff">print</span>(<span style="color: #ffff33">&quot;Hello for you too!&quot;</span>)
+
+ <span style="color: #6699cc; font-weight: bold">elif</span> something = <span style="color: #ffff33">&#39;hi&#39;</span>
+     <span style="color: #9966ff">print</span>(<span style="color: #ffff33">&#39;Hi there!&#39;</span>)
+ <span style="color: #6699cc; font-weight: bold">else</span>:
+     <span style="color: #9966ff">print</span>(<span style="color: #ffff33">&quot;I don&#39;t know what,&quot;</span> something, <span style="color: #ffff33">&quot;means.&quot;</span>)
+</pre></div>
+</li>
+<li><p>Write a program into a file that asks the user to write a word and
+ then prints that word 1000 times. For example, if the user enters
+ <code>hi</code> the program would reply <code>hihihihihihihihi</code> ...</p>
+</li>
+<li><p>Add spaces between the words, so the output is like <code>hi hi hi hi</code> ...</p>
+</li>
+<li><p>Make something that asks the user to enter two words, and prints
+ 1000 of each with spaces in between. For example, if the user
+ enters <code>hello</code> and <code>hi</code> the program would print
+ <code>hello hi hello hi hello hi hello hi hello hi</code> ...</p>
+</li>
+<li><p>Make a program that asks for a password and prints <code>Welcome!</code>,
+ <code>Access denied</code> or <code>You didn't enter anything</code> depending on whether
+ the user entered the correct password, a wrong password, or nothing
+ at all by pressing Enter without typing anything.</p>
+</li>
+</ol>
+<p>The answers are <a href="answers.html#if-else-and-elif">here</a>.</p>
+<hr>
+<p>If you have trouble with this tutorial please <a href="../contact-me.html">tell me about
+it</a> and I'll make this tutorial better. If you
+like this tutorial, please <a href="../index.html#how-can-i-thank-you-for-writing-and-sharing-this-tutorial">give it a
+star</a>.</p>
+<p>You may use this tutorial freely at your own risk. See
+<a href="../LICENSE.txt">LICENSE</a>.</p>
+<p><a href="editor-setup.html">Previous</a> | <a href="handy-stuff-strings.html">Next</a> |
+<a href="../index.html#basics">List of contents</a></p>
+
+  </body>
+</html>
+

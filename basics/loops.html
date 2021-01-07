@@ -1,0 +1,414 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title>Loops</title>
+    <link rel="stylesheet" type="text/css" href="../style.css">
+  </head>
+  <body>
+    <a name="loops" href="#loops"><h1>Loops</h1>
+</a><p>In programming, a <strong>loop</strong> means repeating something multiple times.
+There are different kinds of loops:</p>
+<ul>
+<li><a href="#while-loops">While loops</a> repeat something while a condition is true.</li>
+<li><a href="#until-loops">Until loops</a> repeat something while a condition is false.</li>
+<li><a href="#for-loops">For loops</a> repeat something for each element of something.</li>
+</ul>
+<p>We'll talk about all of these in this tutorial.</p>
+<a name="while-loops" href="#while-loops"><h2>While loops</h2>
+</a><p>Now we know how if statements work.</p>
+<div class="highlight" style="background: #111111"><pre style="line-height: 125%; margin: 0;"><span></span>its_raining = <span style="color: #6699cc; font-weight: bold">True</span>
+<span style="color: #6699cc; font-weight: bold">if</span> its_raining:
+    <span style="color: #9966ff">print</span>(<span style="color: #ffff33">&quot;Oh crap, it&#39;s raining!&quot;</span>)
+</pre></div>
+<p>While loops are really similar to if statements.</p>
+<div class="highlight" style="background: #111111"><pre style="line-height: 125%; margin: 0;"><span></span>its_raining = <span style="color: #6699cc; font-weight: bold">True</span>
+<span style="color: #6699cc; font-weight: bold">while</span> its_raining:
+    <span style="color: #9966ff">print</span>(<span style="color: #ffff33">&quot;Oh crap, it&#39;s raining!&quot;</span>)
+    <span style="color: #336666; font-style: italic"># we&#39;ll jump back to the line with the word &quot;while&quot; from here</span>
+<span style="color: #9966ff">print</span>(<span style="color: #ffff33">&quot;It&#39;s not raining anymore.&quot;</span>)
+</pre></div>
+<p>If you're not familiar with while loops, the program's output may be a
+bit surprising:</p>
+<pre><code>Oh crap, it's raining!
+Oh crap, it's raining!
+Oh crap, it's raining!
+Oh crap, it's raining!
+Oh crap, it's raining!
+Oh crap, it's raining!
+Oh crap, it's raining!
+Oh crap, it's raining!
+Oh crap, it's raining!
+Oh crap, it's raining!
+Oh crap, it's raining!
+Oh crap, it's raining!
+Oh crap, it's raining!
+Oh crap, it's raining!
+Oh crap, it's raining!
+(much more raining)
+</code></pre>
+<p>Again, this program does not break your computer. It just prints the
+same thing multiple times. We can interrupt it by pressing Ctrl+C.</p>
+<p>In this example, <code>its_raining</code> was the <strong>condition</strong>. If something in
+the while loop would have set <code>its_raining</code> to False, the loop would
+have ended and the program would have printed <code>It's not raining anymore</code>.</p>
+<p>Let's actually create a program that does just that:</p>
+<div class="highlight" style="background: #111111"><pre style="line-height: 125%; margin: 0;"><span></span>its_raining = <span style="color: #6699cc; font-weight: bold">True</span>
+<span style="color: #6699cc; font-weight: bold">while</span> its_raining:
+    <span style="color: #9966ff">print</span>(<span style="color: #ffff33">&quot;It&#39;s raining!&quot;</span>)
+    answer = <span style="color: #9966ff">input</span>(<span style="color: #ffff33">&quot;Or is it? (y=yes, n=no) &quot;</span>)
+    <span style="color: #6699cc; font-weight: bold">if</span> answer == <span style="color: #ffff33">&#39;y&#39;</span>:
+        <span style="color: #9966ff">print</span>(<span style="color: #ffff33">&quot;Oh well...&quot;</span>)
+    <span style="color: #6699cc; font-weight: bold">elif</span> answer == <span style="color: #ffff33">&#39;n&#39;</span>:
+        its_raining = <span style="color: #6699cc; font-weight: bold">False</span>     <span style="color: #336666; font-style: italic"># end the while loop</span>
+    <span style="color: #6699cc; font-weight: bold">else</span>:
+        <span style="color: #9966ff">print</span>(<span style="color: #ffff33">&quot;Enter y or n next time.&quot;</span>)
+<span style="color: #9966ff">print</span>(<span style="color: #ffff33">&quot;It&#39;s not raining anymore.&quot;</span>)
+</pre></div>
+<p>Running the program may look like this:</p>
+<pre><code>It's raining!
+Or is it? (y=yes, n=no) i dunno
+Enter y or n next time.
+It's raining!
+Or is it? (y=yes, n=no) y
+Oh well...
+It's raining!
+Or is it? (y=yes, n=no) n
+It's not raining anymore.
+</code></pre>
+<p>The while loop doesn't check the condition all the time, it only checks
+it in the beginning.</p>
+<div class="highlight" style="background: #111111"><pre style="line-height: 125%; margin: 0;"><span></span>&gt;&gt;&gt; its_raining = <span style="color: #6699cc; font-weight: bold">True</span>
+&gt;&gt;&gt; <span style="color: #6699cc; font-weight: bold">while</span> its_raining:
+...     its_raining = <span style="color: #6699cc; font-weight: bold">False</span>
+...     <span style="color: #9966ff">print</span>(<span style="color: #ffff33">&quot;It&#39;s not raining, but the while loop doesn&#39;t know it yet.&quot;</span>)
+...
+It&#39;s not raining, but the while loop doesn&#39;t know it yet.
+&gt;&gt;&gt;
+</pre></div>
+<p>We can also interrupt a loop even if the condition is still true using
+the <code>break</code> keyword. In this case, we'll set condition to True and rely
+on nothing but <code>break</code> to end the loop.</p>
+<div class="highlight" style="background: #111111"><pre style="line-height: 125%; margin: 0;"><span></span><span style="color: #6699cc; font-weight: bold">while</span> <span style="color: #6699cc; font-weight: bold">True</span>:
+    answer = <span style="color: #9966ff">input</span>(<span style="color: #ffff33">&quot;Is it raining? (y=yes, n=no) &quot;</span>)
+    <span style="color: #6699cc; font-weight: bold">if</span> answer == <span style="color: #ffff33">&#39;y&#39;</span>:
+        <span style="color: #9966ff">print</span>(<span style="color: #ffff33">&quot;It&#39;s raining!&quot;</span>)
+    <span style="color: #6699cc; font-weight: bold">elif</span> answer == <span style="color: #ffff33">&#39;n&#39;</span>:
+        <span style="color: #9966ff">print</span>(<span style="color: #ffff33">&quot;It&#39;s not raining anymore.&quot;</span>)
+        <span style="color: #6699cc; font-weight: bold">break</span>   <span style="color: #336666; font-style: italic"># end the loop</span>
+    <span style="color: #6699cc; font-weight: bold">else</span>:
+        <span style="color: #9966ff">print</span>(<span style="color: #ffff33">&quot;Enter y or n.&quot;</span>)
+</pre></div>
+<p>The program works like this:</p>
+<pre><code>Is it raining? (y=yes, n=no) who knows
+Enter y or n.
+Is it raining? (y=yes, n=no) y
+It's raining!
+Is it raining? (y=yes, n=no) n
+It's not raining anymore.
+</code></pre>
+<p>Unlike setting the condition to False, breaking the loop ends it
+immediately.</p>
+<div class="highlight" style="background: #111111"><pre style="line-height: 125%; margin: 0;"><span></span>&gt;&gt;&gt; <span style="color: #6699cc; font-weight: bold">while</span> <span style="color: #6699cc; font-weight: bold">True</span>:
+...     <span style="color: #6699cc; font-weight: bold">break</span>
+...     <span style="color: #9966ff">print</span>(<span style="color: #ffff33">&quot;This is never printed.&quot;</span>)
+...
+&gt;&gt;&gt;
+</pre></div>
+<a name="until-loops" href="#until-loops"><h2>Until loops</h2>
+</a><p>Python doesn't have until loops. If we need an until loop, we can use
+<code>while not</code>:</p>
+<div class="highlight" style="background: #111111"><pre style="line-height: 125%; margin: 0;"><span></span>raining = <span style="color: #6699cc; font-weight: bold">False</span>
+<span style="color: #6699cc; font-weight: bold">while</span> not raining:
+    <span style="color: #9966ff">print</span>(<span style="color: #ffff33">&quot;It&#39;s not raining.&quot;</span>)
+    <span style="color: #6699cc; font-weight: bold">if</span> <span style="color: #9966ff">input</span>(<span style="color: #ffff33">&quot;Is it raining? (y/n) &quot;</span>) == <span style="color: #ffff33">&#39;y&#39;</span>:
+        raining = <span style="color: #6699cc; font-weight: bold">True</span>
+<span style="color: #9966ff">print</span>(<span style="color: #ffff33">&quot;It&#39;s raining!&quot;</span>)
+</pre></div>
+<a name="for-loops" href="#for-loops"><h2>For loops</h2>
+</a><p>Let's say we have <a href="lists-and-tuples.html">a list</a> of things we want to
+print. To print each item in it, we could just do a bunch of prints:</p>
+<div class="highlight" style="background: #111111"><pre style="line-height: 125%; margin: 0;"><span></span>stuff = [<span style="color: #ffff33">&#39;hello&#39;</span>, <span style="color: #ffff33">&#39;hi&#39;</span>, <span style="color: #ffff33">&#39;how are you doing&#39;</span>, <span style="color: #ffff33">&#39;im fine&#39;</span>, <span style="color: #ffff33">&#39;how about you&#39;</span>]
+
+<span style="color: #9966ff">print</span>(stuff[0])
+<span style="color: #9966ff">print</span>(stuff[1])
+<span style="color: #9966ff">print</span>(stuff[2])
+<span style="color: #9966ff">print</span>(stuff[3])
+<span style="color: #9966ff">print</span>(stuff[4])
+</pre></div>
+<p>The output of the program is like this:</p>
+<pre><code>hello
+hi
+how are you doing
+im fine
+how about you
+</code></pre>
+<p>But this is only going to print five items, so if we add something to
+stuff, it's not going to be printed. Or if we remove something from
+stuff, we'll get an error saying "list index out of range".</p>
+<p>We could also create an index variable, and use a while loop:</p>
+<div class="highlight" style="background: #111111"><pre style="line-height: 125%; margin: 0;"><span></span>&gt;&gt;&gt; stuff = [<span style="color: #ffff33">&#39;hello&#39;</span>, <span style="color: #ffff33">&#39;hi&#39;</span>, <span style="color: #ffff33">&#39;how are you doing&#39;</span>, <span style="color: #ffff33">&#39;im fine&#39;</span>, <span style="color: #ffff33">&#39;how about you&#39;</span>]
+&gt;&gt;&gt; length_of_stuff = <span style="color: #9966ff">len</span>(stuff)
+&gt;&gt;&gt; index = 0
+&gt;&gt;&gt; <span style="color: #6699cc; font-weight: bold">while</span> index &lt; length_of_stuff:
+...     <span style="color: #9966ff">print</span>(stuff[index])
+...     index += 1
+...
+hello
+hi
+how are you doing
+im fine
+how about you
+&gt;&gt;&gt;
+</pre></div>
+<p>But we have <code>len()</code> and an index variable we need to increment and a
+while loop and many other things to worry about. That's a lot of work
+just for printing each item.</p>
+<p>This is when for loops come in:</p>
+<div class="highlight" style="background: #111111"><pre style="line-height: 125%; margin: 0;"><span></span>&gt;&gt;&gt; <span style="color: #6699cc; font-weight: bold">for</span> thing in stuff:
+...     <span style="color: #336666; font-style: italic"># this is repeated for each element of stuff, that is, first</span>
+...     <span style="color: #336666; font-style: italic"># for stuff[0], then for stuff[1], etc.</span>
+...     <span style="color: #9966ff">print</span>(thing)
+...
+hello
+hi
+how are you doing
+im fine
+how about you
+&gt;&gt;&gt;
+</pre></div>
+<p>Without the comments, that's only two simple lines, and one variable.
+Much better than anything else we tried before.</p>
+<div class="highlight" style="background: #111111"><pre style="line-height: 125%; margin: 0;"><span></span>&gt;&gt;&gt; <span style="color: #6699cc; font-weight: bold">for</span> thing in stuff:
+...     <span style="color: #9966ff">print</span>(thing)
+...
+hello
+hi
+how are you doing
+im fine
+how about you
+&gt;&gt;&gt;
+</pre></div>
+<p>Note that <code>for thing in stuff:</code> is not same as <code>for (thing in stuff):</code>.
+Here the <code>in</code> keyword is just a part of the for loop and it has a
+different meaning than it would have if we had <code>thing in stuff</code> without
+a <code>for</code>. Trying to do <code>for (thing in stuff):</code> creates an error.</p>
+<p>Right now the while loop version might seem easier to understand for
+you, but later you'll realize that for loops are much easier to work
+with than while loops and index variables, especially in large projects.
+For looping is also a little bit faster than while looping with an index
+variable.</p>
+<p>For loops are not actually limited to lists. We can for loop over many
+other things also, including strings and
+<a href="lists-and-tuples.html#tuples">tuples</a>. For looping over a tuple gives us
+its items, and for looping over a string gives us its characters as
+strings of length one.</p>
+<div class="highlight" style="background: #111111"><pre style="line-height: 125%; margin: 0;"><span></span>&gt;&gt;&gt; <span style="color: #6699cc; font-weight: bold">for</span> short_string in <span style="color: #ffff33">&#39;abc&#39;</span>:
+...     <span style="color: #9966ff">print</span>(short_string)
+...
+a
+b
+c
+&gt;&gt;&gt; <span style="color: #6699cc; font-weight: bold">for</span> item in (1, 2, 3):
+...     <span style="color: #9966ff">print</span>(item)
+...
+1
+2
+3
+&gt;&gt;&gt;
+</pre></div>
+<p>If we can for loop over something, then that something is <strong>iterable</strong>.
+Lists, tuples and strings are all iterable.</p>
+<p>There's only one big limitation with for looping over lists. We
+shouldn't modify the list in the for loop. If we do, the results can
+be surprising:</p>
+<div class="highlight" style="background: #111111"><pre style="line-height: 125%; margin: 0;"><span></span>&gt;&gt;&gt; stuff = [<span style="color: #ffff33">&#39;hello&#39;</span>, <span style="color: #ffff33">&#39;hi&#39;</span>, <span style="color: #ffff33">&#39;how are you doing&#39;</span>, <span style="color: #ffff33">&#39;im fine&#39;</span>, <span style="color: #ffff33">&#39;how about you&#39;</span>]
+&gt;&gt;&gt; <span style="color: #6699cc; font-weight: bold">for</span> thing in stuff:
+...     stuff.remove(thing)
+...
+&gt;&gt;&gt; stuff
+[&#39;hi&#39;, &#39;im fine&#39;]
+&gt;&gt;&gt;
+</pre></div>
+<p>Instead, we can create a copy of stuff and loop over it.</p>
+<div class="highlight" style="background: #111111"><pre style="line-height: 125%; margin: 0;"><span></span>&gt;&gt;&gt; stuff = [<span style="color: #ffff33">&#39;hello&#39;</span>, <span style="color: #ffff33">&#39;hi&#39;</span>, <span style="color: #ffff33">&#39;how are you doing&#39;</span>, <span style="color: #ffff33">&#39;im fine&#39;</span>, <span style="color: #ffff33">&#39;how about you&#39;</span>]
+&gt;&gt;&gt; <span style="color: #6699cc; font-weight: bold">for</span> thing in stuff.copy():
+...     stuff.remove(thing)
+...
+&gt;&gt;&gt; stuff
+[]
+&gt;&gt;&gt;
+</pre></div>
+<p>Or if we just want to clear a list, we can use the <code>clear</code>
+<a href="https://docs.python.org/3/tutorial/datastructures.html#more-on-lists">list method</a>:</p>
+<div class="highlight" style="background: #111111"><pre style="line-height: 125%; margin: 0;"><span></span>&gt;&gt;&gt; stuff = [<span style="color: #ffff33">&#39;hello&#39;</span>, <span style="color: #ffff33">&#39;hi&#39;</span>, <span style="color: #ffff33">&#39;how are you doing&#39;</span>, <span style="color: #ffff33">&#39;im fine&#39;</span>, <span style="color: #ffff33">&#39;how about you&#39;</span>]
+&gt;&gt;&gt; stuff.clear()
+&gt;&gt;&gt; stuff
+[]
+&gt;&gt;&gt;
+</pre></div>
+<a name="summary" href="#summary"><h2>Summary</h2>
+</a><ul>
+<li>A loop means repeating something multiple times.</li>
+<li>While loops repeat something as long as a condition is true, and
+  they check the condition only in the beginning.</li>
+<li>For loops can be used for repeating something to each item in a list.</li>
+<li>An iterable is something that can be for looped over.</li>
+<li>The <code>break</code> keyword can be used to interrupt the innermost loop at
+  any time.</li>
+</ul>
+<a name="examples" href="#examples"><h2>Examples</h2>
+</a><p>Repeat something an endless amount of times.</p>
+<div class="highlight" style="background: #111111"><pre style="line-height: 125%; margin: 0;"><span></span>message = <span style="color: #9966ff">input</span>(<span style="color: #ffff33">&quot;What do you want me to say? &quot;</span>)
+<span style="color: #6699cc; font-weight: bold">while</span> <span style="color: #6699cc; font-weight: bold">True</span>:
+    <span style="color: #9966ff">print</span>(message, <span style="color: #ffff33">&quot;!!!&quot;</span>)
+</pre></div>
+<p>Ask the user to enter five things and print them.</p>
+<div class="highlight" style="background: #111111"><pre style="line-height: 125%; margin: 0;"><span></span>things = []
+
+<span style="color: #9966ff">print</span>(<span style="color: #ffff33">&quot;Enter 5 things: &quot;</span>)
+<span style="color: #6699cc; font-weight: bold">while</span> <span style="color: #9966ff">len</span>(things) &lt; 5:
+    thing = <span style="color: #9966ff">input</span>(<span style="color: #ffff33">&quot;&gt; &quot;</span>)
+    things.append(thing)
+
+<span style="color: #9966ff">print</span>(<span style="color: #ffff33">&quot;You entered these things:&quot;</span>)
+<span style="color: #6699cc; font-weight: bold">for</span> thing in things:
+    <span style="color: #9966ff">print</span>(thing)
+</pre></div>
+<p>Ask the user a bunch of questions.</p>
+<div class="highlight" style="background: #111111"><pre style="line-height: 125%; margin: 0;"><span></span>questions_and_answers = [
+    <span style="color: #336666; font-style: italic"># [question, answer], ...</span>
+    [<span style="color: #ffff33">&quot;What is 2+4? &quot;</span>, <span style="color: #ffff33">&quot;6&quot;</span>],
+    [<span style="color: #ffff33">&quot;What is 2-4? &quot;</span>, <span style="color: #ffff33">&quot;-2&quot;</span>],
+    [<span style="color: #ffff33">&quot;What is 2*4? &quot;</span>, <span style="color: #ffff33">&quot;8&quot;</span>],
+    [<span style="color: #ffff33">&quot;What is 2/4? &quot;</span>, <span style="color: #ffff33">&quot;0.5&quot;</span>],
+    <span style="color: #336666; font-style: italic"># You could add more questions, but the code that asks them</span>
+    <span style="color: #336666; font-style: italic"># wouldn&#39;t need to be changed in any way.</span>
+]
+
+<span style="color: #6699cc; font-weight: bold">for</span> qa in questions_and_answers:
+    <span style="color: #6699cc; font-weight: bold">while</span> <span style="color: #6699cc; font-weight: bold">True</span>:
+        <span style="color: #6699cc; font-weight: bold">if</span> <span style="color: #9966ff">input</span>(qa[0]) == qa[1]:
+            <span style="color: #9966ff">print</span>(<span style="color: #ffff33">&quot;Correct!&quot;</span>)
+            <span style="color: #6699cc; font-weight: bold">break</span>
+        <span style="color: #6699cc; font-weight: bold">else</span>:
+            <span style="color: #9966ff">print</span>(<span style="color: #ffff33">&quot;That&#39;s not what I was thinking of... Try again.&quot;</span>)
+</pre></div>
+<p>Store a list of names and let the user check if the program knows
+the user.</p>
+<div class="highlight" style="background: #111111"><pre style="line-height: 125%; margin: 0;"><span></span><span style="color: #336666; font-style: italic"># You can add names here so the program will know them automatically</span>
+<span style="color: #336666; font-style: italic"># when it starts.</span>
+namelist = []
+
+<span style="color: #9966ff">print</span>(<span style="color: #ffff33">&quot;Options:&quot;</span>)
+<span style="color: #9966ff">print</span>(<span style="color: #ffff33">&quot;  0      Quit&quot;</span>)
+<span style="color: #9966ff">print</span>(<span style="color: #ffff33">&quot;  1      Check if I know you&quot;</span>)
+<span style="color: #9966ff">print</span>(<span style="color: #ffff33">&quot;  2      Introduce yourself to me&quot;</span>)
+<span style="color: #9966ff">print</span>(<span style="color: #ffff33">&quot;  3      Make me forget you&quot;</span>)
+<span style="color: #9966ff">print</span>(<span style="color: #ffff33">&quot;  4      Print a list of people I know&quot;</span>)
+<span style="color: #9966ff">print</span>()     <span style="color: #336666; font-style: italic"># print an empty line</span>
+
+<span style="color: #6699cc; font-weight: bold">while</span> <span style="color: #6699cc; font-weight: bold">True</span>:
+    option = <span style="color: #9966ff">input</span>(<span style="color: #ffff33">&quot;Choose an option: &quot;</span>)
+
+    <span style="color: #336666; font-style: italic"># Things like option == 0 don&#39;t work because option is a string</span>
+    <span style="color: #336666; font-style: italic"># and it needs to be compared with a string:</span>
+    <span style="color: #336666; font-style: italic">#   &gt;&gt;&gt; 0 == 0</span>
+    <span style="color: #336666; font-style: italic">#   True</span>
+    <span style="color: #336666; font-style: italic">#   &gt;&gt;&gt; &#39;0&#39; == &#39;0&#39;</span>
+    <span style="color: #336666; font-style: italic">#   True</span>
+    <span style="color: #336666; font-style: italic">#   &gt;&gt;&gt; 0 == &#39;0&#39;</span>
+    <span style="color: #336666; font-style: italic">#   False</span>
+    <span style="color: #6699cc; font-weight: bold">if</span> option == <span style="color: #ffff33">&#39;0&#39;</span>:
+        <span style="color: #9966ff">print</span>(<span style="color: #ffff33">&quot;Bye!&quot;</span>)
+        <span style="color: #6699cc; font-weight: bold">break</span>
+
+    <span style="color: #6699cc; font-weight: bold">elif</span> option == <span style="color: #ffff33">&#39;1&#39;</span>:
+        name = <span style="color: #9966ff">input</span>(<span style="color: #ffff33">&quot;Enter your name: &quot;</span>)
+        <span style="color: #6699cc; font-weight: bold">if</span> name in namelist:
+            <span style="color: #9966ff">print</span>(<span style="color: #ffff33">&quot;I know you! :D&quot;</span>)
+        <span style="color: #6699cc; font-weight: bold">else</span>:
+            <span style="color: #9966ff">print</span>(<span style="color: #ffff33">&quot;I don&#39;t know you :/&quot;</span>)
+
+    <span style="color: #6699cc; font-weight: bold">elif</span> option == <span style="color: #ffff33">&#39;2&#39;</span>:
+        name = <span style="color: #9966ff">input</span>(<span style="color: #ffff33">&quot;Enter your name: &quot;</span>)
+        <span style="color: #6699cc; font-weight: bold">if</span> name in namelist:
+            <span style="color: #9966ff">print</span>(<span style="color: #ffff33">&quot;I knew you already.&quot;</span>)
+        <span style="color: #6699cc; font-weight: bold">else</span>:
+            namelist.append(name)
+            <span style="color: #9966ff">print</span>(<span style="color: #ffff33">&quot;Now I know you!&quot;</span>)
+
+    <span style="color: #6699cc; font-weight: bold">elif</span> option == <span style="color: #ffff33">&#39;3&#39;</span>:
+        name = <span style="color: #9966ff">input</span>(<span style="color: #ffff33">&quot;Enter your name: &quot;</span>)
+        <span style="color: #6699cc; font-weight: bold">if</span> name in namelist:
+            namelist.remove(name)
+            <span style="color: #9966ff">print</span>(<span style="color: #ffff33">&quot;Now I don&#39;t know you.&quot;</span>)
+        <span style="color: #6699cc; font-weight: bold">else</span>:
+            <span style="color: #9966ff">print</span>(<span style="color: #ffff33">&quot;I didn&#39;t know you to begin with.&quot;</span>)
+
+    <span style="color: #6699cc; font-weight: bold">elif</span> option == <span style="color: #ffff33">&#39;4&#39;</span>:
+        <span style="color: #6699cc; font-weight: bold">if</span> namelist == []:
+            <span style="color: #9966ff">print</span>(<span style="color: #ffff33">&quot;I don&#39;t know anybody yet.&quot;</span>)
+        <span style="color: #6699cc; font-weight: bold">else</span>:
+            <span style="color: #6699cc; font-weight: bold">for</span> name in namelist:
+                <span style="color: #9966ff">print</span>(<span style="color: #ffff33">&quot;I know %s!&quot;</span> % name)
+
+    <span style="color: #6699cc; font-weight: bold">else</span>:
+        <span style="color: #9966ff">print</span>(<span style="color: #ffff33">&quot;I don&#39;t understand :(&quot;</span>)
+
+    <span style="color: #9966ff">print</span>()
+</pre></div>
+<a name="exercises" href="#exercises"><h2>Exercises</h2>
+</a><ol>
+<li><p>This code is supposed to print the numbers 1,2,3,4,5. Fix it.</p>
+<div class="highlight" style="background: #111111"><pre style="line-height: 125%; margin: 0;"><span></span> things = <span style="color: #9966ff">str</span>([1, 2, 3, 4, 5])
+ <span style="color: #6699cc; font-weight: bold">for</span> thing in things:
+     <span style="color: #9966ff">print</span>(thing)
+</pre></div>
+</li>
+<li><p>This code is supposed to print <code>[1, 2, 3, 4, 5, 6]</code>. Fix it without
+ changing the <code>before</code> list.</p>
+<div class="highlight" style="background: #111111"><pre style="line-height: 125%; margin: 0;"><span></span> before = [[1, 2], [3, 4], [5, 6]]
+ after = []
+ <span style="color: #6699cc; font-weight: bold">for</span> number in before:
+     after.append(number)
+ <span style="color: #9966ff">print</span>(after)
+</pre></div>
+</li>
+<li><p>This program is supposed to convert everything in a list to integers
+and then calculate their sum. It should print 6 because <code>1 + 2 + 3</code>
+is 6. Fix the program.</p>
+<div class="highlight" style="background: #111111"><pre style="line-height: 125%; margin: 0;"><span></span><span style="color: #9966ff">input</span> = [<span style="color: #ffff33">&#39;1&#39;</span>, <span style="color: #ffff33">&#39;2&#39;</span>, <span style="color: #ffff33">&#39;3&#39;</span>]
+
+<span style="color: #6699cc; font-weight: bold">for</span> string in <span style="color: #9966ff">input</span>:
+    numbers = []
+    numbers.append(<span style="color: #9966ff">int</span>(string))
+
+result = 0
+<span style="color: #6699cc; font-weight: bold">for</span> n in numbers:
+    result + n
+<span style="color: #9966ff">print</span>(<span style="color: #ffff33">&quot;their sum is&quot;</span>, result)
+</pre></div>
+</li>
+<li><p>This program is supposed to print <code>[1, 2, 3]</code>. Fix it.</p>
+<div class="highlight" style="background: #111111"><pre style="line-height: 125%; margin: 0;"><span></span> numbers = [<span style="color: #ffff33">&#39;1&#39;</span>, <span style="color: #ffff33">&#39;2&#39;</span>, <span style="color: #ffff33">&#39;3&#39;</span>]
+ <span style="color: #6699cc; font-weight: bold">for</span> number in numbers:
+     number = <span style="color: #9966ff">int</span>(number)
+ <span style="color: #9966ff">print</span>(numbers)
+</pre></div>
+</li>
+</ol>
+<p>The answers are <a href="answers.html#loops">here</a>.</p>
+<hr>
+<p>If you have trouble with this tutorial please <a href="../contact-me.html">tell me about
+it</a> and I'll make this tutorial better. If you
+like this tutorial, please <a href="../index.html#how-can-i-thank-you-for-writing-and-sharing-this-tutorial">give it a
+star</a>.</p>
+<p>You may use this tutorial freely at your own risk. See
+<a href="../LICENSE.txt">LICENSE</a>.</p>
+<p><a href="lists-and-tuples.html">Previous</a> | <a href="trey-hunner-zip-and-enumerate.html">Next</a> |
+<a href="../index.html#basics">List of contents</a></p>
+
+  </body>
+</html>
+
